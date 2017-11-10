@@ -1,5 +1,6 @@
 export default {
   user: {
-    authenticated: false
+    authenticated: false,
+    redirect: ''
   }
 }

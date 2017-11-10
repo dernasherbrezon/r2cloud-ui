@@ -30,7 +30,12 @@
     methods: {
       submit () {
         auth.user.authenticated = true
-        this.$router.push('/status')
+        if (auth.user.redirect !== '') {
+          this.$router.push(auth.user.redirect)
+          auth.user.redirect = ''
+        } else {
+          this.$router.push('/admin/status')
+        }
       }
     }
   }

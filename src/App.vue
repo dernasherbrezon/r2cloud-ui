@@ -5,8 +5,8 @@
     	<b-navbar-brand href="#">r2cloud</b-navbar-brand>
     	<b-collapse is-nav id="nav_collapse">
 			<b-navbar-nav>
-			  <b-nav-item to="/airplanes">Airplanes</b-nav-item>
-			  <b-nav-item to="/status">Status</b-nav-item>
+			  <b-nav-item to="/admin/airplanes">Airplanes</b-nav-item>
+			  <b-nav-item to="/admin/status">Status</b-nav-item>
 			  <b-nav-item href="#">Configuration</b-nav-item>
 			</b-navbar-nav>
 			<b-navbar-nav class="ml-auto">
