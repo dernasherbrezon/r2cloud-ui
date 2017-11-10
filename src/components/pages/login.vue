@@ -3,7 +3,7 @@
 	  	<legend>Login</legend>
 	  	<b-alert variant="danger"
              dismissible
-             :show="error != ''">
+             :show="error !== ''">
           {{ error }}
         </b-alert>
         <label for="inputEmail" class="sr-only">Email address</label>
