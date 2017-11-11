@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import airplanes from '@/components/pages/airplanes'
 import login from '@/components/pages/login'
-import status from '@/components/pages/status'
+import statusOverview from '@/components/pages/status/overview'
 import notFound from '@/components/pages/notfound'
 import auth from '@/components/auth'
 
@@ -22,9 +22,9 @@ const router = new Router({
       component: airplanes
     },
     {
-      path: '/admin/status',
-      name: 'status',
-      component: status
+      path: '/admin/status/overview',
+      name: 'statusOverview',
+      component: statusOverview
     },
     {
       path: '*',

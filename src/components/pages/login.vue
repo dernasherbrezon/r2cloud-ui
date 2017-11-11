@@ -34,7 +34,7 @@
           this.$router.push(auth.user.redirect)
           auth.user.redirect = ''
         } else {
-          this.$router.push('/admin/status')
+          this.$router.push('/admin/status/overview')
         }
       }
     }

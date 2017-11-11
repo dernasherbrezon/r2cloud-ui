@@ -1,8 +1,6 @@
 <template>
   <div class="row">
     <div class="col-sm-12 main">
-      <h1>Airplanes</h1>
-      <hr/>
       <div class="iframe-container" v-if="center.lat !== '' && center.lon !== ''">
         <gmap-map
 		  :center="center"
