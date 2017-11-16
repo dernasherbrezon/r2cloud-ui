@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import airplanes from '@/components/pages/airplanes'
 import login from '@/components/pages/login'
 import statusOverview from '@/components/pages/status/overview'
+import statusMetrics from '@/components/pages/status/metrics'
 import notFound from '@/components/pages/notfound'
 import auth from '@/components/auth'
 
@@ -25,6 +26,11 @@ const router = new Router({
       path: '/admin/status/overview',
       name: 'statusOverview',
       component: statusOverview
+    },
+    {
+      path: '/admin/status/metrics',
+      name: 'statusMetrics',
+      component: statusMetrics
     },
     {
       path: '*',

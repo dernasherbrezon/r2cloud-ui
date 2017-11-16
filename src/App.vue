@@ -8,7 +8,7 @@
 			  <b-nav-item to="/admin/airplanes">Airplanes</b-nav-item>
 		      <b-nav-item-dropdown text="Status">
 		        <b-dropdown-item to="/admin/status/overview">Overview</b-dropdown-item>
-		        <b-dropdown-item href="#">Metrics</b-dropdown-item>
+		        <b-dropdown-item to="/admin/status/metrics">Metrics</b-dropdown-item>
 		      </b-nav-item-dropdown>			  
 			  <b-nav-item href="#">Configuration</b-nav-item>
 			</b-navbar-nav>
