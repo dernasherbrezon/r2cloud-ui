@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import airplanes from '@/components/pages/airplanes'
+
 import login from '@/components/pages/login'
+import restore from '@/components/pages/restore'
+import setup from '@/components/pages/setup'
+
 import statusOverview from '@/components/pages/status/overview'
 import statusMetrics from '@/components/pages/status/metrics'
 import notFound from '@/components/pages/notfound'
@@ -16,6 +20,16 @@ const router = new Router({
       alias: '/',
       name: 'login',
       component: login
+    },
+    {
+      path: '/restore',
+      name: 'restore',
+      component: restore
+    },
+    {
+      path: '/setup',
+      name: 'setup',
+      component: setup
     },
     {
       path: '/admin/airplanes',
