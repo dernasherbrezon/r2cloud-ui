@@ -19,7 +19,7 @@
           <input type="text" id="inputText" class="form-control" placeholder="Keyword" required="" autofocus="" v-model="keyword">
         </div>
         <div class="form-group">
-          <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="" v-model="username">
+          <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" v-model="username">
         </div>
         <div class="form-group">
           <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="" v-model="password">

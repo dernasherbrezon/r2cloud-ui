@@ -8,6 +8,11 @@ import setup from '@/components/pages/setup'
 
 import statusOverview from '@/components/pages/status/overview'
 import statusMetrics from '@/components/pages/status/metrics'
+
+import configGeneral from '@/components/pages/configuration/general'
+import configDDNS from '@/components/pages/configuration/ddns'
+import configSSL from '@/components/pages/configuration/ssl'
+
 import notFound from '@/components/pages/notfound'
 import auth from '@/components/auth'
 
@@ -45,6 +50,21 @@ const router = new Router({
       path: '/admin/status/metrics',
       name: 'statusMetrics',
       component: statusMetrics
+    },
+    {
+      path: '/admin/config/general',
+      name: 'configGeneral',
+      component: configGeneral
+    },
+    {
+      path: '/admin/config/ddns',
+      name: 'configDDNS',
+      component: configDDNS
+    },
+    {
+      path: '/admin/config/ssl',
+      name: 'configSSL',
+      component: configSSL
     },
     {
       path: '*',

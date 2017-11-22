@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <form class="form-inline" style="margin-top: 20px;">
 	    <div class="form-group">
-	      <label for="period">Period</label>
+	      <label for="period">Period&nbsp;</label>
 	      <select id="updateInterval" class="form-control" v-model="interval" v-on:click="changeInterval">
 	        <option selected value="DAY">Last day</option>
 	        <option value="MONTH">Last month</option>
