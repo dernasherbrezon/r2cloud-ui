@@ -21,6 +21,8 @@
 <script>
 
 import timeSeries from '@/components/graph/TimeSeries'
+import RRDFile from 'rrd4j-js'
+import axios from 'axios'
 
 export default {
   name: 'metrics',
@@ -31,13 +33,28 @@ export default {
     }
   },
   mounted () {
-    this.graphs = [{
-      id: '1',
-      type: 'bytes',
-      data: {
-        datasets: [{ label: 'Data name', data: [{x: 1272664800000, y: NaN}, {x: 1272672000000, y: 1160.852051282051}, {x: 1272679200000, y: 1254.6666666666667}, {x: 1272686400000, y: 1404.933888888889}, {x: 1272693600000, y: 1508.6666666666667}, {x: 1272700800000, y: 1656.1856944444444}, {x: 1272708000000, y: 1682.778611111111}, {x: 1272715200000, y: 1669.7697222222223}, {x: 1272722400000, y: 1659.3566666666666}, {x: 1272729600000, y: 1667.010416666667}] }]
+    const vm = this
+    axios.get('/static/demo.rrd', {
+      responseType: 'arraybuffer'
+    }).then(function (response) {
+      var file = new RRDFile(new Uint8Array(response.data))
+      var rrddata = file.getData('sun', 'AVERAGE', new Date(1272668400000), new Date(1277938800000))
+      var converted = []
+      for (var i = 0; i < rrddata.data.length; i++) {
+        converted.push({
+          x: rrddata.data[i][0],
+          y: rrddata.data[i][1]
+        })
       }
-    }]
+      console.log(converted)
+      vm.graphs = [{
+        id: '1',
+        type: 'bytes',
+        data: {
+          datasets: [{ label: 'Data name', data: converted }]
+        }
+      }]
+    })
   }
 }
 </script>

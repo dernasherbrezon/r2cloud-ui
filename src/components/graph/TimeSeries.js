@@ -17,10 +17,19 @@ export default {
           xAxes: [{
             type: 'time',
             time: {
-              unit: 'minute',
-              tooltipFormat: 'HH:mm'
+              unit: 'day'
             }
           }]
+        },
+        tooltips: {
+          callbacks: {
+            title: function () {
+              return ''
+            },
+            label: function (tooltipItem) {
+              return tooltipItem.yLabel
+            }
+          }
         },
         legend: {
           onClick: (e) => e.stopPropagation()
