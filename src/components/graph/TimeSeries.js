@@ -1,15 +1,22 @@
-import { Line } from 'vue-chartjs'
+import { Line, mixins } from 'vue-chartjs'
 
 export default {
   extends: Line,
-  props: ['data', 'id'],
+  mixins: [mixins.reactiveProp],
+  props: ['chartData', 'id'],
   name: 'timeSeries',
   mounted () {
-    this.renderChart(this.data,
+    this.renderChart(this.chartData,
       {
+        animation: false,
         elements: {
           line: {
             tension: 0 // disables bezier curves
+          },
+          point: {
+            radius: 0,
+            hitRadius: 10,
+            hoverRadius: 5
           }
         },
         responsive: true,
