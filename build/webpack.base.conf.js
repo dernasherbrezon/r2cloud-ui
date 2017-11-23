@@ -47,7 +47,27 @@ module.exports = {
         include: [resolve('src'), resolve('test')]
       },
       {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url-loader?limit=10000&mimetype=application/font-woff"
+      },
+      {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url-loader?limit=10000&mimetype=application/font-woff"
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url-loader?limit=10000&mimetype=application/octet-stream"
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "file-loader"
+      },{
+        test: /\.(svg)(\?.*)?$/,
+        loader: "url-loader?limit=10000&mimetype=image/svg+xml"
+      },      
+      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+        exclude: /fontawesome-webfont.*?/,
         loader: 'url-loader',
         options: {
           limit: 10000,
@@ -60,14 +80,6 @@ module.exports = {
         options: {
           limit: 10000,
           name: utils.assetsPath('media/[name].[hash:7].[ext]')
-        }
-      },
-      {
-        test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }
     ]
