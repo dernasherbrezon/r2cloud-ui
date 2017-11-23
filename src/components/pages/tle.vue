@@ -4,7 +4,7 @@
       <p :class="color">Last update: {{ lastUpdatedFormatted }} UTC</p>
       <form class="form-inline" style="margin-top: 20px;">
           <div class="form-group">
-            <label for="satellite">Satellite</label>
+            <label for="satellite">Satellite&nbsp;</label>
             <select class="form-control" v-model="selected" >
                 <option value=""></option>
                 <option :value="item.id" v-for="item in tle">{{ item.data[0] }}</option>
@@ -24,7 +24,7 @@
 import moment from 'moment'
 
 export default {
-  name: 'ddns',
+  name: 'tle',
   computed: {
     lastUpdatedFormatted: function () {
       return moment(this.lastUpdated).utc().format('DD-MM-YYYY')

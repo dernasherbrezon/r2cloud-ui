@@ -14,6 +14,7 @@ import configDDNS from '@/components/pages/configuration/ddns'
 import configSSL from '@/components/pages/configuration/ssl'
 
 import tle from '@/components/pages/tle'
+import weather from '@/components/pages/weather'
 
 import notFound from '@/components/pages/notfound'
 import auth from '@/components/auth'
@@ -72,6 +73,11 @@ const router = new Router({
       path: '/admin/tle',
       name: 'tle',
       component: tle
+    },
+    {
+      path: '/admin/weather',
+      name: 'weather',
+      component: weather
     },
     {
       path: '*',
