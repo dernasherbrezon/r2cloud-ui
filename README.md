@@ -1,6 +1,10 @@
 # r2cloud-ui
 
-> ui for r2cloud
+Screenshots
+
+![screen1](/doc/img1.jpg?raw=true)
+![screen2](/doc/img2.jpg?raw=true)
+![screen3](/doc/img3.jpg?raw=true)
 
 ## Build Setup
 
