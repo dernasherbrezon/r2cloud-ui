@@ -6,7 +6,7 @@
           <div style="margin-top: 20px;">
             <p>Next pass: <strong>{{ formatTime(item.nextPass) }}</strong> {{ formatDate(item.nextPass) }} UTC</p>
             <b-tabs pills no-fade>
-              <b-tab :title="formatTime(curData.date) + ' ' + formatDate(curData.date)" :active="curDataIndex === 0" v-for="(curData,curDataIndex) in item.data">
+              <b-tab :title="formatTime(curData.date) + ' ' + formatDate(curData.date)" :key="curData.date" :active="curDataIndex === 0" v-for="(curData,curDataIndex) in item.data">
                 <div class="row" style="margin-top: 20px;">
                   <div class="col-md-6">
                       <img class="img-fluid" :src="curData.aPath">
