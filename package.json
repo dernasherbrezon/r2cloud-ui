@@ -18,6 +18,7 @@
     "bootstrap": "^4.0.0-beta.2",
     "bootstrap-vue": "^1.0.2",
     "chart.js": "^2.7.1",
+    "moment": "^2.19.2",
     "rrd4j-js": "^2.0.1",
     "vue": "^2.5.2",
     "vue-chartjs": "^3.0.2",

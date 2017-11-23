@@ -13,6 +13,8 @@ import configGeneral from '@/components/pages/configuration/general'
 import configDDNS from '@/components/pages/configuration/ddns'
 import configSSL from '@/components/pages/configuration/ssl'
 
+import tle from '@/components/pages/tle'
+
 import notFound from '@/components/pages/notfound'
 import auth from '@/components/auth'
 
@@ -65,6 +67,11 @@ const router = new Router({
       path: '/admin/config/ssl',
       name: 'configSSL',
       component: configSSL
+    },
+    {
+      path: '/admin/tle',
+      name: 'tle',
+      component: tle
     },
     {
       path: '*',

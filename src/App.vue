@@ -14,7 +14,8 @@
                 <b-dropdown-item to="/admin/config/general">General</b-dropdown-item>
                 <b-dropdown-item to="/admin/config/ddns">DDNS</b-dropdown-item>
                 <b-dropdown-item to="/admin/config/ssl">SSL</b-dropdown-item>
-              </b-nav-item-dropdown>              
+              </b-nav-item-dropdown>
+              <b-nav-item to="/admin/tle">TLE</b-nav-item>
 			</b-navbar-nav>
 			<b-navbar-nav class="ml-auto">
 				<b-nav-item v-on:click.prevent="logout">Logout</b-nav-item>
