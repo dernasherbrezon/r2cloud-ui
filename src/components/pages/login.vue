@@ -21,12 +21,14 @@
       </form>
 </template>
 <script>
-  import auth from '../auth'
+  import HTTP from '@/components/http'
+  import auth from '@/components/auth'
+  import axios from 'axios'
 
   export default {
     data () {
       return {
-        username: 'test@example.com',
+        username: 'info@r2cloud.ru',
         password: '1'
       }
     },
@@ -39,19 +41,49 @@
         }
       },
       submit () {
-        this.$validator.validate().then(() => {
-          this.errors.add('username', 'test error from backend')
-          this.errors.add('general', 'test error from backend')
-        }).catch(() => {
-          this.errors.add('general', 'Fatal error during validation')
+        var vm = this
+        HTTP.post('/accessToken', vm.$data).then(function (response) {
+          auth.user.authenticated = true
+          auth.user.accessToken = response.data.access_token
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + auth.user.accessToken
+          if (auth.user.redirect !== '') {
+            vm.$router.push(auth.user.redirect)
+            auth.user.redirect = ''
+          } else {
+            vm.$router.push('/admin/status/overview')
+          }
+        }).catch(function (error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.log('error response')
+            console.log(error.response.data)
+            console.log(error.response.status)
+            console.log(error.response.headers)
+            if (error.response.data && error.response.data.errors) {
+              vm.$validator.validate().then(() => {
+                for (var property in error.response.data.errors) {
+                  if (error.response.data.errors.hasOwnProperty(property)) {
+                    vm.errors.add(property, error.response.data.errors[property])
+                  }
+                }
+              })
+            } else {
+              vm.$validator.validate().then(() => {
+                vm.errors.add('general', 'Internal server error')
+              })
+            }
+          } else if (error.request) {
+            vm.$validator.validate().then(() => {
+              vm.errors.add('general', 'Internal server error')
+            })
+          } else {
+            console.log(error)
+            vm.$validator.validate().then(() => {
+              vm.errors.add('general', 'Internal error')
+            })
+          }
         })
-        auth.user.authenticated = true
-        if (auth.user.redirect !== '') {
-          this.$router.push(auth.user.redirect)
-          auth.user.redirect = ''
-        } else {
-          this.$router.push('/admin/status/overview')
-        }
       }
     }
   }

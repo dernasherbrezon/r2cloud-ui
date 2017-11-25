@@ -32,6 +32,7 @@
 <script>
 
 import auth from '@/components/auth'
+import axios from 'axios'
 
 export default {
   name: 'app',
@@ -43,6 +44,7 @@ export default {
   methods: {
     logout () {
       auth.user.authenticated = false
+      delete axios.defaults.headers.common['Authorization']
       this.$router.push('/login')
     }
   }
