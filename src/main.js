@@ -10,11 +10,14 @@ import messages from '@/components/validation.js'
 import Validator from 'vee-validate'
 import auth from '@/components/auth.js'
 import axios from 'axios'
+import HTTP from '@/components/http.js'
 
 Vue.use(VueCookie)
 Vue.use(BootstrapVue)
 Vue.use(Validator)
 Vue.config.productionTip = false
+
+Vue.prototype.$http = HTTP
 
 var token = localStorage.getItem('access_token')
 if (token) {

@@ -21,7 +21,6 @@
       </form>
 </template>
 <script>
-  import HTTP from '@/components/http.js'
   import auth from '@/components/auth.js'
   import axios from 'axios'
 
@@ -50,7 +49,7 @@
         submitting = true
 
         var vm = this
-        HTTP.post('/accessToken', vm.$data).then(function (response) {
+        vm.$http.post('/accessToken', vm.$data).then(function (response) {
           submitting = false
           auth.user.authenticated = true
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token

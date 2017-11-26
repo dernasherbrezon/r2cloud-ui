@@ -7,6 +7,9 @@
 </template>
 
 <script>
+
+var submitting = false
+
 export default {
   name: 'status',
   mounted: function () {
@@ -15,6 +18,14 @@ export default {
       update()
     }, false)
     function update () {
+      if (submitting) {
+        return
+      }
+      submitting = true
+
+      this.$http.get('/admin/status/overview').then(function (response) {
+        console.log(response.data)
+      })
       var value = {status: 'ERROR', message: 'Error message'}
       var color
       var property = 'rtldongle'

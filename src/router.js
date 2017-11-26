@@ -45,9 +45,19 @@ const router = new Router({
     },
     {
       path: '/admin/status/overview',
-      alias: '/',
       name: 'statusOverview',
       component: statusOverview
+    },
+    {
+      path: '/',
+      redirect: function () {
+        if (!auth.user.authenticated) {
+          auth.user.redirect = '/admin/status/overview'
+          return '/login'
+        } else {
+          return '/admin/status/overview'
+        }
+      }
     },
     {
       path: '/admin/status/metrics',
