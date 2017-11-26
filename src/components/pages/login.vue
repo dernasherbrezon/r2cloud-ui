@@ -25,6 +25,8 @@
   import auth from '@/components/auth.js'
   import axios from 'axios'
 
+  var submitting = false
+  
   export default {
     data () {
       return {
@@ -35,14 +37,21 @@
     methods: {
       validateBeforeSubmit (e) {
         this.$validator.errors.clear()
-        this.$validator.validateAll()
-        if (!this.errors.any()) {
-          this.submit()
-        }
+        this.$validator.validateAll().then((result) => {
+          if (result) {
+            this.submit()
+          }
+        })
       },
       submit () {
+        if (submitting) {
+          return
+        }
+        submitting = true
+
         var vm = this
         HTTP.post('/accessToken', vm.$data).then(function (response) {
+          submitting = false
           auth.user.authenticated = true
           axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token
           localStorage.setItem('access_token', response.data.access_token)
@@ -53,6 +62,7 @@
             vm.$router.push('/admin/status/overview')
           }
         }).catch(function (error) {
+          submitting = false
           if (error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
