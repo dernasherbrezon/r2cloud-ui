@@ -20,7 +20,7 @@
 
 <script>
 
-import timeSeries from '@/components/graph/TimeSeries'
+import timeSeries from '@/components/TimeSeries.js'
 import RRDFile from 'rrd4j-js'
 import axios from 'axios'
 

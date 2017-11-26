@@ -31,7 +31,7 @@
 
 <script>
 
-import auth from '@/components/auth'
+import auth from '@/components/auth.js'
 import axios from 'axios'
 
 export default {

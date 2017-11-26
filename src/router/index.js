@@ -17,7 +17,7 @@ import tle from '@/components/pages/tle'
 import weather from '@/components/pages/weather'
 
 import notFound from '@/components/pages/notfound'
-import auth from '@/components/auth'
+import auth from '@/components/auth.js'
 
 Vue.use(Router)
 

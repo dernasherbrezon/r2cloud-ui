@@ -6,9 +6,9 @@ import VueCookie from 'vue-cookie'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'font-awesome/css/font-awesome.css'
-import messages from '@/components/validation'
+import messages from '@/components/validation.js'
 import Validator from 'vee-validate'
-import auth from '@/components/auth'
+import auth from '@/components/auth.js'
 import axios from 'axios'
 
 Vue.use(VueCookie)

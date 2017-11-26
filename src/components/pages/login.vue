@@ -21,8 +21,8 @@
       </form>
 </template>
 <script>
-  import HTTP from '@/components/http'
-  import auth from '@/components/auth'
+  import HTTP from '@/components/http.js'
+  import auth from '@/components/auth.js'
   import axios from 'axios'
 
   export default {
