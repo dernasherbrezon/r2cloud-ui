@@ -35,8 +35,6 @@
 
 <script>
 
-import HTTP from '@/components/http'
-
 export default {
   name: 'general',
   data () {
@@ -49,9 +47,6 @@ export default {
   methods: {
     save: function (event) {
     }
-  },
-  mounted () {
-    console.log(HTTP)
   }
 }
 </script>

@@ -44,8 +44,8 @@
         var vm = this
         HTTP.post('/accessToken', vm.$data).then(function (response) {
           auth.user.authenticated = true
-          auth.user.accessToken = response.data.access_token
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + auth.user.accessToken
+          axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token
+          localStorage.setItem('access_token', response.data.access_token)
           if (auth.user.redirect !== '') {
             vm.$router.push(auth.user.redirect)
             auth.user.redirect = ''

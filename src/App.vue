@@ -45,6 +45,7 @@ export default {
     logout () {
       auth.user.authenticated = false
       delete axios.defaults.headers.common['Authorization']
+      localStorage.removeItem('access_token')
       this.$router.push('/login')
     }
   }

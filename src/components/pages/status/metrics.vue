@@ -51,7 +51,6 @@ export default {
             y: rrddata.data[i][1]
           })
         }
-        console.log(vm.interval)
         vm.graphs = [{
           id: '1',
           type: 'bytes',

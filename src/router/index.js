@@ -25,7 +25,6 @@ const router = new Router({
   routes: [
     {
       path: '/login',
-      alias: '/',
       name: 'login',
       component: login
     },
@@ -46,6 +45,7 @@ const router = new Router({
     },
     {
       path: '/admin/status/overview',
+      alias: '/',
       name: 'statusOverview',
       component: statusOverview
     },
