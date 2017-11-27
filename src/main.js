@@ -32,3 +32,13 @@ var vue = new Vue({
   render: h => h(App)
 })
 vue.$validator.updateDictionary(messages)
+vue.$http.interceptors.response.use(function (response) {
+  return response
+}, function (error) {
+  if (error.response.status === 401 && error.config.url.indexOf('accessToken') === -1) {
+    auth.user.authenticated = false
+    delete axios.defaults.headers.common['Authorization']
+    vue.$router.push('/login')
+  }
+  return Promise.reject(error)
+})
