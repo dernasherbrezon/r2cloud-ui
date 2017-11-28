@@ -3,9 +3,11 @@ import { Line, mixins } from 'vue-chartjs'
 export default {
   extends: Line,
   mixins: [mixins.reactiveProp],
-  props: ['chartData', 'id', 'scale'],
+  props: ['chartData', 'id', 'scale', 'format'],
   name: 'timeSeries',
   mounted () {
+    console.log(this.format)
+    const vm = this
     this.renderChart(this.chartData,
       {
         animation: false,
@@ -29,6 +31,13 @@ export default {
                 hour: 'H:mm'
               }
             }
+          }],
+          yAxes: [{
+            ticks: {
+              callback: function (label, index, labels) {
+                return vm.formatYValue(label)
+              }
+            }
           }]
         },
         tooltips: {
@@ -37,7 +46,7 @@ export default {
               return ''
             },
             label: function (tooltipItem) {
-              return tooltipItem.yLabel
+              return vm.formatYValue(tooltipItem.yLabel)
             }
           }
         },
@@ -45,5 +54,21 @@ export default {
           onClick: (e) => e.stopPropagation()
         }
       })
+  },
+  methods: {
+    formatYValue: function (label) {
+      if (this.format === 'BYTES') {
+        if (label < 1024) {
+          return label + ' B'
+        } else if (label < 1024 * 1024) {
+          return (label / 1024).toFixed(2) + ' KiB'
+        } else if (label < 1024 * 1024 * 1024) {
+          return (label / 1024 / 1024).toFixed(2) + ' MiB'
+        } else {
+          return label
+        }
+      }
+      return label
+    }
   }
 }

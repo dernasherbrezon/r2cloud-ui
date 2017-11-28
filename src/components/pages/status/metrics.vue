@@ -13,7 +13,7 @@
       </form>
     </div>
 	  <div class="col-md-12">
-	  	<timeSeries v-for="item in graphs" :chart-id="item.id" :scale="formattedInterval" :chartData="item.chartData" :key="item.id" :id="item.id" :height="100" />
+	  	<timeSeries v-for="item in graphs" :chart-id="item.id" :format="item.format" :scale="formattedInterval" :chartData="item.chartData" :key="item.id" :id="item.id" :height="100" />
 	  </div>
   </div>
 </template>
@@ -76,7 +76,7 @@ export default {
               }
               vm.graphs.push({
                 id: currentMetric.id,
-                type: 'bytes',
+                format: currentMetric.format,
                 chartData: {
                   datasets: [{
                     backgroundColor: 'rgba(128, 182, 244, 0.3)',
