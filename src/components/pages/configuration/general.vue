@@ -1,18 +1,27 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <form style="margin-top: 20px;">
+      <b-alert variant="danger"
+        dismissible
+        :show="errors.has('general')">
+      {{ errors.first('general') }}
+      </b-alert>
+    </div>
+    <div class="col-md-12">
+      <form style="margin-top: 20px;" @submit.prevent="validateBeforeSubmit">
         <div class="row">
           <div class="col-md-4">
-            <div class="form-group">
+            <div class="form-group" :class="{'has-danger': errors.has('lat') }">
               <label for="lat">Latitude</label>
-              <input type="text" id="lat" class="form-control" required="" v-model="lat">
+              <input type="text" id="lat" name="lat" :class="{'is-invalid': errors.has('lat') }" v-validate="'required'" class="form-control" v-model="lat">
+              <div class="invalid-feedback" v-if="errors.has('lat')">{{ errors.first('lat') }}</div>
             </div>
           </div>
           <div class="col-md-4">
-            <div class="form-group">
+            <div class="form-group" :class="{'has-danger': errors.has('lng') }">
               <label for="lng">Longitude</label>
-              <input type="text" id="lng" class="form-control" required="" v-model="lng">
+              <input type="text" id="lng" name="lng" :class="{'is-invalid': errors.has('lng') }" v-validate="'required'" class="form-control" v-model="lng">
+              <div class="invalid-feedback" v-if="errors.has('lng')">{{ errors.first('lng') }}</div>
             </div>
           </div>
           <div class="col-md-4">
@@ -35,17 +44,79 @@
 
 <script>
 
+var submitting = false
+
 export default {
   name: 'general',
   data () {
     return {
-      lat: 51.496620842979404,
-      lng: 0.0120395141601486,
-      autoUpdate: true
+      lat: '',
+      lng: '',
+      autoUpdate: false
     }
   },
+  mounted () {
+    const vm = this
+    vm.$http.get('/admin/config/general').then(function (response) {
+      vm.lat = response.data.lat
+      vm.lng = response.data.lng
+      vm.autoUpdate = response.data.autoUpdate
+    })
+  },
   methods: {
-    save: function (event) {
+    validateBeforeSubmit (e) {
+      this.$validator.errors.clear()
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          this.submit()
+        }
+      })
+    },
+    submit: function (event) {
+      if (submitting) {
+        return
+      }
+      submitting = true
+      const vm = this
+      vm.$http.post('/admin/config/general', {
+        lat: parseFloat(vm.lat),
+        lng: parseFloat(vm.lng),
+        autoUpdate: vm.autoUpdate
+      }).then(function (response) {
+        submitting = false
+      }).catch(function (error) {
+        submitting = false
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log('error response')
+          console.log(error.response.data)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+          if (error.response.data && error.response.data.errors) {
+            vm.$validator.validate().then(() => {
+              for (var property in error.response.data.errors) {
+                if (error.response.data.errors.hasOwnProperty(property)) {
+                  vm.errors.add(property, error.response.data.errors[property])
+                }
+              }
+            })
+          } else {
+            vm.$validator.validate().then(() => {
+              vm.errors.add('general', 'Internal server error')
+            })
+          }
+        } else if (error.request) {
+          vm.$validator.validate().then(() => {
+            vm.errors.add('general', 'Internal server error')
+          })
+        } else {
+          console.log(error)
+          vm.$validator.validate().then(() => {
+            vm.errors.add('general', 'Internal error')
+          })
+        }
+      })
     }
   }
 }
