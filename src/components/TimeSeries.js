@@ -6,7 +6,6 @@ export default {
   props: ['chartData', 'id', 'scale', 'format'],
   name: 'timeSeries',
   mounted () {
-    console.log(this.format)
     const vm = this
     this.renderChart(this.chartData,
       {
