@@ -3,7 +3,7 @@ import { Line, mixins } from 'vue-chartjs'
 export default {
   extends: Line,
   mixins: [mixins.reactiveProp],
-  props: ['chartData', 'id'],
+  props: ['chartData', 'id', 'scale'],
   name: 'timeSeries',
   mounted () {
     this.renderChart(this.chartData,
@@ -24,7 +24,10 @@ export default {
           xAxes: [{
             type: 'time',
             time: {
-              unit: 'day'
+              unit: this.scale,
+              displayFormats: {
+                hour: 'H:mm'
+              }
             }
           }]
         },

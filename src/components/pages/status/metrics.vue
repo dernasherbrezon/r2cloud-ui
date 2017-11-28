@@ -13,7 +13,7 @@
       </form>
     </div>
 	  <div class="col-md-12">
-	  	<timeSeries v-for="item in graphs" :chartData="item.chartData" :key="item.id" :id="item.id" :height="100" />
+	  	<timeSeries v-for="item in graphs" :chart-id="item.id" :scale="formattedInterval" :chartData="item.chartData" :key="item.id" :id="item.id" :height="100" />
 	  </div>
   </div>
 </template>
@@ -22,7 +22,6 @@
 
 import timeSeries from '@/components/TimeSeries.js'
 import RRDFile from 'rrd4j-js'
-import axios from 'axios'
 
 export default {
   name: 'metrics',
@@ -33,35 +32,62 @@ export default {
       interval: 'DAY'
     }
   },
+  computed: {
+    formattedInterval: function () {
+      if (this.interval === 'DAY') {
+        return 'hour'
+      } else if (this.interval === 'MONTH') {
+        return 'day'
+      } else if (this.interval === 'YEAR') {
+        return 'month'
+      }
+    }
+  },
   methods: {
     changeInterval: function (event) {
+      this.graphs = []
       this.reload()
     },
     reload: function () {
       const vm = this
-      axios.get('/static/demo.rrd', {
-        responseType: 'arraybuffer'
-      }).then(function (response) {
-        var file = new RRDFile(new Uint8Array(response.data))
-        var rrddata = file.getData('sun', 'AVERAGE', new Date(1272668400000), new Date(1277938800000))
-        var converted = []
-        for (var i = 0; i < rrddata.data.length; i++) {
-          converted.push({
-            x: rrddata.data[i][0],
-            y: rrddata.data[i][1]
-          })
+      vm.$http.get('/admin/status/metrics').then(function (response) {
+        for (var i = 0; i < response.data.length; i++) {
+          (function (currentMetric) {
+            vm.$http.get(currentMetric.url, {
+              responseType: 'arraybuffer'
+            }).then(function (response) {
+              var file = new RRDFile(new Uint8Array(response.data))
+              var start = new Date()
+              var end = new Date()
+              if (vm.interval === 'DAY') {
+                start.setDate(end.getDate() - 1)
+              } else if (vm.interval === 'MONTH') {
+                start.setMonth(start.getMonth() - 1)
+              } else if (vm.interval === 'YEAR') {
+                start.setFullYear(start.getFullYear() - 1)
+              }
+              var rrddata = file.getData('data', 'AVERAGE', start, end)
+              var converted = []
+              for (var i = 0; i < rrddata.data.length; i++) {
+                converted.push({
+                  x: rrddata.data[i][0],
+                  y: rrddata.data[i][1]
+                })
+              }
+              vm.graphs.push({
+                id: currentMetric.id,
+                type: 'bytes',
+                chartData: {
+                  datasets: [{
+                    backgroundColor: 'rgba(128, 182, 244, 0.3)',
+                    label: currentMetric.id,
+                    data: converted
+                  }]
+                }
+              })
+            })
+          })(response.data[i])
         }
-        vm.graphs = [{
-          id: '1',
-          type: 'bytes',
-          chartData: {
-            datasets: [{
-              backgroundColor: 'rgba(128, 182, 244, 0.3)',
-              label: 'Data name ' + vm.interval,
-              data: converted
-            }]
-          }
-        }]
       })
     }
   },
