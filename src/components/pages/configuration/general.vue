@@ -13,14 +13,14 @@
           <div class="col-md-4">
             <div class="form-group" :class="{'has-danger': errors.has('lat') }">
               <label for="lat">Latitude</label>
-              <input type="text" id="lat" name="lat" :class="{'is-invalid': errors.has('lat') }" v-validate="'required'" class="form-control" v-model="lat">
+              <input type="text" id="lat" name="lat" :class="{'is-invalid': errors.has('lat') }" v-validate="'required|decimal'" class="form-control" v-model="lat">
               <div class="invalid-feedback" v-if="errors.has('lat')">{{ errors.first('lat') }}</div>
             </div>
           </div>
           <div class="col-md-4">
             <div class="form-group" :class="{'has-danger': errors.has('lng') }">
               <label for="lng">Longitude</label>
-              <input type="text" id="lng" name="lng" :class="{'is-invalid': errors.has('lng') }" v-validate="'required'" class="form-control" v-model="lng">
+              <input type="text" id="lng" name="lng" :class="{'is-invalid': errors.has('lng') }" v-validate="'required|decimal'" class="form-control" v-model="lng">
               <div class="invalid-feedback" v-if="errors.has('lng')">{{ errors.first('lng') }}</div>
             </div>
           </div>
