@@ -36,7 +36,8 @@
             <input type="checkbox" v-model="autoUpdate"> Auto-update enabled
           </label>
         </div>
-        <button type="submit" class="btn btn-primary">Save</button>	              
+        <button type="submit" class="btn btn-primary" :disabled="submitting">Save</button>
+        <span v-if="success" class="text-success" style="margin-left: 20px;">Saved</span>
       </form>
     </div>
   </div>
@@ -44,15 +45,15 @@
 
 <script>
 
-var submitting = false
-
 export default {
   name: 'general',
   data () {
     return {
       lat: '',
       lng: '',
-      autoUpdate: false
+      autoUpdate: false,
+      submitting: false,
+      success: false
     }
   },
   mounted () {
@@ -73,19 +74,21 @@ export default {
       })
     },
     submit: function (event) {
-      if (submitting) {
+      if (this.submitting) {
         return
       }
-      submitting = true
+      this.success = false
+      this.submitting = true
       const vm = this
       vm.$http.post('/admin/config/general', {
         lat: parseFloat(vm.lat),
         lng: parseFloat(vm.lng),
         autoUpdate: vm.autoUpdate
       }).then(function (response) {
-        submitting = false
+        vm.submitting = false
+        vm.success = true
       }).catch(function (error) {
-        submitting = false
+        vm.submitting = false
         if (error.response) {
           // The request was made and the server responded with a status code
           // that falls out of the range of 2xx
