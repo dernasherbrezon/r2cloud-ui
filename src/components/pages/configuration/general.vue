@@ -27,7 +27,7 @@
           <div class="col-md-4">
             <div class="form-group">
                 <label for="detect">&nbsp;</label>
-                <button id="detect" type="button" class="btn btn-default" style="display: block;">Detect</button>
+                <button id="detect" type="button" class="btn btn-default" v-on:click="detectLocation" style="display: block;">Detect</button>
             </div>
           </div>
         </div>
@@ -65,6 +65,15 @@ export default {
     })
   },
   methods: {
+    detectLocation () {
+      const vm = this
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          vm.lat = position.coords.latitude
+          vm.lng = position.coords.longitude
+        })
+      }
+    },
     validateBeforeSubmit (e) {
       this.$validator.errors.clear()
       this.$validator.validateAll().then((result) => {
