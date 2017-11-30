@@ -6,7 +6,6 @@
           <div class="form-group">
             <label for="satellite">Satellite&nbsp;</label>
             <select class="form-control" v-model="selected" >
-                <option value=""></option>
                 <option :value="item.id" v-for="item in tle">{{ item.data[0] }}</option>
             </select>
           </div>          
@@ -43,23 +42,18 @@ export default {
   data () {
     return {
       selected: '',
-      lastUpdated: 1272668400000,
-      tle: [{
-        id: '1',
-        data: ['NOAA 18', 'test line1', 'test line2']
-      }, {
-        id: '2',
-        data: ['NOAA 19', '1 28654U 05018A 17322.49258488 .00000039 00000-0 46486-4 0 9996', '2 28654 99.1705 348.3919 0014261 2.8630 357.2620 14.12357364644047']
-      }, {
-        id: '3',
-        data: ['NOAA 15', 'test line1', 'test line2']
-      }
-      ]
+      lastUpdated: '',
+      tle: []
     }
   },
-  methods: {
-    save: function (event) {
-    }
+  mounted () {
+    const vm = this
+    vm.$http.get('/admin/tle').then(function (response) {
+      vm.lastUpdated = response.data.lastUpdated
+      vm.tle = response.data.tle
+    }).catch(function (error) {
+      vm.handleError(vm, error)
+    })
   }
 }
 </script>
