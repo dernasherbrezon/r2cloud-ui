@@ -21,17 +21,17 @@
         <div v-if="type === 'NOIP'">
           <div class="form-group" :class="{'has-danger': errors.has('username') }">
             <label for="username">User name</label>
-            <input type="text" id="username" name="username" class="form-control" v-validate="requiredForNOIP" v-model="username">
+            <input type="text" id="username" name="username" class="form-control" :class="{'is-invalid': errors.has('username') }" v-validate="requiredForNOIP" v-model="username">
             <div class="invalid-feedback" v-if="errors.has('username')">{{ errors.first('username') }}</div>
           </div>
           <div class="form-group" :class="{'has-danger': errors.has('password') }">
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" class="form-control" v-validate="requiredForNOIP" v-model="password">
+            <input type="password" id="password" name="password" class="form-control" :class="{'is-invalid': errors.has('password') }" v-validate="requiredForNOIP" v-model="password">
             <div class="invalid-feedback" v-if="errors.has('password')">{{ errors.first('password') }}</div>
           </div>
           <div class="form-group" :class="{'has-danger': errors.has('domain') }">
             <label for="domain">Domain</label>
-            <input type="text" id="domain" name="domain" class="form-control" v-validate="requiredForNOIP" v-model="domain">
+            <input type="text" id="domain" name="domain" class="form-control" :class="{'is-invalid': errors.has('domain') }" v-validate="domainValidate" v-model="domain">
             <div class="invalid-feedback" v-if="errors.has('domain')">{{ errors.first('domain') }}</div>
           </div>
           <div class="form-group">
@@ -65,6 +65,12 @@ export default {
     requiredForNOIP () {
       if (this.type === 'NOIP') {
         return 'required'
+      }
+      return ''
+    },
+    domainValidate () {
+      if (this.type === 'NOIP') {
+        return 'required|url'
       }
       return ''
     }
