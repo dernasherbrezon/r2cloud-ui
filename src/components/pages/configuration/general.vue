@@ -98,36 +98,7 @@ export default {
         vm.success = true
       }).catch(function (error) {
         vm.submitting = false
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log('error response')
-          console.log(error.response.data)
-          console.log(error.response.status)
-          console.log(error.response.headers)
-          if (error.response.data && error.response.data.errors) {
-            vm.$validator.validate().then(() => {
-              for (var property in error.response.data.errors) {
-                if (error.response.data.errors.hasOwnProperty(property)) {
-                  vm.errors.add(property, error.response.data.errors[property])
-                }
-              }
-            })
-          } else {
-            vm.$validator.validate().then(() => {
-              vm.errors.add('general', 'Internal server error')
-            })
-          }
-        } else if (error.request) {
-          vm.$validator.validate().then(() => {
-            vm.errors.add('general', 'Internal server error')
-          })
-        } else {
-          console.log(error)
-          vm.$validator.validate().then(() => {
-            vm.errors.add('general', 'Internal error')
-          })
-        }
+        vm.handleError(vm, error)
       })
     }
   }
