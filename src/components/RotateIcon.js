@@ -1,17 +1,18 @@
 var RotateIcon = function (options) {
+  var icon = this
   this.options = options || {}
   this.rImg = options.img || new Image()
-  this.rImg.src = this.options.url
   this.rImg.addEventListener('load', function () {
+    icon.options.width = icon.options.width || icon.rImg.width || 16
+    icon.options.height = icon.options.height || icon.rImg.height || 16
+    var canvas = document.createElement('canvas')
+    canvas.width = icon.options.width
+    canvas.height = icon.options.height
+    icon.context = canvas.getContext('2d')
+    icon.canvas = canvas
     options.callback()
   }, false)
-  this.options.width = this.options.width || this.rImg.width || 16
-  this.options.height = this.options.height || this.rImg.height || 16
-  var canvas = document.createElement('canvas')
-  canvas.width = this.options.width
-  canvas.height = this.options.height
-  this.context = canvas.getContext('2d')
-  this.canvas = canvas
+  this.rImg.src = this.options.url
 }
 
 RotateIcon.prototype.setRotation = function (options) {
