@@ -48,7 +48,7 @@ export default {
   data () {
     return {
       satellites: [],
-      enabled: false,
+      enabled: true,
       agreeWithToC: false,
       submitting: false
     }

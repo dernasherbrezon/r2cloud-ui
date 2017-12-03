@@ -52,3 +52,34 @@ export default {
 }
 </script>
 
+<style type="text/css">
+.form-signin {
+  max-width: 360px;
+  padding: 15px;
+  margin: 0 auto;
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, .2);
+    background-color: #f5f5f5;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+</style>
+
