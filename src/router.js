@@ -3,8 +3,8 @@ import Router from 'vue-router'
 import airplanes from '@/components/pages/airplanes'
 
 import login from '@/components/pages/login'
-import restore from '@/components/pages/restore'
-import setup from '@/components/pages/setup'
+import restore from '@/components/pages/setup/restore'
+import setup from '@/components/pages/setup/setup'
 
 import statusOverview from '@/components/pages/status/overview'
 import statusMetrics from '@/components/pages/status/metrics'

@@ -44,7 +44,7 @@ vue.$http.interceptors.response.use(function (response) {
 })
 Vue.mixin({
   methods: {
-    handleError: function (vm, error) {
+    handleError (vm, error) {
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
@@ -74,6 +74,17 @@ Vue.mixin({
         vm.$validator.validate().then(() => {
           vm.errors.add('general', 'Internal error')
         })
+      }
+    },
+    authenticate (vm, token) {
+      auth.user.authenticated = true
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
+      localStorage.setItem('access_token', token)
+      if (auth.user.redirect !== '') {
+        vm.$router.push(auth.user.redirect)
+        auth.user.redirect = ''
+      } else {
+        vm.$router.push('/admin/status/overview')
       }
     }
   }

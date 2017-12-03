@@ -21,9 +21,6 @@
       </form>
 </template>
 <script>
-  import auth from '@/components/auth.js'
-  import axios from 'axios'
-
   var submitting = false
   
   export default {
@@ -51,15 +48,7 @@
         var vm = this
         vm.$http.post('/accessToken', vm.$data).then(function (response) {
           submitting = false
-          auth.user.authenticated = true
-          axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token
-          localStorage.setItem('access_token', response.data.access_token)
-          if (auth.user.redirect !== '') {
-            vm.$router.push(auth.user.redirect)
-            auth.user.redirect = ''
-          } else {
-            vm.$router.push('/admin/status/overview')
-          }
+          vm.authenticate(vm, response.data.access_token)
         }).catch(function (error) {
           submitting = false
           vm.handleError(vm, error)
