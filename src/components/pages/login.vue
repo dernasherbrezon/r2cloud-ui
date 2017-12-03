@@ -26,8 +26,8 @@
   export default {
     data () {
       return {
-        username: 'info@r2cloud.ru',
-        password: '1'
+        username: '',
+        password: ''
       }
     },
     created () {

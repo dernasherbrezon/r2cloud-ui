@@ -36,8 +36,8 @@
     data () {
       return {
         keyword: '',
-        username: 'test@example.com',
-        password: '1',
+        username: '',
+        password: '',
         submitting: false
       }
     },
