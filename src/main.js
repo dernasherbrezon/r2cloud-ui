@@ -25,33 +25,10 @@ if (token) {
   axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
 }
 
-/* eslint-disable no-new */
-var vue = new Vue({
-  el: 'body',
-  router,
-  render: h => h(App)
-})
-vue.$validator.updateDictionary(messages)
-vue.$http.interceptors.response.use(function (response) {
-  return response
-}, function (error) {
-  if (error.response && error.response.status === 401 && error.config.url.indexOf('accessToken') === -1) {
-    auth.user.authenticated = false
-    delete axios.defaults.headers.common['Authorization']
-    vue.$router.push('/login')
-  }
-  return Promise.reject(error)
-})
 Vue.mixin({
   methods: {
     handleError (vm, error) {
       if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.log('error response')
-        console.log(error.response.data)
-        console.log(error.response.status)
-        console.log(error.response.headers)
         if (error.response.data && error.response.data.errors) {
           vm.$validator.validate().then(() => {
             for (var property in error.response.data.errors) {
@@ -87,5 +64,26 @@ Vue.mixin({
         vm.$router.push('/admin/status/overview')
       }
     }
+  }
+})
+
+/* eslint-disable no-new */
+var vue = new Vue({
+  el: 'body',
+  router,
+  render: h => h(App),
+  beforeCreate () {
+    var vm = this
+    vm.$validator.updateDictionary(messages)
+    vm.$http.interceptors.response.use(function (response) {
+      return response
+    }, function (error) {
+      if (error.response && error.response.status === 401 && error.config.url.indexOf('accessToken') === -1) {
+        auth.user.authenticated = false
+        delete axios.defaults.headers.common['Authorization']
+        vue.$router.push('/login')
+      }
+      return Promise.reject(error)
+    })
   }
 })

@@ -88,6 +88,8 @@ export default {
             })
           })(response.data[i])
         }
+      }).catch(function (error) {
+        vm.handleError(vm, error)
       })
     }
   },

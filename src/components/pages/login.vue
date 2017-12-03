@@ -30,6 +30,18 @@
         password: '1'
       }
     },
+    created () {
+      var token = localStorage.getItem('configured')
+      if (!token || token === 'false') {
+        var vm = this
+        vm.$http.get('/configured').then(function (response) {
+          localStorage.setItem('configured', response.data.configured)
+          if (!response.data.configured) {
+            vm.$router.push('/setup')
+          }
+        })
+      }
+    },
     methods: {
       validateBeforeSubmit (e) {
         this.$validator.errors.clear()

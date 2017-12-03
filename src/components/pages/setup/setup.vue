@@ -62,6 +62,7 @@
           password: vm.password
         }).then(function (response) {
           vm.submitting = false
+          localStorage.setItem('configured', true)
           vm.authenticate(vm, response.data.access_token)
         }).catch(function (error) {
           vm.submitting = false

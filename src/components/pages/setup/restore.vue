@@ -41,6 +41,7 @@
           username: vm.username
         }).then(function (response) {
           vm.submitting = false
+          localStorage.setItem('configured', false)
           vm.$router.push('/setup')
         }).catch(function (error) {
           vm.submitting = false
