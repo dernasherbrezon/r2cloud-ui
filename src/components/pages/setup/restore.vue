@@ -37,7 +37,7 @@
         }
         this.submitting = true
         const vm = this
-        vm.$http.post('/admin/setup/restore', {
+        vm.$http.post('/setup/restore', {
           username: vm.username
         }).then(function (response) {
           vm.submitting = false

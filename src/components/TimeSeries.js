@@ -63,11 +63,13 @@ export default {
           return (label / 1024).toFixed(2) + ' KiB'
         } else if (label < 1024 * 1024 * 1024) {
           return (label / 1024 / 1024).toFixed(2) + ' MiB'
-        } else {
-          return label
         }
       }
-      return label
+      if (Number(label) % 1 === 0) {
+        return label
+      } else {
+        return label.toFixed(2)
+      }
     }
   }
 }

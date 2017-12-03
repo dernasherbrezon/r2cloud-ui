@@ -1,5 +1,5 @@
 <template>
-	  <form class="form-signin" @submit.prevent="validateBeforeSubmit">
+	  <form class="form-signin" @submit.prevent="validateBeforeSubmit" style="top: 5%">
 	  	<legend>Setup</legend>
         <b-alert variant="danger"
           dismissible
@@ -20,7 +20,7 @@
           <div class="invalid-feedback" v-if="errors.has('keyword')">{{ errors.first('keyword') }}</div>
         </div>
         <div class="form-group" :class="{'has-danger': errors.has('username') }">
-          <input type="email" id="inputEmail" name="username" :class="{'is-invalid': errors.has('username') }" class="form-control" v-validate="'required|email'" placeholder="Email address" autofocus="" v-model="username">
+          <input type="email" id="inputEmail" name="username" :class="{'is-invalid': errors.has('username') }" class="form-control" v-validate="'required|email'" placeholder="Email address" v-model="username">
           <div class="invalid-feedback" v-if="errors.has('username')">{{ errors.first('username') }}</div>
         </div>
         <div class="form-group" :class="{'has-danger': errors.has('password') }">
@@ -56,7 +56,7 @@
         }
         this.submitting = true
         const vm = this
-        vm.$http.post('/admin/setup/setup', {
+        vm.$http.post('/setup/setup', {
           keyword: vm.keyword,
           username: vm.username,
           password: vm.password
