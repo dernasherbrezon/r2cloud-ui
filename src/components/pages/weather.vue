@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-md-12" v-if="enabled">
+    <div class="col-md-12" v-if="enabled && !loading">
       <b-tabs no-fade>
         <b-tab :title="item.name" :active="index === 0" :key="item.id" v-for="(item, index) in satellites">
           <div style="margin-top: 20px;">
@@ -21,7 +21,7 @@
         </b-tab>
       </b-tabs>
     </div>
-    <div class="col-md-12" v-else>
+    <div class="col-md-12" v-else-if="!enabled && !loading">
       <div class="text-center">
       <p>Weather satellite tracking is not enabled. Please ensure you have proper antenna connected.<br>
       Once connect it, click "Enable" button below. You must agree with the terms and conditions</p>
@@ -35,6 +35,10 @@
         <button type="submit" class="btn btn-default" :disabled="submitting">Enable</button>
       </form>
       </div>      
+    </div>
+    <div class="col-md-12" style="text-align: center;" v-else-if="loading">
+      <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+      <span class="sr-only">Loading...</span>          
     </div>
   </div>
 </template>
@@ -50,7 +54,8 @@ export default {
       satellites: [],
       enabled: true,
       agreeWithToC: false,
-      submitting: false
+      submitting: false,
+      loading: true
     }
   },
   mounted () {
@@ -62,6 +67,7 @@ export default {
       vm.$http.get('/admin/weather').then(function (response) {
         vm.satellites = response.data.satellites
         vm.enabled = response.data.enabled
+        vm.loading = false
       })
     },
     validateBeforeSubmit (e) {

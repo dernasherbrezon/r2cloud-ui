@@ -1,6 +1,6 @@
 <template>
   <div class="row">
-    <div class="col-sm-12 main">
+    <div class="col-sm-12 main" v-if="!loading">
       <div class="iframe-container" v-if="center.lat !== '' && center.lon !== ''">
         <gmap-map :center="center" :zoom="10" ref="map">
           <gmap-polyline v-for="item in paths" :key="item.icao24" :path="item.positions" :options="item.options" :editable="false"></gmap-polyline>
@@ -8,6 +8,10 @@
         </gmap-map>
       </div>
       <p v-else style="text-align: center;">Latitude or Longitude on this station are not configured<br><br><router-link to="/admin/config/general">Settings</router-link></p>
+    </div>
+    <div class="col-sm-12 main" style="text-align: center;" v-else>
+      <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+      <span class="sr-only">Loading...</span>
     </div>
   </div>
 </template>
@@ -31,7 +35,8 @@ export default {
         lat: '',
         lng: ''
       },
-      paths: []
+      paths: [],
+      loading: true
     }
   },
   mounted () {
@@ -78,6 +83,7 @@ export default {
     },
     update () {
       const vm = this
+      vm.loading = false
       vm.$http.get('/admin/adsb').then(function (response) {
         vm.paths = []
         var data = response.data
