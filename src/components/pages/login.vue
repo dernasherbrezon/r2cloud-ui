@@ -14,20 +14,20 @@
           <input type="password" id="inputPassword" name="password" :class="{'is-invalid': errors.has('password') }" class="form-control" v-validate="'required'" placeholder="Password" v-model="password">
           <div class="invalid-feedback" v-if="errors.has('password')">{{ errors.first('password') }}</div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block" :disabled="submitting" type="submit">Sign in</button>
 		<div style="padding-top: 20px;">
 			<router-link to="/restore">Forgot password</router-link>
 		</div>        
       </form>
 </template>
 <script>
-  var submitting = false
   
   export default {
     data () {
       return {
         username: '',
-        password: ''
+        password: '',
+        submitting: false
       }
     },
     created () {
@@ -52,17 +52,17 @@
         })
       },
       submit () {
-        if (submitting) {
+        if (this.submitting) {
           return
         }
-        submitting = true
+        this.submitting = true
 
         var vm = this
         vm.$http.post('/accessToken', vm.$data).then(function (response) {
-          submitting = false
+          vm.submitting = false
           vm.authenticate(vm, response.data.access_token)
         }).catch(function (error) {
-          submitting = false
+          vm.submitting = false
           vm.handleError(vm, error)
         })
       }
