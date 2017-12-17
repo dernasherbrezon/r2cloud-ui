@@ -12,5 +12,5 @@ before_install:
 script:
   - npm run build
   - npm test
-  - ./build-debian.sh
+  - sh build-debian.sh
   - package_cloud push dernasherbrezon/r2cloud/raspbian/stretch *.deb
