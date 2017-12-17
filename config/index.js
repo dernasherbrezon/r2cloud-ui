@@ -8,8 +8,8 @@ const path = require('path')
 module.exports = {
   build: {
     env: require('./prod.env'),
-    index: path.resolve(__dirname, '../dist/index.html'),
-    assetsRoot: path.resolve(__dirname, '../dist'),
+    index: path.resolve(__dirname, '../debian/usr/share/doc/r2cloud-ui/index.html'),
+    assetsRoot: path.resolve(__dirname, '../debian/usr/share/doc/r2cloud-ui'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     productionSourceMap: true,
