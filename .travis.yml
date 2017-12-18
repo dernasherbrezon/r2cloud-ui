@@ -3,6 +3,7 @@ node_js:
   - "6"
   
 cache:
+  bundler: true
   directories:
     - "node_modules"
 
