@@ -70,7 +70,6 @@ export default {
   },
   methods: {
     rowColor (observation) {
-      console.log(observation)
       if (observation.aURL && observation.aURL !== '' && observation.bURL && observation.bURL !== '') {
         return 'table-success'
       }
