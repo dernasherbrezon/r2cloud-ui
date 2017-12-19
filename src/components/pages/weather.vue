@@ -4,19 +4,26 @@
       <b-tabs no-fade>
         <b-tab :title="item.name" :active="index === 0" :key="item.id" v-for="(item, index) in satellites">
           <div style="margin-top: 20px;">
-            <p>Next pass: <strong>{{ formatTime(item.nextPass) }}</strong> {{ formatDate(item.nextPass) }} UTC</p>
-            <b-tabs pills no-fade>
-              <b-tab :title="formatTime(curData.date) + ' ' + formatDate(curData.date)" :key="curData.date" :active="curDataIndex === 0" v-for="(curData,curDataIndex) in item.data">
-                <div class="row" style="margin-top: 20px;">
-                  <div class="col-md-6">
-                      <img class="img-fluid" :src="curData.aPath">
-                  </div>
-                  <div class="col-md-6">
-                      <img class="img-fluid" :src="curData.bPath">
-                  </div>
-                </div>
-              </b-tab>
-            </b-tabs>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col" style="width: 30%">Date</th>
+                  <th scope="col">Has data</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Next pass: <strong>{{ formatTime(item.nextPass) }}</strong> {{ formatDate(item.nextPass) }} UTC</td>
+                  <td></td>
+                </tr>
+                <tr :class="rowColor(curData)" v-for="(curData, curDataIndex) in item.data" :key="curData.id">
+                  <td><router-link :to="{ path: '/admin/weather/observation', query: { id: curData.id, satelliteId: item.id }}">{{ formatTime(curData.start) + ' ' + formatDate(curData.start) }}</router-link></td>
+                  <td>
+                  <i class="fa fa-check" v-if="curData.aURL || curData.bURL"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </b-tab>
       </b-tabs>
@@ -34,7 +41,7 @@
         </div>
         <button type="submit" class="btn btn-default" :disabled="submitting">Enable</button>
       </form>
-      </div>      
+      </div>
     </div>
     <div class="col-md-12" style="text-align: center;" v-else-if="loading">
       <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
@@ -62,6 +69,13 @@ export default {
     this.loadData()
   },
   methods: {
+    rowColor (observation) {
+      console.log(observation)
+      if (observation.aURL && observation.aURL !== '' && observation.bURL && observation.bURL !== '') {
+        return 'table-success'
+      }
+      return ''
+    },
     loadData () {
       const vm = this
       vm.$http.get('/admin/weather').then(function (response) {

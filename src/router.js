@@ -15,6 +15,7 @@ import configSSL from '@/components/pages/configuration/ssl'
 
 import tle from '@/components/pages/tle'
 import weather from '@/components/pages/weather'
+import weatherobservation from '@/components/pages/weatherObservation'
 
 import notFound from '@/components/pages/notfound'
 import auth from '@/components/auth.js'
@@ -88,6 +89,11 @@ const router = new Router({
       path: '/admin/weather',
       name: 'weather',
       component: weather
+    },
+    {
+      path: '/admin/weather/observation',
+      name: 'weatherobservation',
+      component: weatherobservation
     },
     {
       path: '*',
