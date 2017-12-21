@@ -51,7 +51,7 @@
             </b-tab>
             <b-tab title="Spectogram">
               <div class="row" style="margin-top: 20px;" v-if="observation.spectogramURL && !generatingSpectogram">
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <img class="img-fluid" :src="observation.spectogramURL">
                 </div>
               </div>
