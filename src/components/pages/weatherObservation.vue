@@ -33,19 +33,39 @@
         </table>
       </div>
       <div class="col-md-8">
-        <div class="row" v-if="observation.aURL || observation.bURL">
-          <div class="col-md-6">
-            <img class="img-fluid" :src="observation.aURL">
-          </div>
-          <div class="col-md-6">
-            <img class="img-fluid" :src="observation.bURL">
-          </div>
-        </div>
-        <div class="row" v-else>
-          <div class="col-md-12 text-center" style="margin-top: 10%">
-          <i class="fa fa-times"></i>&nbsp;No Data
-          </div>
-        </div>
+          <b-tabs no-fade>
+            <b-tab title="Data">
+              <div class="row" style="margin-top: 20px;" v-if="observation.aURL || observation.bURL">
+                <div class="col-md-6">
+                  <img class="img-fluid" :src="observation.aURL">
+                </div>
+                <div class="col-md-6">
+                  <img class="img-fluid" :src="observation.bURL">
+                </div>
+              </div>
+              <div class="row" style="margin-top: 20px;" v-else>
+                <div class="col-md-12 text-center" style="margin-top: 10%">
+                  <i class="fa fa-times"></i>&nbsp;No Data
+                </div>
+              </div>
+            </b-tab>
+            <b-tab title="Spectogram">
+              <div class="row" style="margin-top: 20px;" v-if="observation.spectogramURL && !generatingSpectogram">
+                <div class="col-md-6">
+                  <img class="img-fluid" :src="observation.spectogramURL">
+                </div>
+              </div>
+              <div class="row" style="margin-top: 20px;" v-else>
+                <div class="col-md-12 text-center" style="margin-top: 10%" v-if="!generatingSpectogram">
+                  <button class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Generate</button>
+                </div>                
+                <div class="col-md-12" style="text-align: center;" v-else>
+                  <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+                  <span class="sr-only">Generating...</span>          
+                </div>
+              </div>
+            </b-tab>
+          </b-tabs>
       </div>
     </div>
     <div class="col-md-12" style="text-align: center;" v-else="loading">
@@ -64,7 +84,8 @@ export default {
   data () {
     return {
       observation: {},
-      loading: true
+      loading: true,
+      generatingSpectogram: false
     }
   },
   mounted () {
