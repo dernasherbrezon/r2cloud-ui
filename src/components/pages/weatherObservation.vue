@@ -57,7 +57,7 @@
               </div>
               <div class="row" style="margin-top: 20px;" v-else>
                 <div class="col-md-12 text-center" style="margin-top: 10%" v-if="!generatingSpectogram">
-                  <button class="btn btn-default"><i class="fa fa-refresh"></i>&nbsp;Generate</button>
+                  <button class="btn btn-default" v-on:click="debug"><i class="fa fa-refresh"></i>&nbsp;Generate</button>
                 </div>                
                 <div class="col-md-12" style="text-align: center;" v-else>
                   <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
@@ -92,6 +92,20 @@ export default {
     this.loadData()
   },
   methods: {
+    debug () {
+      const vm = this
+      vm.generatingSpectogram = true
+      vm.$http.post('/admin/weather/spectogram', {
+        id: vm.$route.query.id,
+        satelliteId: vm.$route.query.satelliteId
+      }).then(function (response) {
+        vm.generatingSpectogram = false
+        vm.observation.spectogramURL = response.data.spectogramURL
+      }).catch(function (error) {
+        vm.generatingSpectogram = false
+        vm.handleError(vm, error)
+      })
+    },
     loadData () {
       const vm = this
       vm.$http.get('/admin/weather/observation?id=' + vm.$route.query.id + '&satelliteId=' + vm.$route.query.satelliteId).then(function (response) {
