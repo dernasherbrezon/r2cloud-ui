@@ -8,10 +8,10 @@ cache:
     - "node_modules"
 
 before_install:
-  - gem install package_cloud
+  - gem install deb-s3
+  - openssl aes-256-cbc -K $encrypted_ace8744cfeee_key -iv $encrypted_ace8744cfeee_iv -in codesigning.asc.enc -out codesigning.asc -d
 
 script:
   - npm run build
   - npm test
   - sh build-debian.sh
-  - package_cloud push dernasherbrezon/r2cloud/raspbian/stretch *.deb
