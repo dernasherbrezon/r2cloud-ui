@@ -6,7 +6,7 @@ Screenshots
 ![screen2](/doc/img2.jpg?raw=true)
 ![screen3](/doc/img3.jpg?raw=true)
 
-## Build Setup
+## Build Setup 
 
 ``` bash
 # install dependencies
