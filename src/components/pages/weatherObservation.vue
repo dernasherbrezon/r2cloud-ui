@@ -111,6 +111,9 @@ export default {
       vm.$http.get('/admin/weather/observation?id=' + vm.$route.query.id + '&satelliteId=' + vm.$route.query.satelliteId).then(function (response) {
         vm.observation = response.data
         vm.loading = false
+      }).catch(function (error) {
+        vm.loading = false
+        vm.handleError(vm, error)
       })
     },
     formatDate (unixTimestamp) {

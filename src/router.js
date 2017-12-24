@@ -96,7 +96,8 @@ const router = new Router({
       component: weatherobservation
     },
     {
-      path: '*',
+      path: '/404',
+      alias: '*',
       component: notFound
     }
   ]
