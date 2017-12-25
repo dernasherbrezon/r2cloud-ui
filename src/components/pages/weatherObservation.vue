@@ -56,12 +56,17 @@
                 </div>
               </div>
               <div class="row" style="margin-top: 20px;" v-else>
-                <div class="col-md-12 text-center" style="margin-top: 10%" v-if="!generatingSpectogram">
+                <div class="col-md-12 text-center" style="margin-top: 10%" v-if="!generatingSpectogram && !errors.has('general')">
                   <button class="btn btn-default" v-on:click="debug"><i class="fa fa-refresh"></i>&nbsp;Generate</button>
                 </div>                
-                <div class="col-md-12" style="text-align: center;" v-else>
+                <div class="col-md-12" style="text-align: center;" v-else-if="generatingSpectogram">
                   <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
                   <span class="sr-only">Generating...</span>          
+                </div>
+                <div class="col-md-12" style="text-align: center;" v-else-if="errors.has('general')">
+                  <p class="text-danger">
+                  {{ errors.first('general') }}
+                  </p>
                 </div>
               </div>
             </b-tab>
@@ -103,6 +108,12 @@ export default {
         vm.observation.spectogramURL = response.data.spectogramURL
       }).catch(function (error) {
         vm.generatingSpectogram = false
+        if (error.response && error.response.status === 404) {
+          vm.$validator.validate().then(() => {
+            vm.errors.add('general', 'Unable to find .wav')
+          })
+          return
+        }
         vm.handleError(vm, error)
       })
     },
