@@ -35,7 +35,8 @@ export default {
             ticks: {
               callback: function (label, index, labels) {
                 return vm.formatYValue(label)
-              }
+              },
+              beginAtZero: true
             }
           }]
         },
@@ -58,7 +59,7 @@ export default {
     formatYValue: function (label) {
       if (this.format === 'BYTES') {
         if (label < 1024) {
-          return label + ' B'
+          return label.toFixed(2) + ' B'
         } else if (label < 1024 * 1024) {
           return (label / 1024).toFixed(2) + ' KiB'
         } else if (label < 1024 * 1024 * 1024) {
