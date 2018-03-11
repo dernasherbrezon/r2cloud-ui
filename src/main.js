@@ -75,7 +75,7 @@ var vue = new Vue({
   el: 'body',
   router,
   render: h => h(App),
-  beforeCreate () {
+  created () {
     var vm = this
     vm.$validator.updateDictionary(messages)
     vm.$http.interceptors.response.use(function (response) {
