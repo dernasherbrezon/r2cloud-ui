@@ -7,7 +7,6 @@
 </template>
 
 <script>
-
 var submitting = false
 
 export default {

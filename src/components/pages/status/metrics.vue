@@ -19,7 +19,6 @@
 </template>
 
 <script>
-
 import timeSeries from '@/components/TimeSeries.js'
 import RRDFile from 'rrd4j-js'
 

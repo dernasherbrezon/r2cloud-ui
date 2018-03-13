@@ -17,7 +17,6 @@
 </template>
 
 <script>
-
 import Vue from 'vue'
 import RotateIcon from '@/components/RotateIcon.js'
 import * as VueGoogleMaps from 'vue2-google-maps'

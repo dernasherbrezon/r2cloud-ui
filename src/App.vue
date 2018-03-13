@@ -30,7 +30,6 @@
 </template>
 
 <script>
-
 import auth from '@/components/auth.js'
 import axios from 'axios'
 

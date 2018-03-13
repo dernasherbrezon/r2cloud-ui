@@ -47,7 +47,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'ddns',
   data () {
