@@ -17,17 +17,21 @@
               <td>End</td>
               <td>{{ formatTime(observation.end) + ' ' + formatDate(observation.end) }}</td>
             </tr>
-            <tr>
+            <tr v-if="observation.gain">
               <td>Gain</td>
               <td>{{ observation.gain }}</td>
             </tr>
-            <tr>
+            <tr v-if="observation.channelA">
               <td>Channel A</td>
               <td>{{ observation.channelA  }}</td>
             </tr>
-            <tr>
+            <tr v-if="observation.channelB">
               <td>Channel B</td>
               <td>{{ observation.channelB  }}</td>
+            </tr>
+            <tr v-if="observation.numberOfDecodedPackets">
+              <td>Number of packets</td>
+              <td>{{ observation.numberOfDecodedPackets  }}</td>
             </tr>
           </tbody>
         </table>
