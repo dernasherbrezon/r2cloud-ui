@@ -69,7 +69,7 @@ export default {
   },
   methods: {
     rowColor (observation) {
-      if (observation.aURL && observation.aURL !== '' && observation.bURL && observation.bURL !== '') {
+      if (observation.aURL && observation.aURL !== '') {
         return 'table-success'
       }
       return ''
