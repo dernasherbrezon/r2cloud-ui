@@ -39,12 +39,9 @@
       <div class="col-md-8">
           <b-tabs no-fade>
             <b-tab title="Data">
-              <div class="row" style="margin-top: 20px;" v-if="observation.aURL || observation.bURL">
-                <div class="col-md-6">
+              <div class="row" style="margin-top: 20px;" v-if="observation.aURL">
+                <div class="col-md-12">
                   <img class="img-fluid" :src="observation.aURL">
-                </div>
-                <div class="col-md-6">
-                  <img class="img-fluid" :src="observation.bURL">
                 </div>
               </div>
               <div class="row" style="margin-top: 20px;" v-else>

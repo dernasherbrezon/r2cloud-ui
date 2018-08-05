@@ -16,6 +16,7 @@ import configR2Cloud from '@/components/pages/configuration/r2cloud'
 
 import tle from '@/components/pages/tle'
 import weather from '@/components/pages/weather'
+import amateur from '@/components/pages/amateur'
 import weatherobservation from '@/components/pages/weatherObservation'
 
 import notFound from '@/components/pages/notfound'
@@ -95,6 +96,11 @@ const router = new Router({
       path: '/admin/weather',
       name: 'weather',
       component: weather
+    },
+    {
+      path: '/admin/amateur',
+      name: 'amateur',
+      component: amateur
     },
     {
       path: '/admin/weather/observation',
