@@ -33,6 +33,14 @@
               <td>Number of packets</td>
               <td>{{ observation.numberOfDecodedPackets  }}</td>
             </tr>
+            <tr v-if="observation.frequency > 0">
+              <td>Frequency</td>
+              <td>{{ observation.frequency  }}</td>
+            </tr>
+            <tr v-if="observation.sampleRate > 0">
+              <td>Sample rate</td>
+              <td>{{ observation.sampleRate  }}</td>
+            </tr>
           </tbody>
         </table>
       </div>
