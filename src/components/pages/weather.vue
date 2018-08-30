@@ -1,9 +1,9 @@
 <template>
   <div class="row">
-    <div class="col-md-12" v-if="enabled">
-      <satellites url="/admin/weather"/>
+    <div class="col-md-12" v-if="enabled && !loading">
+      <satellites :satellites="satellites"/>
     </div>
-    <div class="col-md-12" v-else-if="!enabled">
+    <div class="col-md-12" v-else-if="!enabled && !loading">
       <div class="text-center">
       <p>Weather satellite tracking is not enabled. Please ensure you have proper antenna connected.<br>
       Once connect it, click "Enable" button below. You must agree with the terms and conditions</p>
@@ -18,6 +18,10 @@
       </form>
       </div>
     </div>
+    <div class="col-md-12" style="text-align: center;" v-else-if="loading">
+      <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
+      <span class="sr-only">Loading...</span>          
+    </div>
   </div>
 </template>
 
@@ -29,12 +33,28 @@ export default {
   components: {satellites},
   data () {
     return {
-      enabled: true,
+      satellites: [],
+      enabled: false,
       agreeWithToC: false,
-      submitting: false
+      submitting: false,
+      loading: true
     }
   },
+  mounted () {
+    this.loadData()
+  },
   methods: {
+    loadData () {
+      const vm = this
+      vm.$http.get('/admin/weather').then(function (response) {
+        vm.satellites = response.data.satellites
+        vm.enabled = response.data.enabled
+        vm.loading = false
+      }).catch(function (error) {
+        vm.loading = false
+        vm.handleError(vm, error)
+      })
+    },
     validateBeforeSubmit (e) {
       this.$validator.errors.clear()
       this.$validator.validateAll().then((result) => {
@@ -54,6 +74,7 @@ export default {
         agreeWithToC: vm.agreeWithToC
       }).then(function (response) {
         vm.submitting = false
+        vm.enabled = true
         vm.loadData()
       }).catch(function (error) {
         vm.submitting = false

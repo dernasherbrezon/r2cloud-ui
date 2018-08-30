@@ -1,5 +1,5 @@
 <template>
-    <b-tabs no-fade v-if="!loading">
+    <b-tabs no-fade>
       <b-tab :title="item.name" :active="index === 0" :key="item.id" v-for="(item, index) in satellites">
         <div>
           <table class="table table-hover">
@@ -25,10 +25,6 @@
         </div>
       </b-tab>
     </b-tabs>
-    <div style="text-align: center;" v-else>
-      <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-      <span class="sr-only">Loading...</span>          
-    </div>
 </template>
 
 <script>
@@ -36,29 +32,13 @@ import moment from 'moment'
 
 export default {
   name: 'satellites',
-  props: ['url'],
-  data () {
-    return {
-      satellites: [],
-      loading: true
-    }
-  },
-  mounted () {
-    this.loadData()
-  },
+  props: ['satellites'],
   methods: {
     rowColor (observation) {
       if ((observation.aURL && observation.aURL !== '') || (observation.data && observation.data !== '')) {
         return 'table-success'
       }
       return ''
-    },
-    loadData () {
-      const vm = this
-      vm.$http.get(vm.url).then(function (response) {
-        vm.satellites = response.data.satellites
-        vm.loading = false
-      })
     },
     formatDate (unixTimestamp) {
       return moment(unixTimestamp).utc().format('DD-MMM-YYYY')

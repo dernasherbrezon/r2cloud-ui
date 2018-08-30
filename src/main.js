@@ -77,7 +77,7 @@ var vue = new Vue({
   render: h => h(App),
   created () {
     var vm = this
-    vm.$validator.updateDictionary(messages)
+    vm.$validator.localize(messages)
     vm.$http.interceptors.response.use(function (response) {
       return response
     }, function (error) {
