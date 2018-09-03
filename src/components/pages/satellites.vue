@@ -10,7 +10,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr v-if="item.nextPass">
                 <td>Next pass: <strong>{{ formatTime(item.nextPass) }}</strong> {{ formatDate(item.nextPass) }} UTC</td>
                 <td></td>
               </tr>

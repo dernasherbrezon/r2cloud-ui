@@ -65,6 +65,7 @@ describe('weather.vue', () => {
       }).then(function () {
         expect(wrapper.find('.fa-cog').exists()).equal(false)
         expect(wrapper.find('.nav-link').text()).equal('METEOR-M 2')
+        expect(wrapper.find('.table tbody tr').exists()).equal(false)
         done()
       })
     })
