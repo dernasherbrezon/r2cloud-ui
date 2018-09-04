@@ -5,6 +5,7 @@ import airplanes from '@/components/pages/airplanes'
 import login from '@/components/pages/login'
 import restore from '@/components/pages/setup/restore'
 import setup from '@/components/pages/setup/setup'
+import setupWizard from '@/components/pages/setup/wizard'
 
 import statusOverview from '@/components/pages/status/overview'
 import statusMetrics from '@/components/pages/status/metrics'
@@ -42,6 +43,11 @@ const router = new Router({
       component: setup
     },
     {
+      path: '/admin/setup/wizard',
+      name: 'setupWizard',
+      component: setupWizard
+    },
+    {
       path: '/admin/airplanes',
       name: 'airplanes',
       component: airplanes
@@ -54,8 +60,8 @@ const router = new Router({
     {
       path: '/',
       redirect: function () {
-        if (!auth.user.authenticated) {
-          auth.user.redirect = '/admin/status/overview'
+        if (!auth.authenticated) {
+          auth.redirect = '/admin/status/overview'
           return '/login'
         } else {
           return '/admin/status/overview'
@@ -115,8 +121,8 @@ const router = new Router({
   ]
 })
 router.beforeEach((to, from, next) => {
-  if (to.fullPath.indexOf('/admin/') !== -1 && !auth.user.authenticated) {
-    auth.user.redirect = to.fullPath
+  if (to.fullPath.indexOf('/admin/') !== -1 && !auth.authenticated) {
+    auth.redirect = to.fullPath
     next('/login')
   } else {
     next()

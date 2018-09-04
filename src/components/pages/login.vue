@@ -21,6 +21,8 @@
       </form>
 </template>
 <script>
+  import auth from '@/components/auth.js'
+
   export default {
     data () {
       return {
@@ -30,16 +32,15 @@
       }
     },
     created () {
-      var token = localStorage.getItem('configured')
-      if (!token || token === 'false') {
-        var vm = this
-        vm.$http.get('/configured').then(function (response) {
-          localStorage.setItem('configured', response.data.configured)
-          if (!response.data.configured) {
-            vm.$router.push('/setup')
-          }
-        })
-      }
+      var vm = this
+      vm.$http.get('/configured').then(function (response) {
+        auth.setGeneralSetup(response.data.generalSetup)
+        if (!response.data.configured) {
+          vm.$router.push('/setup')
+        } else if (!response.data.generalSetup) {
+          auth.redirect = '/admin/setup/wizard'
+        }
+      })
     },
     methods: {
       validateBeforeSubmit (e) {
@@ -59,7 +60,8 @@
         var vm = this
         vm.$http.post('/accessToken', vm.$data).then(function (response) {
           vm.submitting = false
-          vm.authenticate(vm, response.data.access_token)
+          auth.authenticate(response.data.access_token)
+          vm.navigateAfterAuthentication(vm)
         }).catch(function (error) {
           vm.submitting = false
           vm.handleError(vm, error)

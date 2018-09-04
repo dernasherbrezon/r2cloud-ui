@@ -31,6 +31,8 @@
       </form>
 </template>
 <script>
+  import auth from '@/components/auth.js'
+
   export default {
     data () {
       return {
@@ -61,8 +63,8 @@
           password: vm.password
         }).then(function (response) {
           vm.submitting = false
-          localStorage.setItem('configured', true)
-          vm.authenticate(vm, response.data.access_token)
+          auth.authenticate(response.data.access_token)
+          vm.$router.push('/admin/setup/wizard')
         }).catch(function (error) {
           vm.submitting = false
           vm.handleError(vm, error)

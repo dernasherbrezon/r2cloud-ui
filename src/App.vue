@@ -1,6 +1,6 @@
 <template>
   <body>
-    <b-navbar toggleable="md" type="dark" variant="dark" v-if="currentUser.authenticated">
+    <b-navbar toggleable="md" type="dark" variant="dark" v-if="currentUser.authenticated && currentUser.generalSetup">
     	<b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
     	<b-navbar-brand href="#">r2cloud</b-navbar-brand>
     	<b-collapse is-nav id="nav_collapse">
@@ -33,20 +33,17 @@
 
 <script>
 import auth from '@/components/auth.js'
-import axios from 'axios'
 
 export default {
   name: 'app',
   data () {
     return {
-      currentUser: auth.user
+      currentUser: auth
     }
   },
   methods: {
     logout () {
-      auth.user.authenticated = false
-      delete axios.defaults.headers.common['Authorization']
-      localStorage.removeItem('access_token')
+      auth.logout()
       this.$router.push('/login')
     }
   }
