@@ -38,6 +38,9 @@ Vue.mixin({
         if (error.response.status === 404) {
           vm.$router.push('/404')
         }
+        if (error.response.status === 502) {
+          vm.$router.push('/502')
+        }
       } else if (error.request) {
         vm.$validator.validate().then(() => {
           vm.errors.add('general', 'Internal server error')

@@ -21,6 +21,7 @@ import amateur from '@/components/pages/amateur'
 import weatherobservation from '@/components/pages/weatherObservation'
 
 import notFound from '@/components/pages/notfound'
+import proxyError from '@/components/pages/proxyError'
 import auth from '@/components/auth.js'
 
 Vue.use(Router)
@@ -117,6 +118,11 @@ const router = new Router({
       path: '/404',
       alias: '*',
       component: notFound
+    },
+    {
+      path: '/502',
+      alias: '502',
+      component: proxyError
     }
   ]
 })
