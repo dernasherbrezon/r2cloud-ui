@@ -11,7 +11,7 @@
       <form style="margin-top: 20px;" @submit.prevent="validateBeforeSubmit">
         <div class="form-group" :class="{'has-danger': errors.has('apiKey') }">
           <label for="apiKey">API key</label>
-          <input type="text" id="apiKey" name="apiKey" class="form-control" :class="{'is-invalid': errors.has('apiKey') }" v-validate="required" v-model="apiKey">
+          <input type="text" id="apiKey" name="apiKey" class="form-control" :class="{'is-invalid': errors.has('apiKey') }" v-validate="'required'" v-model="apiKey">
           <div class="invalid-feedback" v-if="errors.has('apiKey')">{{ errors.first('apiKey') }}</div>
         </div>
         <div class="checkbox">
