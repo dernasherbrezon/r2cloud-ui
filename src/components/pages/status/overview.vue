@@ -49,8 +49,6 @@ export default {
             }
           }
         }
-      }).catch(function () {
-        submitting = false
       })
     }
   }

@@ -38,9 +38,6 @@ Vue.mixin({
         if (error.response.status === 404) {
           vm.$router.push('/404')
         }
-        if (error.response.status === 502) {
-          vm.$router.push('/502')
-        }
       } else if (error.request) {
         vm.$validator.validate().then(() => {
           vm.errors.add('general', 'Internal server error')
@@ -74,9 +71,14 @@ var vue = new Vue({
     vm.$http.interceptors.response.use(function (response) {
       return response
     }, function (error) {
-      if (error.response && error.response.status === 401 && error.config.url.indexOf('accessToken') === -1) {
-        Auth.logout()
-        vue.$router.push('/login')
+      if (error.response) {
+        if (error.response.status === 401 && error.config.url.indexOf('accessToken') === -1) {
+          Auth.logout()
+          vue.$router.push('/login')
+        }
+        if (error.response.status === 502) {
+          vm.$router.push('/502')
+        }
       }
       return Promise.reject(error)
     })
