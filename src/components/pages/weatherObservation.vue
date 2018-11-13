@@ -52,6 +52,22 @@
                   <img class="img-fluid" :src="observation.aURL">
                 </div>
               </div>
+              <div class="row" style="margin-top: 20px;" v-else-if="observation.dataEntity">
+                <div class="col-md-12" role="tablist">
+                  <b-card no-body class="mb-1" v-for="(curBeacon, index) in observation.dataEntity" :key="curBeacon.name">
+                    <b-card-header header-tag="header" class="p-1" role="tab">
+                      <b-btn href="#" v-b-toggle="'accordion-' + index" variant="default">Uptime: {{ curBeacon.name }}</b-btn>
+                    </b-card-header>
+                    <b-collapse :id="'accordion-' + index" accordion="accordion" role="tabpanel">
+                      <b-card-body>
+                        <pre>
+{{ curBeacon.body }}
+                        </pre>
+                      </b-card-body>
+                    </b-collapse>
+                  </b-card>                  
+                </div>
+              </div>              
               <div class="row" style="margin-top: 20px;" v-else>
                 <div class="col-md-12 text-center" style="margin-top: 10%">
                   <i class="fa fa-times"></i>&nbsp;No Data
