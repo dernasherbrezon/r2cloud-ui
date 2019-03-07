@@ -113,7 +113,7 @@
 import moment from 'moment'
 
 export default {
-  name: 'weatherObservation',
+  name: 'observationLoad',
   data () {
     return {
       observation: {},
@@ -128,7 +128,7 @@ export default {
     debug () {
       const vm = this
       vm.generatingSpectogram = true
-      vm.$http.post('/admin/weather/spectogram', {
+      vm.$http.post('/admin/observation/spectogram', {
         id: vm.$route.query.id,
         satelliteId: vm.$route.query.satelliteId
       }).then(function (response) {
@@ -147,7 +147,7 @@ export default {
     },
     loadData () {
       const vm = this
-      vm.$http.get('/admin/weather/observation?id=' + vm.$route.query.id + '&satelliteId=' + vm.$route.query.satelliteId).then(function (response) {
+      vm.$http.get('/admin/observation/load?id=' + vm.$route.query.id + '&satelliteId=' + vm.$route.query.satelliteId).then(function (response) {
         vm.observation = response.data
         vm.loading = false
       }).catch(function (error) {

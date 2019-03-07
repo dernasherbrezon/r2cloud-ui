@@ -6,8 +6,7 @@
     	<b-collapse is-nav id="nav_collapse">
 			<b-navbar-nav>
 			  <b-nav-item to="/admin/airplanes"><i class="fa fa-plane" aria-hidden="true"></i>&nbsp;Airplanes</b-nav-item>
-              <b-nav-item to="/admin/weather"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Weather</b-nav-item>
-              <b-nav-item to="/admin/amateur"><i class="fa fa-paper-plane" aria-hidden="true"></i>&nbsp;Amateur</b-nav-item>
+              <b-nav-item to="/admin/observation/list"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Observations</b-nav-item>
               <b-nav-item to="/admin/tle"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;TLE</b-nav-item>
 			</b-navbar-nav>
 			<b-navbar-nav class="ml-auto">

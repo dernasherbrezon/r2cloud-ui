@@ -16,9 +16,8 @@ import configSSL from '@/components/pages/configuration/ssl'
 import configR2Cloud from '@/components/pages/configuration/r2cloud'
 
 import tle from '@/components/pages/tle'
-import weather from '@/components/pages/weather'
-import amateur from '@/components/pages/amateur'
-import weatherobservation from '@/components/pages/weatherObservation'
+import observationList from '@/components/pages/observation/list'
+import observationEntity from '@/components/pages/observation/entity'
 
 import notFound from '@/components/pages/notfound'
 import proxyError from '@/components/pages/proxyError'
@@ -100,19 +99,14 @@ const router = new Router({
       component: tle
     },
     {
-      path: '/admin/weather',
-      name: 'weather',
-      component: weather
+      path: '/admin/observation/list',
+      name: 'observationList',
+      component: observationList
     },
     {
-      path: '/admin/amateur',
-      name: 'amateur',
-      component: amateur
-    },
-    {
-      path: '/admin/weather/observation',
-      name: 'weatherobservation',
-      component: weatherobservation
+      path: '/admin/observation/load',
+      name: 'observationEntity',
+      component: observationEntity
     },
     {
       path: '/404',
