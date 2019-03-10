@@ -57,7 +57,6 @@ export default {
       })
     },
     format (unixTimestamp) {
-      console.log(unixTimestamp)
       if (unixTimestamp) {
         var utcTime = moment(unixTimestamp).utc()
         return utcTime.format('DD-MMM-YYYY') + ' ' + utcTime.format('HH:mm')
@@ -72,7 +71,6 @@ export default {
         }
         vm.satellites = response.data
         vm.loading = false
-        console.log('loaded')
       })
     }
   }
