@@ -19,6 +19,8 @@ import tle from '@/components/pages/tle'
 import observationList from '@/components/pages/observation/list'
 import observationEntity from '@/components/pages/observation/entity'
 
+import scheduleList from '@/components/pages/schedule/list'
+
 import notFound from '@/components/pages/notfound'
 import proxyError from '@/components/pages/proxyError'
 import auth from '@/components/auth.js'
@@ -107,6 +109,11 @@ const router = new Router({
       path: '/admin/observation/load',
       name: 'observationEntity',
       component: observationEntity
+    },
+    {
+      path: '/admin/schedule/list',
+      name: 'scheduleList',
+      component: scheduleList
     },
     {
       path: '/404',
