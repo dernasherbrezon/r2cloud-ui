@@ -5,7 +5,6 @@
     	<b-navbar-brand href="#">r2cloud</b-navbar-brand>
     	<b-collapse is-nav id="nav_collapse">
 			<b-navbar-nav>
-			  <b-nav-item to="/admin/airplanes"><i class="fa fa-plane" aria-hidden="true"></i>&nbsp;Airplanes</b-nav-item>
               <b-nav-item to="/admin/observation/list"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Observations</b-nav-item>
               <b-nav-item to="/admin/schedule/list"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Schedule</b-nav-item>
               <b-nav-item to="/admin/tle"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;TLE</b-nav-item>
