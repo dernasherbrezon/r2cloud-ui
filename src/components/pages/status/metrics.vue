@@ -52,7 +52,10 @@ export default {
       vm.$http.get('/admin/status/metrics').then(function (response) {
         for (var i = 0; i < response.data.length; i++) {
           (function (currentMetric) {
-            vm.$http.get(currentMetric.url, {
+            vm.$http({
+              method: 'get',
+              url: currentMetric.url,
+              baseURL: '',
               responseType: 'arraybuffer'
             }).then(function (response) {
               var file = new RRDFile(new Uint8Array(response.data))
