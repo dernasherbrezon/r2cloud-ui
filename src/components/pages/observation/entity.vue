@@ -38,12 +38,16 @@
               <td>{{ observation.frequency  }}</td>
             </tr>
             <tr v-if="observation.actualFrequency > 0">
-            <td>Actual frequency</td>
-            <td>{{ observation.actualFrequency  }}</td>
-          </tr>
+              <td>Actual frequency</td>
+              <td>{{ observation.actualFrequency  }}</td>
+            </tr>
             <tr v-if="observation.sampleRate > 0">
               <td>Sample rate</td>
               <td>{{ observation.sampleRate  }}</td>
+            </tr>
+            <tr v-if="observation.bandwidth > 0">
+              <td>Bandwidth</td>
+              <td>{{ observation.bandwidth  }}</td>
             </tr>
           </tbody>
         </table>
