@@ -11,6 +11,7 @@ before_install:
   - gem install deb-s3
 
 script:
+  - set -e
   - npm run build
   - npm test
   - sh build-debian.sh
