@@ -9,6 +9,14 @@
             </tr>
           </thead>
           <tbody>
+          	<tr v-if="observation.tle">
+          		<td>Satellite</td>
+          		<td>{{ observation.tle.line1 }}</td>
+          	</tr>
+          	<tr>
+          		<td>NORAD id</td>
+          		<td>{{ observation.satellite }}</td>
+          	</tr>
             <tr>
               <td>Start</td>
               <td>{{ formatTime(observation.start) + ' ' + formatDate(observation.start) }}</td>
