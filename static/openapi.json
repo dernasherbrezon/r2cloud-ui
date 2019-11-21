@@ -48,6 +48,271 @@
 		}
 	],
 	"paths": {
+		"/configured": {
+			"get": {
+				"tags": [
+					"Configuration"
+				],
+				"summary": "Get base station configuration status",
+				"responses": {
+					"200": {
+						"description": "Configuration status",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ConfigurationStatus"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/admin/config/ddns": {
+			"get": {
+				"tags": [
+					"Configuration"
+				],
+				"summary": "Get base station DDNS configuration",
+				"responses": {
+					"200": {
+						"description": "DDNS configuration",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/DDNSConfiguration"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			},
+			"post": {
+				"tags": [
+					"Configuration"
+				],
+				"summary": "Update base station DDNS configuration",
+				"requestBody": {
+					"description": "DDNS configuration",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/DDNSConfigurationRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"400": {
+						"description": "If request parameters are missing or empty",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "Success"
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
+		"/admin/schedule/list": {
+			"get": {
+				"tags": [
+					"Schedule"
+				],
+				"summary": "Get all satellites and their schedule",
+				"responses": {
+					"200": {
+						"description": "Array of satellites with schedule information",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/ScheduleDetails"
+									}
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
+		"/admin/schedule/save": {
+			"post": {
+				"tags": [
+					"Schedule"
+				],
+				"summary": "Add/remove satellite from schedule",
+				"description": "If enable=false, then cancel active observation. If enable=true, then schedule new observation",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "query",
+						"description": "Satellite id",
+						"required": true,
+						"style": "form",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "enabled",
+						"in": "query",
+						"description": "Enable or disable satellite",
+						"style": "form",
+						"schema": {
+							"type": "boolean"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "If request parameters are missing or empty",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "Satellite schedule information",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ScheduleDetails"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
+		"/admin/schedule/immediately/start": {
+			"post": {
+				"tags": [
+					"Schedule"
+				],
+				"summary": "Start observation immediately",
+				"description": "Cancel current observation if any and start new one",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "query",
+						"description": "Satellite id",
+						"required": true,
+						"style": "form",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "If request parameters are missing or empty",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "If id is unknown"
+					},
+					"500": {
+						"description": "If unable to start immediately"
+					},
+					"200": {
+						"description": "Success. Return id of the newly started observation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Id"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
+		"/admin/schedule/immediately/complete": {
+			"post": {
+				"tags": [
+					"Schedule"
+				],
+				"summary": "Complete observation immediately",
+				"description": "Complete currently running observation. This will trigger normal demodulation/decoding process",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "query",
+						"description": "Satellite id",
+						"required": true,
+						"style": "form",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "If request parameters are missing or empty",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "If id is unknown or no currently running observations"
+					},
+					"200": {
+						"description": "On success"
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
 		"/admin/observation/list": {
 			"get": {
 				"tags": [
@@ -60,7 +325,10 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/ObservationSummary"
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/ObservationSummary"
+									}
 								}
 							}
 						}
@@ -189,11 +457,105 @@
 	},
 	"components": {
 		"schemas": {
+			"ScheduleDetails": {
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "Satellite id",
+						"example": "44387"
+					},
+					"name": {
+						"type": "string",
+						"description": "Satellite name",
+						"example": "METEOR-M2 2"
+					},
+					"enabled": {
+						"type": "boolean",
+						"description": "If satellite is enabled for observation"
+					},
+					"frequency": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Satellite frequency",
+						"example": "137900000"
+					},
+					"nextPass": {
+						"type": "integer",
+						"format": "int64",
+						"description": "UNIX timestamp. The next scheduled observation time for this satellite. Can be empty if satellite is not enabled",
+						"example": "1574019119875"
+					}
+				}
+			},
 			"Response": {
 				"type": "object",
 				"properties": {
 					"errors": {
 						"$ref": "#/components/schemas/Errors"
+					}
+				}
+			},
+			"DDNSConfigurationRequest": {
+				"type": "object",
+				"properties": {
+					"username": {
+						"type": "string",
+						"description": "username used for ddns authentication"
+					},
+					"password": {
+						"type": "string",
+						"description": "password used for ddns authentication"
+					},
+					"domain": {
+						"type": "string",
+						"description": "domain for this base station",
+						"example": "example.ddns.com"
+					},
+					"type": {
+						"type": "string",
+						"description": "ddns provider",
+						"example": "NONE"
+					}
+				}
+			},
+			"DDNSConfiguration": {
+				"type": "object",
+				"properties": {
+					"username": {
+						"type": "string",
+						"description": "username used for ddns authentication"
+					},
+					"password": {
+						"type": "string",
+						"description": "password used for ddns authentication"
+					},
+					"domain": {
+						"type": "string",
+						"description": "domain for this base station",
+						"example": "example.ddns.com"
+					},
+					"type": {
+						"type": "string",
+						"description": "ddns provider",
+						"example": "NONE"
+					},
+					"currentIp": {
+						"type": "string",
+						"description": "Current external IP",
+						"example": "127.0.0.1"
+					}
+				}
+			},
+			"ConfigurationStatus": {
+				"type": "object",
+				"properties": {
+					"configured": {
+						"type": "boolean",
+						"description": "true - if base station was previously configured (login/password and coordinates). false - otherwise"
+					},
+					"generalSetup": {
+						"type": "boolean",
+						"description": "true - if base station coordinates were previously configured. false - otherwise"
 					}
 				}
 			},
@@ -218,6 +580,14 @@
 					"spectogramURL": {
 						"type": "string",
 						"description": "The URL to the newly generated spectogram"
+					}
+				}
+			},
+			"Id": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string"
 					}
 				}
 			},
@@ -263,6 +633,23 @@
 					"line3": {
 						"type": "string",
 						"example": "2 40069  98.5901 334.4030 0004544 256.4188 103.6490 14.20654800221188"
+					}
+				}
+			},
+			"GroundStation": {
+				"type": "object",
+				"properties": {
+					"lat": {
+						"type": "number",
+						"format": "double",
+						"description": "Latitude of the base station",
+						"example": "56.31"
+					},
+					"lon": {
+						"type": "number",
+						"format": "double",
+						"description": "Longitude of the base station",
+						"example": "38.13"
 					}
 				}
 			},
@@ -330,6 +717,15 @@
 					},
 					"tle": {
 						"$ref": "#/components/schemas/TLE"
+					},
+					"numberOfDecodedPackets": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Number of decoded packets during this observation",
+						"example": "14"
+					},
+					"groundStation": {
+						"$ref": "#/components/schemas/GroundStation"
 					}
 				}
 			}
