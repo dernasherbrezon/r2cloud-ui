@@ -48,6 +48,94 @@
 		}
 	],
 	"paths": {
+		"/setup/restore": {
+			"post": {
+				"tags": [
+					"Setup"
+				],
+				"summary": "Reset password to the base station",
+				"parameters": [
+					{
+						"name": "username",
+						"in": "query",
+						"description": "Email used during registration",
+						"required": true,
+						"style": "form",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "If request parameters are missing or empty",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "Successful password reset"
+					}
+				}
+			}
+		},
+		"/admin/status/metrics": {
+			"get": {
+				"tags": [
+					"Status"
+				],
+				"summary": "Get all metrics",
+				"responses": {
+					"200": {
+						"description": "Array of metrics",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/Metric"
+									}
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
+		"/admin/status/overview": {
+			"get": {
+				"tags": [
+					"Status"
+				],
+				"summary": "Get overall status",
+				"responses": {
+					"200": {
+						"description": "Base station status",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/StatusOverview"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
 		"/configured": {
 			"get": {
 				"tags": [
@@ -103,6 +191,192 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/DDNSConfigurationRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"400": {
+						"description": "If request parameters are missing or empty",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "Success"
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
+		"/admin/config/general": {
+			"get": {
+				"tags": [
+					"Configuration"
+				],
+				"summary": "Get base station configuration",
+				"responses": {
+					"200": {
+						"description": "General configuration",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Configuration"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			},
+			"post": {
+				"tags": [
+					"Configuration"
+				],
+				"summary": "Update base station configuration",
+				"requestBody": {
+					"description": "General configuration",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Configuration"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"400": {
+						"description": "If request parameters are missing or empty",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "Success"
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
+		"/admin/config/r2cloud": {
+			"get": {
+				"tags": [
+					"Configuration"
+				],
+				"summary": "Get r2server configuration",
+				"responses": {
+					"200": {
+						"description": "R2server configuration",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/R2ServerConfiguration"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			},
+			"post": {
+				"tags": [
+					"Configuration"
+				],
+				"summary": "Update r2server configuration",
+				"requestBody": {
+					"description": "R2server configuration",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/R2ServerConfiguration"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"400": {
+						"description": "If request parameters are missing or empty",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "Success"
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
+		"/admin/config/ssl": {
+			"get": {
+				"tags": [
+					"Configuration"
+				],
+				"summary": "Get SSL configuration",
+				"responses": {
+					"200": {
+						"description": "SSL configuration",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SSLConfiguration"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			},
+			"post": {
+				"tags": [
+					"Configuration"
+				],
+				"summary": "Update SSL configuration",
+				"requestBody": {
+					"description": "SSL configuration",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SSLConfiguration"
 							}
 						}
 					},
@@ -457,6 +731,43 @@
 	},
 	"components": {
 		"schemas": {
+			"Metric": {
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "Metric identifier. Unique",
+						"example": "heap"
+					},
+					"url": {
+						"type": "string",
+						"description": "URL to RRD file containing historical data"
+					},
+					"format": {
+						"type": "string",
+						"description": "Metric format. Applicable only for Formatted metrics. Possible values are: NORMAL, BYTES"
+					}
+				}
+			},
+			"ParameterDetails": {
+				"properties": {
+					"status": {
+						"type": "string",
+						"description": "Can be: SUCCESS, ERROR, UNKNOWN",
+						"example": "SUCCESS"
+					},
+					"message": {
+						"type": "string",
+						"description": "optional message describing error"
+					}
+				}
+			},
+			"StatusOverview": {
+				"properties": {
+					"parameterName": {
+						"$ref": "#/components/schemas/ParameterDetails"
+					}
+				}
+			},
 			"ScheduleDetails": {
 				"properties": {
 					"id": {
@@ -484,6 +795,58 @@
 						"format": "int64",
 						"description": "UNIX timestamp. The next scheduled observation time for this satellite. Can be empty if satellite is not enabled",
 						"example": "1574019119875"
+					}
+				}
+			},
+			"R2ServerConfiguration": {
+				"type": "object",
+				"properties": {
+					"apiKey": {
+						"type": "string",
+						"description": "API key obtained at https://r2server.ru"
+					},
+					"syncSpectogram": {
+						"type": "boolean",
+						"description": "Synchronize spectograms to r2server. If no spectogram available for observation, then it will be created prior to upload"
+					}
+				}
+			},
+			"SSLConfiguration": {
+				"type": "object",
+				"properties": {
+					"enabled": {
+						"type": "boolean",
+						"description": "true - if SSL configuration enabled. false - otherwise"
+					},
+					"agreeWithToC": {
+						"type": "boolean",
+						"description": "true - if agree with lets encrypt terms and conditions"
+					},
+					"domain": {
+						"type": "string",
+						"description": "domain to setup for SSL",
+						"example": "example.ddns.com"
+					}
+				}
+			},
+			"Configuration": {
+				"type": "object",
+				"properties": {
+					"lat": {
+						"type": "number",
+						"format": "double",
+						"description": "Latitude of the base station",
+						"example": "56.31"
+					},
+					"lon": {
+						"type": "number",
+						"format": "double",
+						"description": "Longitude of the base station",
+						"example": "38.13"
+					},
+					"autoUpdate": {
+						"type": "boolean",
+						"description": "true if automatic updates enabled"
 					}
 				}
 			},
