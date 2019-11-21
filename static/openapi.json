@@ -1,0 +1,344 @@
+{
+	"openapi": "3.0.1",
+	"info": {
+		"title": "r2cloud API",
+		"description": "This is an API definition for r2cloud. It can be used to control base station programmatically",
+		"contact": {
+			"email": "dernasherbrezon@gmail.com"
+		},
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+		},
+		"version": "1.0.0"
+	},
+	"externalDocs": {
+		"description": "Find out more about r2cloud",
+		"url": "https://github.com/dernasherbrezon/r2cloud"
+	},
+	"servers": [
+		{
+			"url": "/api/v1"
+		}
+	],
+	"tags": [
+		{
+			"name": "Observation",
+			"description": "Manage observations"
+		},
+		{
+			"name": "Schedule",
+			"description": "Schedule an observation or cancel already running"
+		},
+		{
+			"name": "Configuration",
+			"description": "Manage base station configuration"
+		},
+		{
+			"name": "Status",
+			"description": "Monitoring and current hardware status"
+		},
+		{
+			"name": "Setup",
+			"description": "Initial setup and restore"
+		},
+		{
+			"name": "System",
+			"description": "Login, logout, health"
+		}
+	],
+	"paths": {
+		"/admin/observation/list": {
+			"get": {
+				"tags": [
+					"Observation"
+				],
+				"summary": "Get all observations",
+				"responses": {
+					"200": {
+						"description": "Array of observations",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ObservationSummary"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
+		"/admin/observation/load": {
+			"get": {
+				"tags": [
+					"Observation"
+				],
+				"summary": "Get observation details",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "query",
+						"description": "Observation id",
+						"required": true,
+						"style": "form",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Observation details",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Observation"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "If id is missing or empty",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "If id is unknown"
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},
+		"/admin/observation/spectogram": {
+			"post": {
+				"tags": [
+					"Observation"
+				],
+				"summary": "Generate spectogram for observation",
+				"parameters": [
+					{
+						"name": "id",
+						"in": "query",
+						"description": "Observation id",
+						"required": true,
+						"style": "form",
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"name": "satelliteId",
+						"in": "query",
+						"description": "Satellite id",
+						"required": true,
+						"style": "form",
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"responses": {
+					"400": {
+						"description": "If request parameters are missing or empty",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "If unknown observation"
+					},
+					"500": {
+						"description": "If unable to generate spectogram"
+					},
+					"200": {
+						"description": "URL to the newly generated spectogram",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/SpectogramResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Response": {
+				"type": "object",
+				"properties": {
+					"errors": {
+						"$ref": "#/components/schemas/Errors"
+					}
+				}
+			},
+			"Errors": {
+				"type": "object",
+				"properties": {
+					"general": {
+						"type": "string",
+						"description": "If general error occur",
+						"example": "Internal server error"
+					},
+					"fieldName": {
+						"type": "string",
+						"description": "Error related to the particular fieldName",
+						"example": "Cannot be empty"
+					}
+				}
+			},
+			"SpectogramResponse": {
+				"type": "object",
+				"properties": {
+					"spectogramURL": {
+						"type": "string",
+						"description": "The URL to the newly generated spectogram"
+					}
+				}
+			},
+			"ObservationSummary": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"example": "1574019119875",
+						"description": "Unique observation identifier"
+					},
+					"satelliteId": {
+						"type": "string",
+						"description": "NORAD Id. Unique satellite id",
+						"example": "44387"
+					},
+					"name": {
+						"type": "string",
+						"example": "METEOR-M2 2"
+					},
+					"start": {
+						"type": "integer",
+						"format": "int64",
+						"description": "UNIX timestamp"
+					},
+					"hasData": {
+						"type": "boolean",
+						"description": "Determines if observation has any data decoded. true - if at least 1 packet was decoded"
+					}
+				}
+			},
+			"TLE": {
+				"type": "object",
+				"properties": {
+					"line1": {
+						"type": "string",
+						"example": "METEOR-M2 2"
+					},
+					"line2": {
+						"type": "string",
+						"example": "1 40069U 14037A   18286.52491495 -.00000023  00000-0  92613-5 0  9990"
+					},
+					"line3": {
+						"type": "string",
+						"example": "2 40069  98.5901 334.4030 0004544 256.4188 103.6490 14.20654800221188"
+					}
+				}
+			},
+			"Observation": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"example": "1574019119875",
+						"description": "Unique observation identifier"
+					},
+					"satellite": {
+						"type": "string",
+						"description": "NORAD Id. Unique satellite id",
+						"example": "44387"
+					},
+					"name": {
+						"type": "string",
+						"example": "METEOR-M2 2"
+					},
+					"start": {
+						"type": "integer",
+						"format": "int64",
+						"description": "UNIX timestamp"
+					},
+					"end": {
+						"type": "integer",
+						"format": "int64",
+						"description": "UNIX timestamp"
+					},
+					"sampleRate": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Samples per second",
+						"example": "144000"
+					},
+					"inputSampleRate": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Samples per second in the raw file",
+						"example": "288000"
+					},
+					"frequency": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Satellite frequency",
+						"example": "137900000"
+					},
+					"actualFrequency": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Actual frequency used while receiving satellite data. Frequency of the raw file",
+						"example": "137900000"
+					},
+					"decoder": {
+						"type": "string",
+						"description": "Type of decoder to use. Supported values: APT, LRPT, TELEMETRY",
+						"example": "LRPT"
+					},
+					"bandwidth": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Signal bandwidth. Used by demodulator",
+						"example": "140000"
+					},
+					"tle": {
+						"$ref": "#/components/schemas/TLE"
+					}
+				}
+			}
+		},
+		"securitySchemes": {
+			"Bearer": {
+				"type": "http",
+				"scheme": "bearer"
+			}
+		}
+	}
+}
