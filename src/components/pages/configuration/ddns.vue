@@ -1,6 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-12">
+      <h1>DDNS configuration</h1>
       <b-alert variant="danger"
         dismissible
         :show="errors.has('general')">

@@ -1,6 +1,8 @@
 <template>
   <div class="row">
     <div class="col-md-12">
+      <h1>R2Server configuration</h1>
+      <p>You can register at <a href="https://r2server.ru">https://r2server.ru</a> and obtain an API key there.</p>
       <b-alert variant="danger"
         dismissible
         :show="errors.has('general')">

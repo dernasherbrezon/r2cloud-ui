@@ -1,6 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-12">
+      <h1>SSL configuration</h1>
       <b-alert variant="danger"
         dismissible
         :show="errors.has('general')">
@@ -10,7 +11,7 @@
     <div class="col-md-12">
       <form style="margin-top: 20px;" @submit.prevent="validateBeforeSubmit">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div class="form-group" :class="{'has-danger': errors.has('domain') }">
               <label for="domain">Domain</label>
               <input type="text" id="domain" name="domain" class="form-control" :class="{'is-invalid': errors.has('domain') }" v-validate="'required|url'" v-model="ssl.domain">
