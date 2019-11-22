@@ -48,24 +48,153 @@
 		}
 	],
 	"paths": {
+		"/admin/tle": {
+			"get": {
+				"tags": [
+					"System"
+				],
+				"summary": "Get all TLE settings",
+				"responses": {
+					"200": {
+						"description": "If r2cloud is up",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TLEResponse"
+								}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"Bearer": []
+					}
+				]
+			}
+		},	
+		"/health": {
+			"get": {
+				"tags": [
+					"System"
+				],
+				"summary": "Check if r2cloud is up",
+				"responses": {
+					"200": {
+						"description": "If r2cloud is up"
+					}
+				}
+			}
+		},	
+		"/accessToken": {
+			"post": {
+				"tags": [
+					"System"
+				],
+				"summary": "Login",
+				"requestBody": {
+					"description": "Login request",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/LoginRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "If authentication failed",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "Successful login",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/setup/setup": {
+			"post": {
+				"tags": [
+					"Setup"
+				],
+				"summary": "Initial base station setup",
+				"requestBody": {
+					"description": "Setup request",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SetupRequest"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"401": {
+						"description": "If keyword mismatched",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "If request parameters are missing or empty",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Response"
+								}
+							}
+						}
+					},
+					"200": {
+						"description": "Successful setup and login",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/LoginResponse"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
 		"/setup/restore": {
 			"post": {
 				"tags": [
 					"Setup"
 				],
 				"summary": "Reset password to the base station",
-				"parameters": [
-					{
-						"name": "username",
-						"in": "query",
-						"description": "Email used during registration",
-						"required": true,
-						"style": "form",
-						"schema": {
-							"type": "string"
+				"requestBody": {
+					"description": "Setup request",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/RestoreRequest"
+							}
 						}
-					}
-				],
+					},
+					"required": true
+				},
 				"responses": {
 					"400": {
 						"description": "If request parameters are missing or empty",
@@ -439,27 +568,17 @@
 				],
 				"summary": "Add/remove satellite from schedule",
 				"description": "If enable=false, then cancel active observation. If enable=true, then schedule new observation",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "query",
-						"description": "Satellite id",
-						"required": true,
-						"style": "form",
-						"schema": {
-							"type": "string"
+				"requestBody": {
+					"description": "Schedule request",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ScheduleRequest"
+							}
 						}
 					},
-					{
-						"name": "enabled",
-						"in": "query",
-						"description": "Enable or disable satellite",
-						"style": "form",
-						"schema": {
-							"type": "boolean"
-						}
-					}
-				],
+					"required": true
+				},				
 				"responses": {
 					"400": {
 						"description": "If request parameters are missing or empty",
@@ -496,18 +615,17 @@
 				],
 				"summary": "Start observation immediately",
 				"description": "Cancel current observation if any and start new one",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "query",
-						"description": "Satellite id",
-						"required": true,
-						"style": "form",
-						"schema": {
-							"type": "string"
+				"requestBody": {
+					"description": "Satellite id",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Id"
+							}
 						}
-					}
-				],
+					},
+					"required": true
+				},				
 				"responses": {
 					"400": {
 						"description": "If request parameters are missing or empty",
@@ -550,18 +668,17 @@
 				],
 				"summary": "Complete observation immediately",
 				"description": "Complete currently running observation. This will trigger normal demodulation/decoding process",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "query",
-						"description": "Satellite id",
-						"required": true,
-						"style": "form",
-						"schema": {
-							"type": "string"
+				"requestBody": {
+					"description": "Satellite id",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Id"
+							}
 						}
-					}
-				],
+					},
+					"required": true
+				},				
 				"responses": {
 					"400": {
 						"description": "If request parameters are missing or empty",
@@ -671,28 +788,17 @@
 					"Observation"
 				],
 				"summary": "Generate spectogram for observation",
-				"parameters": [
-					{
-						"name": "id",
-						"in": "query",
-						"description": "Observation id",
-						"required": true,
-						"style": "form",
-						"schema": {
-							"type": "string"
+				"requestBody": {
+					"description": "Spectogram request",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/SpectogramRequest"
+							}
 						}
 					},
-					{
-						"name": "satelliteId",
-						"in": "query",
-						"description": "Satellite id",
-						"required": true,
-						"style": "form",
-						"schema": {
-							"type": "string"
-						}
-					}
-				],
+					"required": true
+				},				
 				"responses": {
 					"400": {
 						"description": "If request parameters are missing or empty",
@@ -731,6 +837,122 @@
 	},
 	"components": {
 		"schemas": {
+			"SpectogramRequest": {
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "Observation id",
+						"example": "1574019119875"
+					},
+					"satelliteId": {
+						"type": "boolean",
+						"description": "Satellite id",
+						"example": "44387"
+					}
+				}				
+			},
+			"ScheduleRequest": {
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "Satellite id",
+						"example": "44387"
+					},
+					"enabled": {
+						"type": "boolean",
+						"description": "Enable or disable satellite"
+					}
+				}				
+			},
+			"RestoreRequest": {
+				"properties": {
+					"username": {
+						"type": "string",
+						"description": "Email used during registration",
+						"example": "info@example.com"
+					}
+				}				
+			},
+			"TLEResponse": {
+				"properties": {
+					"lastUpdated": {
+						"type": "integer",
+						"format": "int64",
+						"description": "UNIX timestamp. Last updated time",
+						"example": "1573906195042"
+					},
+					"tle": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/TLEArray"
+						}
+					}
+				}
+			},
+			"TLEArray": {
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "Satellite id",
+						"example": "44387"
+					},
+					"data": {
+						"type": "array",
+						"description": "Array of TLE elements",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+			},
+		    "SetupRequest": {
+				"properties": {
+					"username": {
+						"type": "string",
+						"description": "Email",
+						"example": "info@example.com"
+					},
+					"password": {
+						"type": "string",
+						"description": "Password"
+					},
+					"keyword": {
+						"type": "string",
+						"description": "Keyword from /boot/r2cloud.txt file. Should be pre-configured"
+					}
+				}
+		    },
+		    "LoginRequest": {
+				"properties": {
+					"username": {
+						"type": "string",
+						"description": "Email",
+						"example": "info@example.com"
+					},
+					"password": {
+						"type": "string",
+						"description": "Password"
+					}
+				}
+		    },
+		    "LoginResponse": {
+				"properties": {
+					"access_token": {
+						"type": "string",
+						"description": "Token to use when sending requests"
+					},
+					"token_type": {
+						"type": "string",
+						"description": "Always: bearer",
+						"example": "bearer"
+					},
+					"expires_in": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Number of seconds after which this token expires"
+					}
+				}
+		    },
 			"Metric": {
 				"properties": {
 					"id": {
