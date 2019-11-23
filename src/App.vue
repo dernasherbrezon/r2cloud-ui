@@ -8,6 +8,7 @@
               <b-nav-item to="/admin/observation/list"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Observations</b-nav-item>
               <b-nav-item to="/admin/schedule/list"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Schedule</b-nav-item>
               <b-nav-item to="/admin/tle"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;TLE</b-nav-item>
+              <b-nav-item to="/admin/api"><i class="fa fa-puzzle-piece" aria-hidden="true"></i>&nbsp;API</b-nav-item>
 			</b-navbar-nav>
 			<b-navbar-nav class="ml-auto">
               <b-nav-item-dropdown text="Status">

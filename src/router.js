@@ -20,6 +20,8 @@ import observationEntity from '@/components/pages/observation/entity'
 
 import scheduleList from '@/components/pages/schedule/list'
 
+import api from '@/components/pages/api'
+
 import notFound from '@/components/pages/notfound'
 import proxyError from '@/components/pages/proxyError'
 import auth from '@/components/auth.js'
@@ -93,6 +95,11 @@ const router = new Router({
       path: '/admin/tle',
       name: 'tle',
       component: tle
+    },
+    {
+      path: '/admin/api',
+      name: 'api',
+      component: api
     },
     {
       path: '/admin/observation/list',
