@@ -111,6 +111,21 @@
                 </div>
               </div>
             </b-tab>
+
+            <b-tab title="TLE">
+              <div class="row" style="margin-top: 20px;" v-if="observation.tle">
+                <div class="col-md-12">
+                  <p>{{ observation.tle.line1 }}</p>
+				  <p>{{ observation.tle.line2 }}</p>
+				  <p>{{ observation.tle.line3 }}</p>
+                </div>
+              </div>
+              <div class="row" style="margin-top: 20px;" v-else>
+                <div class="col-md-12 text-center" style="margin-top: 10%">
+                  <i class="fa fa-times"></i>&nbsp;No Data
+                </div>
+              </div>
+            </b-tab>
           </b-tabs>
       </div>
     </div>
