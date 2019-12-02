@@ -56,7 +56,7 @@
 				"summary": "Get all TLE settings",
 				"responses": {
 					"200": {
-						"description": "If r2cloud is up",
+						"description": "List of TLE for each satellite",
 						"content": {
 							"application/json": {
 								"schema": {
