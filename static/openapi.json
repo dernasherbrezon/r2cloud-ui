@@ -1251,10 +1251,6 @@
 						"description": "NORAD Id. Unique satellite id",
 						"example": "44387"
 					},
-					"name": {
-						"type": "string",
-						"example": "METEOR-M2 2"
-					},
 					"start": {
 						"type": "integer",
 						"format": "int64",
@@ -1311,6 +1307,33 @@
 					},
 					"groundStation": {
 						"$ref": "#/components/schemas/GroundStation"
+					},
+					"gain": {
+						"type": "string",
+						"description": "Average gain reported during observation",
+						"example": "14.5"
+					},
+					"channelA": {
+						"type": "string",
+						"description": "Type of A channel from NOAA satellite image",
+						"example": "3/3B (mid infrared)"
+					},
+					"channelB": {
+						"type": "string",
+						"description": "Type of B channel from NOAA satellite image",
+						"example": "4 (thermal infrared)"
+					},
+					"aURL": {
+						"type": "string",
+						"description": "URL to the decoded image"
+					},
+					"data": {
+						"type": "string",
+						"description": "URL to the raw data"
+					},
+					"spectogramURL": {
+						"type": "string",
+						"description": "URL to the spectogram image"
 					}
 				}
 			}
