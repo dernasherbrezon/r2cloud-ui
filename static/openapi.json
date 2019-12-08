@@ -748,6 +748,16 @@
 						"schema": {
 							"type": "string"
 						}
+					},
+					{
+						"name": "satelliteId",
+						"in": "query",
+						"description": "Satellite id",
+						"required": true,
+						"style": "form",
+						"schema": {
+							"type": "string"
+						}
 					}
 				],
 				"responses": {
@@ -1334,6 +1344,23 @@
 					"spectogramURL": {
 						"type": "string",
 						"description": "URL to the spectogram image"
+					},
+					"dataEntity": {
+						"$ref": "#/components/schemas/ParsedData"
+					}
+				}
+			},
+			"ParsedData": {
+				"type": "object",
+				"properties": {
+					"name": {
+						"type": "string",
+						"example": "1574019119875",
+						"description": "Unique telemetry identifier"
+					},
+					"body": {
+						"type": "object",
+						"description": "Parsed telemetry. Format depends on the satellite"
 					}
 				}
 			}
