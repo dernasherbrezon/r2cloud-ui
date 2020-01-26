@@ -62,13 +62,15 @@
       </div>
       <div class="col-md-8">
           <b-tabs no-fade>
-            <b-tab title="Data">
-              <div class="row" style="margin-top: 20px;" v-if="observation.aURL">
+          	<b-tab title="Image" v-if="observation.aURL">
+              <div class="row" style="margin-top: 20px;">
                 <div class="col-md-12">
                   <img class="img-fluid" :src="observation.aURL">
                 </div>
               </div>
-              <div class="row" style="margin-top: 20px;" v-else-if="observation.dataEntity">
+          	</b-tab>
+            <b-tab title="Telemetry" v-if="observation.dataEntity">
+              <div class="row" style="margin-top: 20px;">
                 <div class="col-md-12" role="tablist">
                   <b-card no-body class="mb-1" v-for="(curBeacon, index) in observation.dataEntity" :key="curBeacon.name">
                     <b-card-header header-tag="header" class="p-1" role="tab">
@@ -84,11 +86,6 @@
                   </b-card>                  
                 </div>
               </div>              
-              <div class="row" style="margin-top: 20px;" v-else>
-                <div class="col-md-12 text-center" style="margin-top: 10%">
-                  <i class="fa fa-times"></i>&nbsp;No Data
-                </div>
-              </div>
             </b-tab>
             <b-tab title="Spectogram">
               <div class="row" style="margin-top: 20px;" v-if="observation.spectogramURL && !generatingSpectogram">
