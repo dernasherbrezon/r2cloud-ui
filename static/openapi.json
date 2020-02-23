@@ -1346,7 +1346,10 @@
 						"description": "URL to the spectogram image"
 					},
 					"dataEntity": {
-						"$ref": "#/components/schemas/ParsedData"
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/ParsedData"
+						}
 					}
 				}
 			},
