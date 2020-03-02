@@ -32,6 +32,24 @@
             </div>
           </div>
         </div>
+        <div class="row">
+        	<div class="col-md-4">
+				<div class="form-group">
+		          <label for="ppmType">PPM type</label>
+		          <select class="form-control" id="ppmType" v-model="ppmType">
+		            <option value="AUTO">AUTO</option>
+		            <option value="MANUAL">MANUAL</option>
+		          </select>
+		        </div>        	
+        	</div>
+        	<div class="col-md-4">
+				<div class="form-group">
+		          <label for="ppm">PPM</label>
+	              <input type="text" id="ppm" name="ppm" :class="{'is-invalid': errors.has('ppm') }" :readonly="ppmType === 'AUTO'" class="form-control" v-model="ppm">
+	              <div class="invalid-feedback" v-if="errors.has('ppm')">{{ errors.first('ppm') }}</div>
+		        </div>
+        	</div>
+        </div>
         <div class="checkbox">
           <label>
             <input type="checkbox" v-model="autoUpdate"> Auto-update enabled
@@ -53,6 +71,8 @@ export default {
       lng: '',
       autoUpdate: false,
       submitting: false,
+      ppmType: 'AUTO',
+      ppm: 0,
       success: false
     }
   },
@@ -62,6 +82,8 @@ export default {
       vm.lat = response.data.lat
       vm.lng = response.data.lng
       vm.autoUpdate = response.data.autoUpdate
+      vm.ppmType = response.data.ppmType
+      vm.ppm = response.data.ppm
     })
   },
   methods: {
@@ -92,7 +114,9 @@ export default {
       vm.$http.post('/admin/config/general', {
         lat: parseFloat(vm.lat),
         lng: parseFloat(vm.lng),
-        autoUpdate: vm.autoUpdate
+        autoUpdate: vm.autoUpdate,
+        ppmType: vm.ppmType,
+        ppm: vm.ppm
       }).then(function (response) {
         vm.submitting = false
         vm.success = true

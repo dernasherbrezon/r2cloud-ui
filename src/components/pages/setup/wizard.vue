@@ -83,7 +83,8 @@
         vm.$http.post('/admin/config/general', {
           lat: parseFloat(vm.lat),
           lng: parseFloat(vm.lng),
-          autoUpdate: vm.autoUpdate
+          autoUpdate: vm.autoUpdate,
+          ppmType: 'AUTO'
         }).then(function (response) {
           vm.submitting = false
           auth.setGeneralSetup(true)
