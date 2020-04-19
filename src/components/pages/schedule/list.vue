@@ -4,14 +4,14 @@
 		<table class="table table-hover">
             <thead>
               <tr>
-              	<th scope="col" style="width: 20%; border-top: 0px;">Name</th>
-                <th scope="col" style="width: 20%; border-top: 0px;">Next pass</th>
+              	<th @click="sort('name')" scope="col" style="width: 20%; border-top: 0px; cursor: pointer;">Name</th>
+                <th @click="sort('nextPass')" scope="col" style="width: 20%; border-top: 0px; cursor: pointer;">Next pass</th>
                 <th scope="col" style="width: 20%; border-top: 0px;">Frequency</th>
                 <th scope="col" style="width: 20%; border-top: 0px;">Enabled</th>
               </tr>
             </thead>
             <tbody>
-              <tr :key="curData.id" v-for="(curData, index) in satellites">
+              <tr :key="curData.id" v-for="(curData, index) in sortedSatellites">
               	<td>{{ curData.name }}</td>
                 <td>{{ curData.nextPassFormatted }}</td>
                 <td>{{ curData.frequency }} hz</td>
@@ -37,12 +37,25 @@ export default {
   data () {
     return {
       satellites: [],
-      loading: true
+      loading: true,
+      currentSort: 'name',
+      currentSortDir: 'asc'
     }
   },
   mounted () {
     this.loadData()
   },
+  computed:{
+    sortedSatellites:function() {
+      return this.satellites.sort((a,b) => {
+        let modifier = 1;
+        if(this.currentSortDir === 'desc') modifier = -1;
+        if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+        if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        return 0;
+      });
+    }
+  },  
   methods: {
     check (element, index) {
       const vm = this
@@ -56,6 +69,13 @@ export default {
         vm.handleError(vm, error)
       })
     },
+    sort:function(s) {
+      //if s == current sort, reverse
+      if(s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir==='asc'?'desc':'asc';
+      }
+      this.currentSort = s;
+    },    
     format (unixTimestamp) {
       if (unixTimestamp) {
         var utcTime = moment(unixTimestamp).utc()
