@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <h1>General configuration</h1>
+      <h1 class="pb-2 mb-2 border-bottom">General configuration</h1>
       <b-alert variant="danger"
         dismissible
         :show="errors.has('general')">
@@ -50,10 +50,11 @@
 		        </div>
         	</div>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" v-model="autoUpdate"> Auto-update enabled
-          </label>
+        <div class="form-group">
+	        <div class="form-check">
+	            <input class="form-check-input" type="checkbox" id="gridCheck" v-model="autoUpdate">
+	            <label class="form-check-label" for="gridCheck"> Auto-update enabled</label>
+	        </div>
         </div>
         <button type="submit" class="btn btn-primary" :disabled="submitting">Save</button>
         <span v-if="success" class="text-success" style="margin-left: 20px;">Saved</span>

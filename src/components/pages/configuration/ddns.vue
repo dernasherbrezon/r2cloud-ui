@@ -1,7 +1,8 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <h1>DDNS configuration</h1>
+      <h1 class="pb-2 mb-2 border-bottom">DDNS configuration</h1>
+      <p>Configure access to this instance from Internet. Please register at the corresponding DDNS provider first.</p>
       <b-alert variant="danger"
         dismissible
         :show="errors.has('general')">
@@ -9,7 +10,7 @@
       </b-alert>
     </div>  
     <div class="col-md-12">
-      <form style="margin-top: 20px;" @submit.prevent="validateBeforeSubmit">
+      <form @submit.prevent="validateBeforeSubmit">
         <div class="form-group">
           <label for="ddnsType">Type</label>
           <select class="form-control" id="ddnsType" v-model="type">

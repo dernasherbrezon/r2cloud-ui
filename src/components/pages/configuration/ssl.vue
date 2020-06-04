@@ -1,7 +1,8 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <h1>SSL configuration</h1>
+      <h1 class="pb-2 mb-2 border-bottom">SSL configuration</h1>
+      <p>If this instance if available from the Internet, then it is possible to issue proper SSL certificate.</p>
       <b-alert variant="danger"
         dismissible
         :show="errors.has('general')">
@@ -9,7 +10,7 @@
       </b-alert>
     </div>
     <div class="col-md-12">
-      <form style="margin-top: 20px;" @submit.prevent="validateBeforeSubmit">
+      <form @submit.prevent="validateBeforeSubmit">
         <div class="row">
           <div class="col-md-12">
             <div class="form-group" :class="{'has-danger': errors.has('domain') }">
@@ -17,16 +18,19 @@
               <input type="text" id="domain" name="domain" class="form-control" :class="{'is-invalid': errors.has('domain') }" v-validate="'required|url'" v-model="ssl.domain">
               <div class="invalid-feedback" v-if="errors.has('domain')">{{ errors.first('domain') }}</div>
             </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" v-model="ssl.enabled"> SSL enabled
-              </label>
-            </div>
-            <div class="form-check" :class="{'has-danger': errors.has('agreeWithToC') }">
-              <label class="form-check-label" :class="{'is-invalid': errors.has('agreeWithToC') }">
-                <input type="checkbox" name="agreeWithToC" class="form-check-input" v-model="ssl.agreeWithToC" v-validate="requiredToC"> Agree with <a href="https://letsencrypt.org/documents/LE-SA-v1.1.1-August-1-2016.pdf" target="blank">Terms and Conditions</a>
-              </label>
-              <div class="invalid-feedback" v-if="errors.has('agreeWithToC')">{{ errors.first('agreeWithToC') }}</div>
+            <div class="form-group">
+		        <div class="form-check">
+		        	<input type="checkbox" class="form-check-input" id="gridCheck" v-model="ssl.enabled">
+		            <label class="form-check-label" for="gridCheck"> SSL enabled</label>
+		        </div>
+	        </div>
+	        <div class="form-group">
+	            <div class="form-check" :class="{'has-danger': errors.has('agreeWithToC') }">
+	              <label class="form-check-label" :class="{'is-invalid': errors.has('agreeWithToC') }">
+	                <input type="checkbox" name="agreeWithToC" class="form-check-input" v-model="ssl.agreeWithToC" v-validate="requiredToC"> Agree with <a href="https://letsencrypt.org/documents/LE-SA-v1.1.1-August-1-2016.pdf" target="blank">Terms and Conditions</a>
+	              </label>
+	              <div class="invalid-feedback" v-if="errors.has('agreeWithToC')">{{ errors.first('agreeWithToC') }}</div>
+	            </div>
             </div>
             <button type="submit" :disabled="running" class="btn btn-primary">Save</button>
           </div>

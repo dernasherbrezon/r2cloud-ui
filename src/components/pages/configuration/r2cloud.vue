@@ -1,7 +1,7 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <h1>R2Server configuration</h1>
+      <h1 class="pb-2 mb-2 border-bottom">R2Server configuration</h1>
       <p>You can register at <a href="https://r2server.ru">https://r2server.ru</a> and obtain an API key there.</p>
       <b-alert variant="danger"
         dismissible
@@ -10,16 +10,17 @@
       </b-alert>
     </div>  
     <div class="col-md-12">
-      <form style="margin-top: 20px;" @submit.prevent="validateBeforeSubmit">
+      <form @submit.prevent="validateBeforeSubmit">
         <div class="form-group" :class="{'has-danger': errors.has('apiKey') }">
           <label for="apiKey">API key</label>
           <input type="text" id="apiKey" name="apiKey" class="form-control" :class="{'is-invalid': errors.has('apiKey') }" v-validate="'required'" v-model="apiKey">
           <div class="invalid-feedback" v-if="errors.has('apiKey')">{{ errors.first('apiKey') }}</div>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox" v-model="syncSpectogram"> Upload spectogram
-          </label>
+        <div class="form-group">
+	        <div class="form-check">
+	            <input class="form-check-input" type="checkbox" id="gridCheck" v-model="syncSpectogram">
+	            <label class="form-check-label" for="gridCheck"> Upload spectogram</label>
+	        </div>
         </div>
         <button type="submit" class="btn btn-primary" :disabled="submitting">Save</button>
         <span v-if="success" class="text-success" style="margin-left: 20px;">Saved</span>
