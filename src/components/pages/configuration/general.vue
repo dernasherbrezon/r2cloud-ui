@@ -40,7 +40,7 @@
 		            <option value="AUTO">AUTO</option>
 		            <option value="MANUAL">MANUAL</option>
 		          </select>
-		        </div>        	
+		        </div>
         	</div>
         	<div class="col-md-4">
 				<div class="form-group">
@@ -56,6 +56,23 @@
 	            <label class="form-check-label" for="gridCheck"> Auto-update enabled</label>
 	        </div>
         </div>
+        <hr/>
+        <div class="row">
+        	<div class="col-md-4">
+				<div class="form-group" :class="{'has-danger': errors.has('elevationMin') }">
+		          <label for="elevationMin">Minimum elevation</label>
+	              <input type="text" id="elevationMin" name="elevationMin" :class="{'is-invalid': errors.has('elevationMin') }" v-validate="'required|decimal'" class="form-control" v-model="elevationMin">
+	              <div class="invalid-feedback" v-if="errors.has('elevationMin')">{{ errors.first('elevationMin') }}</div>
+		        </div>
+        	</div>
+        	<div class="col-md-4">
+				<div class="form-group" :class="{'has-danger': errors.has('elevationGuaranteed') }">
+		          <label for="elevationGuaranteed">Guaranteed elevation</label>
+	              <input type="text" id="elevationGuaranteed" name="elevationGuaranteed" :class="{'is-invalid': errors.has('elevationGuaranteed') }" v-validate="'required|decimal'" class="form-control" v-model="elevationGuaranteed">
+	              <div class="invalid-feedback" v-if="errors.has('elevationGuaranteed')">{{ errors.first('elevationGuaranteed') }}</div>
+		        </div>
+        	</div>
+        </div>
         <button type="submit" class="btn btn-primary" :disabled="submitting">Save</button>
         <span v-if="success" class="text-success" style="margin-left: 20px;">Saved</span>
       </form>
@@ -70,6 +87,8 @@ export default {
     return {
       lat: '',
       lng: '',
+      elevationMin: '',
+      elevationGuaranteed: '',
       autoUpdate: false,
       submitting: false,
       ppmType: 'AUTO',
@@ -85,6 +104,8 @@ export default {
       vm.autoUpdate = response.data.autoUpdate
       vm.ppmType = response.data.ppmType
       vm.ppm = response.data.ppm
+      vm.elevationMin = response.data.elevationMin
+      vm.elevationGuaranteed = response.data.elevationGuaranteed
     })
   },
   methods: {
@@ -117,7 +138,9 @@ export default {
         lng: parseFloat(vm.lng),
         autoUpdate: vm.autoUpdate,
         ppmType: vm.ppmType,
-        ppm: vm.ppm
+        ppm: vm.ppm,
+        elevationMin: parseFloat(vm.elevationMin),
+        elevationGuaranteed: parseFloat(vm.elevationGuaranteed)
       }).then(function (response) {
         vm.submitting = false
         vm.success = true
