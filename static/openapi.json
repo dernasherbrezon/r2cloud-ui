@@ -1079,6 +1079,18 @@
 					"autoUpdate": {
 						"type": "boolean",
 						"description": "true if automatic updates enabled"
+					},
+					"elevationMin": {
+						"type": "number",
+						"format": "double",
+						"description": "Minimum elevation for scheduling observations. Should be positive and less than elevationGuaranteed",
+						"example": "8"
+					},
+					"elevationGuaranteed": {
+						"type": "number",
+						"format": "double",
+						"description": "Guaranteed elevation for scheduling observations. Should be positive and more than elevationMin",
+						"example": "20"
 					}
 				}
 			},
