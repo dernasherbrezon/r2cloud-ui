@@ -84,7 +84,10 @@
           lat: parseFloat(vm.lat),
           lng: parseFloat(vm.lng),
           autoUpdate: vm.autoUpdate,
-          ppmType: 'AUTO'
+          ppmType: 'AUTO',
+          elevationGuaranteed: 20,
+          elevationMin: 8,
+          rotationEnabled: false
         }).then(function (response) {
           vm.submitting = false
           auth.setGeneralSetup(true)
