@@ -855,7 +855,7 @@
 						"example": "1574019119875"
 					},
 					"satelliteId": {
-						"type": "boolean",
+						"type": "string",
 						"description": "Satellite id",
 						"example": "44387"
 					}
@@ -1091,6 +1091,33 @@
 						"format": "double",
 						"description": "Guaranteed elevation for scheduling observations. Should be positive and more than elevationMin",
 						"example": "20"
+					},
+					"rotationEnabled": {
+						"type": "boolean",
+						"description": "true if rotator configuration enabled"
+					},
+					"rotctrldHostname": {
+						"type": "string",
+						"description": "rotctrld daemon hostname",
+						"example": "127.0.0.1"
+					},
+					"rotctrldPort": {
+						"type": "integer",
+						"format": "int64",
+						"description": "rotctrld daemon port",
+						"example": "4533"
+					},
+					"rotatorTolerance": {
+						"type": "number",
+						"format": "double",
+						"description": "Tolerance in degrees for adjusting rotator. If satellite position changed for a value less than tolerance, then do not rotate",
+						"example": "5"
+					},
+					"rotatorCycle": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Number of millis to wait before next satellite position calculation",
+						"example": "1000"
 					}
 				}
 			},
