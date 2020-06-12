@@ -1378,6 +1378,10 @@
 					},
 					"data": {
 						"type": "string",
+						"description": "URL to the decoded data"
+					},
+					"rawURL": {
+						"type": "string",
 						"description": "URL to the raw data"
 					},
 					"spectogramURL": {

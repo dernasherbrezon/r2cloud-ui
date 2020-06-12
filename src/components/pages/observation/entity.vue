@@ -57,6 +57,10 @@
               <td>Bandwidth</td>
               <td>{{ observation.bandwidth  }}</td>
             </tr>
+            <tr v-if="observation.rawURL">
+              <td>Download</td>
+              <td><i class="fa fa-download" aria-hidden="true"></i>&nbsp;<a :href="observation.rawURL" target="blank">Raw file</a></td>
+            </tr>
           </tbody>
         </table>
       </div>
