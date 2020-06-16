@@ -49,6 +49,9 @@ export default {
     sortedSatellites:function() {
       return this.satellites.sort((a,b) => {
         let modifier = 1;
+        if(!a[this.currentSort] && !b[this.currentSort]) return 0;
+        if(!a[this.currentSort] ) return 1;
+        if(!b[this.currentSort]) return -1;
         if(this.currentSortDir === 'desc') modifier = -1;
         if(a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
         if(a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
