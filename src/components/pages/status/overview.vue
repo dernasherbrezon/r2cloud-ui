@@ -38,14 +38,18 @@ export default {
           } else {
             color = '#777'
           }
-
+          
           var elem = dashboard.contentDocument.getElementById(property)
           if (elem !== null) {
-            elem.style.fill = color
-            if (value.status === 'ERROR') {
-              elem.innerHTML = '<title>' + value.message + '</title>'
+            if ( elem.nodeName === "tspan" ) {
+                elem.innerHTML = value.message
             } else {
-              elem.innerHTML = ''
+                elem.style.fill = color
+                if (value.status === 'ERROR') {
+                  elem.innerHTML = '<title>' + value.message + '</title>'
+                } else {
+                  elem.innerHTML = ''
+                }
             }
           }
         }
