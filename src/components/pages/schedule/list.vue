@@ -81,8 +81,8 @@ export default {
     },    
     format (unixTimestamp) {
       if (unixTimestamp) {
-        var utcTime = moment(unixTimestamp).utc()
-        return utcTime.format('DD-MMM-YYYY') + ' ' + utcTime.format('HH:mm')
+          var localTime = moment();
+          return localTime.format('DD-MMM-YYYY') + ' ' + localTime.format('HH:mm');
       }
     },
     loadData () {
