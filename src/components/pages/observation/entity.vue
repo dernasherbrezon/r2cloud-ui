@@ -29,6 +29,10 @@
               <td>Gain</td>
               <td>{{ observation.gain }}</td>
             </tr>
+            <tr v-if="observation.biast">
+              <td>Bias-T</td>
+              <td>{{ observation.biast }}</td>
+            </tr>            
             <tr v-if="observation.channelA">
               <td>Channel A</td>
               <td>{{ observation.channelA  }}</td>

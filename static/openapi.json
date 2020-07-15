@@ -1118,6 +1118,16 @@
 						"format": "int64",
 						"description": "Number of millis to wait before next satellite position calculation",
 						"example": "1000"
+					},
+					"gain": {
+						"type": "number",
+						"format": "double",
+						"description": "The gain setting for rtl-sdr. Should be between 0 and 50",
+						"example": "45"
+					},
+					"biast": {
+						"type": "boolean",
+						"description": "true if bias-t enabled before every observation"
 					}
 				}
 			},
@@ -1359,9 +1369,13 @@
 					},
 					"gain": {
 						"type": "string",
-						"description": "Average gain reported during observation",
+						"description": "RTL-SDR gain used while receiving signal",
 						"example": "14.5"
 					},
+					"biast": {
+						"type": "boolean",
+						"description": "true if bias-t was enabled"
+					},					
 					"channelA": {
 						"type": "string",
 						"description": "Type of A channel from NOAA satellite image",

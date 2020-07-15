@@ -75,6 +75,25 @@
         </div>
         <hr/>
         <div class="row">
+        	<div class="col-md-4">
+				<div class="form-group" :class="{'has-danger': errors.has('gain') }">
+		          <label for="gain">RTL-SDR gain</label>
+	              <input type="text" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model="gain">
+	              <div class="invalid-feedback" v-if="errors.has('gain')">{{ errors.first('gain') }}</div>
+		        </div>
+        	</div>
+        	<div class="col-md-4">
+		        <div class="form-group">
+		        	<label for="gain">Bias-t enabled</label><br/>
+		            <input class="form-control" type="checkbox" id="biast" v-model="biast">
+					<small id="biast" class="form-text text-muted">
+						Will enable <a href="https://en.wikipedia.org/wiki/Bias_tee">bias-t</a> before every observation and disable afterwards
+					</small>
+		        </div>
+        	</div>
+        </div>        
+        <hr/>
+        <div class="row">
         	<div class="col-md-12">
 	        	<h3>Rotator configuration</h3>
 	        	<p>Before configuring rotator make sure rotctrld daemon is running.</p>
@@ -143,7 +162,9 @@ export default {
       rotctrldHostname: '127.0.0.1',
       rotatorTolerance: 5,
       rotatorCycle: 1000,
-      success: false
+      success: false,
+      gain: 45,
+      biast: false
     }
   },
   mounted () {
@@ -161,6 +182,8 @@ export default {
       vm.rotctrldHostname = response.data.rotctrldHostname
       vm.rotatorTolerance = response.data.rotatorTolerance
       vm.rotatorCycle = response.data.rotatorCycle
+      vm.gain = response.data.gain
+      vm.biast = response.data.biast
     })
   },
   methods: {
@@ -200,7 +223,9 @@ export default {
         rotctrldPort: parseInt(vm.rotctrldPort),
         rotctrldHostname: vm.rotctrldHostname,
         rotatorTolerance: parseFloat(vm.rotatorTolerance),
-        rotatorCycle: parseInt(vm.rotatorCycle)
+        rotatorCycle: parseInt(vm.rotatorCycle),
+        gain: parseFloat(vm.gain),
+        biast: vm.biast
       }).then(function (response) {
         vm.submitting = false
         vm.success = true
