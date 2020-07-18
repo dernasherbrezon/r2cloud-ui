@@ -38,7 +38,7 @@ export default {
     return {
       satellites: [],
       loading: true,
-      currentSort: 'name',
+      currentSort: 'nextPass',
       currentSortDir: 'asc'
     }
   },
