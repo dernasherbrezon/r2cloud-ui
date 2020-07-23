@@ -87,7 +87,8 @@
           ppmType: 'AUTO',
           elevationGuaranteed: 20,
           elevationMin: 8,
-          rotationEnabled: false
+          rotationEnabled: false,
+          gain: 45
         }).then(function (response) {
           vm.submitting = false
           auth.setGeneralSetup(true)
