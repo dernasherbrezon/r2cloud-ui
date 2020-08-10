@@ -66,11 +66,7 @@ export default {
           return (label / 1024 / 1024).toFixed(2) + ' MiB'
         }
       }
-      if (Number(label) % 1 === 0) {
-        return label
-      } else {
-        return label.toFixed(2)
-      }
+      return label.toFixed(2)
     }
   }
 }
