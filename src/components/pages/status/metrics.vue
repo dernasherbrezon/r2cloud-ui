@@ -4,7 +4,7 @@
       <form class="form-inline" style="margin-top: 20px;">
 	    <div class="form-group">
 	      <label for="period">Period&nbsp;</label>
-	      <select id="updateInterval" class="form-control" v-model="interval" v-on:click="changeInterval">
+	      <select id="updateInterval" class="form-control" v-model="interval" v-on:change="changeInterval">
 	        <option selected value="DAY">Last day</option>
 	        <option value="MONTH">Last month</option>
 	        <option value="YEAR">Last year</option>
@@ -70,11 +70,22 @@ export default {
               }
               var rrddata = file.getData('data', 'AVERAGE', start, end)
               var converted = []
-              for (var i = 0; i < rrddata.data.length; i++) {
-                converted.push({
-                  x: rrddata.data[i][0],
-                  y: rrddata.data[i][1]
-                })
+              var previousX = NaN
+              if (rrddata.data) {
+                for (var i = 0; i < rrddata.data.length; i++) {
+                  var curX = rrddata.data[i][0]
+                  var curY
+                  if (currentMetric.type === 'counter' && i > 0 && !isNaN(previousX) ) {
+                    curY = rrddata.data[i][1] * ( curX - previousX ) / 1000
+                  } else {
+                    curY = rrddata.data[i][1]
+                  }
+                  converted.push({
+                    x: curX,
+                    y: curY
+                  })
+                  previousX = curX
+                }
               }
               vm.graphs.push({
                 id: currentMetric.id,
