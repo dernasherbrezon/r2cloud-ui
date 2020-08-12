@@ -977,6 +977,10 @@
 					"format": {
 						"type": "string",
 						"description": "Metric format. Applicable only for Formatted metrics. Possible values are: NORMAL, BYTES"
+					},
+					"type": {
+						"type": "string",
+						"description": "Metric type. Can be one of follows: GAUGE, COUNTER"
 					}
 				}
 			},
