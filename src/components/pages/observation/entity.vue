@@ -116,7 +116,33 @@
                 </div>
               </div>
             </b-tab>
-
+			<b-tab title="Polar Plot">
+				<div class="row" style="margin-top: 20px;" v-if="observation.tle">
+					<div class="col-md-12">
+						<svg xmlns="http://www.w3.org/2000/svg" version="1.1" id="polar" width="120px" height="120px" viewBox="-110 -110 220 220" overflow="hidden">
+			                <path fill="none" stroke="black" stroke-width="1" d="M 0 -95 v 190 M -95 0 h 190"></path>
+			                <circle fill="none" stroke="black" cx="0" cy="0" r="30"></circle>
+			                <circle fill="none" stroke="black" cx="0" cy="0" r="60"></circle>
+			                <circle fill="none" stroke="black" cx="0" cy="0" r="90"></circle>
+			                <text x="-4" y="-96">
+			                    N
+			                </text>
+			                <text x="-4" y="105">
+			                    S
+			                </text>
+			                <text x="96" y="4">
+			                    E
+			                </text>
+			                <text x="-106" y="4">
+			                    W
+			                </text>
+		            		<path fill="none" stroke="blue" stroke-opacity="1.0" stroke-width="3" :d="polarPlot.curve"></path>
+		            		<circle v-if="polarPlot.start" fill="lightgreen" stroke="black" stroke-width="1" :cx="polarPlot.start.x" :cy="polarPlot.start.y" r="7"></circle>
+		            		<circle v-if="polarPlot.end"   fill="red"        stroke="black" stroke-width="1" :cx="polarPlot.end.x"   :cy="polarPlot.end.y"   r="7"></circle>
+		        		</svg>
+					</div>
+				</div>
+			</b-tab>
             <b-tab title="TLE">
               <div class="row" style="margin-top: 20px;" v-if="observation.tle">
                 <div class="col-md-12">
@@ -143,6 +169,7 @@
 
 <script>
 import moment from 'moment'
+import * as satellite from 'satellite.js'
 
 export default {
   name: 'observationLoad',
@@ -150,7 +177,9 @@ export default {
     return {
       observation: {},
       loading: true,
-      generatingSpectogram: false
+      generatingSpectogram: false,
+      polarPlot: {
+      }
     }
   },
   mounted () {
@@ -182,10 +211,59 @@ export default {
       vm.$http.get('/admin/observation/load?id=' + vm.$route.query.id + '&satelliteId=' + vm.$route.query.satelliteId).then(function (response) {
         vm.observation = response.data
         vm.loading = false
+        vm.generatePolarPlot()
       }).catch(function (error) {
         vm.loading = false
         vm.handleError(vm, error)
       })
+    },
+    generatePolarPlot() {
+      const vm = this
+      var satrec = satellite.twoline2satrec(vm.observation.tle.line2, vm.observation.tle.line3)
+      var g = ''
+      var observerGd = {
+        longitude: vm.observation.groundStation.lon * Math.PI / 180.0,
+        latitude: vm.observation.groundStation.lat * Math.PI / 180.0,
+        height: 0
+      }
+      for (var t = moment(vm.observation.start); t < moment(vm.observation.end); t.add(20, 's')) {
+        var skyPosition = vm.polarGetAzEl(satrec, observerGd, t);
+        var coord = vm.polarGetXY(skyPosition.azimuth, skyPosition.elevation);
+        if (g === '') {
+            g += 'M'
+        } else {
+            g += ' L'
+        }
+        g += coord.x + ' ' + coord.y
+      }
+      var skyStart = vm.polarGetAzEl(satrec, observerGd, moment(vm.observation.start))
+      var coordStart = vm.polarGetXY(skyStart.azimuth, skyStart.elevation)
+      var skyEnd = vm.polarGetAzEl(satrec, observerGd, moment(vm.observation.end))
+      var coordEnd = vm.polarGetXY(skyEnd.azimuth, skyEnd.elevation)
+      vm.polarPlot = {
+        curve: g,
+        start: coordStart,
+        end: coordEnd
+      }
+      console.log(vm.polarPlot)
+    },
+    polarGetAzEl(satrec, observerGd, t) {
+        var positionAndVelocity = satellite.propagate(satrec, t.toDate())
+
+        var gmst = satellite.gstime(t.toDate())
+        var positionEci   = positionAndVelocity.position
+        var positionEcf   = satellite.eciToEcf(positionEci, gmst)
+
+        var lookAngles    = satellite.ecfToLookAngles(observerGd, positionEcf)
+
+        return {'azimuth':   lookAngles.azimuth * 180 / Math.PI,
+            'elevation': lookAngles.elevation * 180 / Math.PI}
+    },
+    polarGetXY(az, el) {
+        var ret = {};
+        ret.x = (90 - el) * Math.sin(az * Math.PI / 180.0);
+        ret.y = (el - 90) * Math.cos(az * Math.PI / 180.0);
+        return ret;
     },
     formatDate (unixTimestamp) {
       if (unixTimestamp) {
