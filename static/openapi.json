@@ -1261,6 +1261,11 @@
 						"format": "int64",
 						"description": "UNIX timestamp"
 					},
+					"numberOfDecodedPackets": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Number of frames decoded"
+					},
 					"hasData": {
 						"type": "boolean",
 						"description": "Determines if observation has any data decoded. true - if at least 1 packet was decoded"

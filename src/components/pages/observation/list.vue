@@ -6,16 +6,14 @@
               <tr>
               	<th scope="col" style="border-top: 0px;">Name</th>
                 <th scope="col" style="border-top: 0px;">Date</th>
-                <th scope="col" style="border-top: 0px;">Has data</th>
+                <th scope="col" style="border-top: 0px;">Frames</th>
               </tr>
             </thead>
             <tbody>
               <tr :class="rowColor(curData)" :key="curData.id" v-for="(curData, index) in observations">
               	<td>{{ curData.name }}</td>
                 <td><router-link :to="{ path: '/admin/observation/load', query: { id: curData.id, satelliteId: curData.satelliteId }}">{{ formatTime(curData.start) + ' ' + formatDate(curData.start) }}</router-link></td>
-                <td>
-                <i class="fa fa-check" v-if="curData.hasData"></i>
-                </td>
+                <td>{{ curData.numberOfDecodedPackets }}</td>
               </tr>
             </tbody>
          </table>      

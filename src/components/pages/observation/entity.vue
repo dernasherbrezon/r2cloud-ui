@@ -42,7 +42,7 @@
               <td>{{ observation.channelB  }}</td>
             </tr>
             <tr v-if="observation.numberOfDecodedPackets">
-              <td>Number of packets</td>
+              <td>Frames decoded</td>
               <td>{{ observation.numberOfDecodedPackets  }}</td>
             </tr>
             <tr v-if="observation.frequency > 0">
