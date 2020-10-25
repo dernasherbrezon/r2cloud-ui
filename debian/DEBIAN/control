@@ -2,7 +2,7 @@ Package: r2cloud-ui
 Section: embedded
 Priority: standard
 Homepage: https://github.com/dernasherbrezon/r2cloud-ui
-Architecture: armhf
+Architecture: all
 Maintainer: Andrey Rodionov <info@r2cloud.ru>
 Description: r2cloud ui
  Web UI for r2cloud
