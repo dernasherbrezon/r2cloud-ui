@@ -11,7 +11,6 @@ import statusMetrics from '@/components/pages/status/metrics'
 
 import configGeneral from '@/components/pages/configuration/general'
 import configDDNS from '@/components/pages/configuration/ddns'
-import configSSL from '@/components/pages/configuration/ssl'
 import configR2Cloud from '@/components/pages/configuration/r2cloud'
 
 import tle from '@/components/pages/tle'
@@ -80,11 +79,6 @@ const router = new Router({
       path: '/admin/config/ddns',
       name: 'configDDNS',
       component: configDDNS
-    },
-    {
-      path: '/admin/config/ssl',
-      name: 'configSSL',
-      component: configSSL
     },
     {
       path: '/admin/config/r2cloud',

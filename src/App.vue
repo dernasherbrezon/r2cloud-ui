@@ -18,7 +18,6 @@
               <b-nav-item-dropdown text="Configuration">
                 <b-dropdown-item to="/admin/config/general">General</b-dropdown-item>
                 <b-dropdown-item to="/admin/config/ddns">DDNS</b-dropdown-item>
-                <b-dropdown-item to="/admin/config/ssl">SSL</b-dropdown-item>
                 <b-dropdown-item to="/admin/config/r2cloud">R2Server</b-dropdown-item>
               </b-nav-item-dropdown>
               <b-nav-item v-on:click.prevent="logout">Logout</b-nav-item>

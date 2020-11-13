@@ -471,68 +471,6 @@
 				]
 			}
 		},
-		"/admin/config/ssl": {
-			"get": {
-				"tags": [
-					"Configuration"
-				],
-				"summary": "Get SSL configuration",
-				"responses": {
-					"200": {
-						"description": "SSL configuration",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/SSLConfiguration"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"Bearer": []
-					}
-				]
-			},
-			"post": {
-				"tags": [
-					"Configuration"
-				],
-				"summary": "Update SSL configuration",
-				"requestBody": {
-					"description": "SSL configuration",
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/SSLConfiguration"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"400": {
-						"description": "If request parameters are missing or empty",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Response"
-								}
-							}
-						}
-					},
-					"200": {
-						"description": "Success"
-					}
-				},
-				"security": [
-					{
-						"Bearer": []
-					}
-				]
-			}
-		},
 		"/admin/schedule/list": {
 			"get": {
 				"tags": [
@@ -1044,24 +982,6 @@
 					"syncSpectogram": {
 						"type": "boolean",
 						"description": "Synchronize spectograms to r2server. If no spectogram available for observation, then it will be created prior to upload"
-					}
-				}
-			},
-			"SSLConfiguration": {
-				"type": "object",
-				"properties": {
-					"enabled": {
-						"type": "boolean",
-						"description": "true - if SSL configuration enabled. false - otherwise"
-					},
-					"agreeWithToC": {
-						"type": "boolean",
-						"description": "true - if agree with lets encrypt terms and conditions"
-					},
-					"domain": {
-						"type": "string",
-						"description": "domain to setup for SSL",
-						"example": "example.ddns.com"
 					}
 				}
 			},
