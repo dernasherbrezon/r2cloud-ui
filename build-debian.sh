@@ -2,7 +2,7 @@
 
 set -e
 
-DATE=`date +%s`
+DATE=$(date '+%Y%m%d%H%M%S')
 
 echo "Version: ${DATE}" >> debian/DEBIAN/control
 
