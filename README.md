@@ -1,4 +1,4 @@
-# r2cloud-ui [![Build Status](https://travis-ci.org/dernasherbrezon/r2cloud-ui.svg?branch=master)](https://travis-ci.org/dernasherbrezon/r2cloud-ui)
+# r2cloud-ui [![Build Status](https://travis-ci.com/dernasherbrezon/r2cloud-ui.svg?branch=master)](https://travis-ci.com/dernasherbrezon/r2cloud-ui)
 
 Screenshots
 
