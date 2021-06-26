@@ -14,4 +14,4 @@ script:
   - set -e
   - npm run build
   - npm test
-  - if [[ $TRAVIS_BRANCH == 'master' ]]; then sh build-debian.sh; fi
+  - if [[ $TRAVIS_BRANCH == 'master' && $TRAVIS_PULL_REQUEST == 'false' ]]; then sh build-debian.sh; fi
