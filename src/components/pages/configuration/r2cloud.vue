@@ -22,6 +22,13 @@
 	            <label class="form-check-label" for="gridCheck"> Upload spectogram</label>
 	        </div>
         </div>
+        <div class="form-group">
+	        <div class="form-check">
+	            <input class="form-check-input" type="checkbox" id="newLaunch" v-model="newLaunch">
+	            <label class="form-check-label" for="newLaunch"> New launches</label>
+	            <small id="newLaunchHelp" class="form-text text-muted">Schedule observations for new launches with top priority. More info in the <a href="https://github.com/dernasherbrezon/r2cloud/wiki/Tracking-newly-launched-satellites">documentation</a>.</small>
+	        </div>
+        </div>
         <button type="submit" class="btn btn-primary" :disabled="submitting">Save</button>
         <span v-if="success" class="text-success" style="margin-left: 20px;">Saved</span>
       </form>
@@ -36,6 +43,7 @@ export default {
     return {
       apiKey: '',
       syncSpectogram: false,
+      newLaunch: false,
       submitting: false,
       success: false
     }
@@ -45,6 +53,7 @@ export default {
     vm.$http.get('/admin/config/r2cloud').then(function (response) {
       vm.apiKey = response.data.apiKey
       vm.syncSpectogram = response.data.syncSpectogram
+      vm.newLaunch = response.data.newLaunch
     })
   },
   methods: {
@@ -65,7 +74,8 @@ export default {
       const vm = this
       vm.$http.post('/admin/config/r2cloud', {
         apiKey: vm.apiKey,
-        syncSpectogram: vm.syncSpectogram
+        syncSpectogram: vm.syncSpectogram,
+        newLaunch: vm.newLaunch
       }).then(function (response) {
         vm.submitting = false
         vm.success = true
