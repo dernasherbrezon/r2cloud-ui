@@ -199,7 +199,7 @@ export default {
         vm.generatingSpectogram = false
         if (error.response && error.response.status === 404) {
           vm.$validator.validate().then(() => {
-            vm.errors.add('general', 'Unable to find .wav')
+            vm.errors.add('general', 'Unable to find IQ file with raw data')
           })
           return
         }
