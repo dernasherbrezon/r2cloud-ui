@@ -1,60 +1,58 @@
 <template>
-  <div class="row">
-	  <div class="col-md-12">
-		<object id="dashboard" data="/static/dash.svg" type="image/svg+xml"></object>	  
-	  </div>
-  </div>
+	<div class="row" v-if="!loading">
+		<div class="col-md-12" :key="curData.id" v-for="(curData, index) in devices">
+		
+			<div class="card border-success" v-if="curData.status === 'CONNECTED'">
+				<div class="card-header text-success">{{ curData.connection }}</div>
+				<ul class="list-group list-group-flush text-success">
+				    <li class="list-group-item" v-if="curData.model">Model: {{ curData.model }}</li>
+					<li class="list-group-item">Frequencies: {{ curData.minFrequency / 1000000  }} - {{ curData.maxFrequency / 1000000 }} Mhz</li>
+				</ul>
+				<rotatorStatus :rotator="curData.rotator"/>
+			</div>
+			
+			<div class="card border-danger" v-else-if="curData.status === 'FAILED'">
+				<div class="card-header text-danger">{{ curData.connection }}</div>
+				<ul class="list-group list-group-flush text-danger">
+				    <li class="list-group-item">Status: {{ curData.status }}</li>
+				    <li class="list-group-item">Message: {{ curData.failureMessage }}</li>
+				</ul>
+				<rotatorStatus :rotator="curData.rotator"/>
+			</div>
+		</div>
+	</div>
+	<div class="row" v-else>
+		<div class="col-md-12" style="text-align: center;">
+			<i class="fa fa-cog fa-spin fa-3x fa-fw"></i> <span class="sr-only">Loading...</span>
+		</div>
+	</div>
 </template>
 
 <script>
-var submitting = false
+import rotatorStatus from './rotatorStatus.vue'
 
 export default {
   name: 'status',
-  mounted: function () {
-    var vm = this
-    var dashboard = document.getElementById('dashboard')
-    dashboard.addEventListener('load', function () {
-      update()
-    }, false)
-    function update () {
-      if (submitting) {
-        return
-      }
-      submitting = true
-
+  data () {
+    return {
+      devices: [],
+      loading: true
+    }
+  },
+  mounted () {
+    this.loadData()
+  },
+  methods: {
+    loadData () {
+      const vm = this
       vm.$http.get('/admin/status/overview').then(function (response) {
-        submitting = false
-        for (var property in response.data) {
-          if (!response.data.hasOwnProperty(property)) {
-            continue
-          }
-          var value = response.data[property]
-          var color
-          if (value.status === 'SUCCESS') {
-            color = '#3c763d'
-          } else if (value.status === 'ERROR') {
-            color = '#a94442'
-          } else {
-            color = '#777'
-          }
-          
-          var elem = dashboard.contentDocument.getElementById(property)
-          if (elem !== null) {
-            if ( elem.nodeName === "tspan" ) {
-                elem.innerHTML = value.message
-            } else {
-                elem.style.fill = color
-                if (value.status === 'ERROR') {
-                  elem.innerHTML = '<title>' + value.message + '</title>'
-                } else {
-                  elem.innerHTML = ''
-                }
-            }
-          }
-        }
+        vm.devices = response.data.devices
+        vm.loading = false
       })
     }
+  },
+  components: {
+    rotatorStatus
   }
 }
 </script>
