@@ -2,7 +2,7 @@
 	<div class="row" v-if="!loading">
 		<div class="col-md-12" :key="curData.id" v-for="(curData, index) in devices">
 		
-			<div class="card border-success" v-if="curData.status === 'CONNECTED'">
+			<div class="card border-success mb-3" v-if="curData.status === 'CONNECTED'">
 				<div class="card-header text-success">{{ curData.connection }}</div>
 				<ul class="list-group list-group-flush text-success">
 				    <li class="list-group-item" v-if="curData.model">Model: {{ curData.model }}</li>
@@ -11,7 +11,7 @@
 				<rotatorStatus :rotator="curData.rotator"/>
 			</div>
 			
-			<div class="card border-danger" v-else-if="curData.status === 'FAILED'">
+			<div class="card border-danger mb-3" v-else-if="curData.status === 'FAILED'">
 				<div class="card-header text-danger">{{ curData.connection }}</div>
 				<ul class="list-group list-group-flush text-danger">
 				    <li class="list-group-item">Status: {{ curData.status }}</li>
