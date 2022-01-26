@@ -82,7 +82,7 @@
                 <div class="col-md-12" role="tablist">
                   <b-card no-body class="mb-1" v-for="(curBeacon, index) in observation.dataEntity" :key="curBeacon.name">
                     <b-card-header header-tag="header" class="p-1" role="tab">
-                      <b-btn href="#" v-b-toggle="'accordion-' + index" variant="default">Uptime: {{ curBeacon.name }}</b-btn>
+                      <b-btn href="#" v-b-toggle="'accordion-' + index" variant="default">Time: {{ formatTimeBeacon(curBeacon.time) }} <span v-if="curBeacon.rssi">RSSI: {{ curBeacon.rssi }} SNR: {{ curBeacon.snr }}</span></b-btn>
                     </b-card-header>
                     <b-collapse :id="'accordion-' + index" accordion="accordion" role="tabpanel">
                       <b-card-body>
@@ -274,6 +274,12 @@ export default {
     formatTime (unixTimestamp) {
       if (unixTimestamp) {
         return moment(unixTimestamp).utc().format('HH:mm')
+      }
+      return ''
+    },
+    formatTimeBeacon (unixTimestamp) {
+      if (unixTimestamp) {
+        return moment(unixTimestamp).utc().format('HH:mm:ss')
       }
       return ''
     }
