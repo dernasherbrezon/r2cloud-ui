@@ -248,7 +248,7 @@
 				"summary": "Get overall status",
 				"responses": {
 					"200": {
-						"description": "Base station status",
+						"description": "Get the status of all connected devices and their rotators.",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -922,23 +922,81 @@
 					}
 				}
 			},
-			"ParameterDetails": {
+			"RotatorStatus": {
 				"properties": {
 					"status": {
 						"type": "string",
-						"description": "Can be: SUCCESS, ERROR, UNKNOWN",
-						"example": "SUCCESS"
+						"description": "Rotator status. Can be one of: CONNECTED, FAILED, DISABLED",
+						"example": "CONNECTED"
 					},
-					"message": {
+					"model": {
 						"type": "string",
-						"description": "optional message describing error"
+						"description": "Rotator can report its own model",
+						"example": "TEST"
+					},
+					"connection": {
+						"type": "string",
+						"description": "rotctrld connection details",
+						"example": "127.0.0.1:8004"
+					},
+					"failureMessage": {
+						"type": "string",
+						"description": "If rotator status FAILED, then this failure message contains failure details",
+						"example": "unable to connect to rotctrld"
+					}
+				}
+			},
+			"DeviceStatus": {
+				"properties": {
+					"status": {
+						"type": "string",
+						"description": "Device status. Can be one of: CONNECTED, FAILED",
+						"example": "CONNECTED"
+					},
+					"failureMessage": {
+						"type": "string",
+						"description": "If device status FAILED, then this failure message contains failure details",
+						"example": "unable to find device"
+					},
+					"connection": {
+						"type": "string",
+						"description": "Unique device id string. Contains device type and unique device identifier",
+						"example": "RTL-SDR 0"
+					},
+					"model": {
+						"type": "string",
+						"description": "Device can report its own model and type",
+						"example": "Realtek, RTL2838UHIDIR, SN: 00000001"
+					},
+					"minFrequency": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Minimum frequency device supports",
+						"example": "144000000"
+					},
+					"maxFrequency": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Maximum frequency device supports",
+						"example": "500100000"
+					},
+					"rotator": {
+						"$ref": "#/components/schemas/RotatorStatus"
 					}
 				}
 			},
 			"StatusOverview": {
 				"properties": {
-					"parameterName": {
-						"$ref": "#/components/schemas/ParameterDetails"
+					"serverTime": {
+						"type": "string",
+						"description": "Current server time",
+						"example": "12 June 2021 13:34"
+					},
+					"devices": {
+						"type": "array",
+						"items": {
+							"$ref": "#/components/schemas/DeviceStatus"
+						}
 					}
 				}
 			},
@@ -1342,10 +1400,28 @@
 			"ParsedData": {
 				"type": "object",
 				"properties": {
-					"name": {
+					"time": {
 						"type": "string",
 						"example": "1574019119875",
-						"description": "Unique telemetry identifier"
+						"description": "Time when this beacon was received by the station. Format: unix timestamp"
+					},
+					"frequencyError": {
+						"type": "integer",
+						"format": "int64",
+						"description": "Frequency error observed during RX. In hz. Can be empty",
+						"example": "-2123"
+					},
+					"rssi": {
+						"type": "number",
+						"format": "double",
+						"description": "RSSI observed during RX. Can be empty",
+						"example": "-122"
+					},
+					"snr": {
+						"type": "number",
+						"format": "double",
+						"description": "SNR observed during RX. Can be empty",
+						"example": "-8"
 					},
 					"body": {
 						"type": "object",
