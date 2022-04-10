@@ -1,14 +1,14 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <h1 class="pb-2 mb-2 border-bottom">R2Server configuration</h1>
-      <p>You can register at <a href="https://r2server.ru">https://r2server.ru</a> and obtain an API key there.</p>
+      <h1 class="pb-2 mb-2 border-bottom">LEOSatData configuration</h1>
+      <p>You can register at <a href="https://leosatdata.com">https://leosatdata.com</a> and obtain an API key there.</p>
       <b-alert variant="danger"
         dismissible
         :show="errors.has('general')">
       {{ errors.first('general') }}
       </b-alert>
-    </div>  
+    </div>
     <div class="col-md-12">
       <form @submit.prevent="validateBeforeSubmit">
         <div class="form-group" :class="{'has-danger': errors.has('apiKey') }">
