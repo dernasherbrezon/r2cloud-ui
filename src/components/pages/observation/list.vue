@@ -4,16 +4,38 @@
 		<table class="table table-hover">
             <thead>
               <tr>
-              	<th scope="col" style="border-top: 0px;">Name</th>
-                <th scope="col" style="border-top: 0px;">Date</th>
+              	<th scope="col" style="border-top: 0px; width: 30%">Name</th>
+                <th scope="col" style="border-top: 0px; width: 30%">Date</th>
                 <th scope="col" style="border-top: 0px;">Frames</th>
               </tr>
             </thead>
             <tbody>
               <tr :class="rowColor(curData)" :key="curData.id" v-for="(curData, index) in observations">
-              	<td>{{ curData.name }}</td>
-                <td><router-link :to="{ path: '/admin/observation/load', query: { id: curData.id, satelliteId: curData.satelliteId }}">{{ formatTime(curData.start) + ' ' + formatDate(curData.start) }}</router-link></td>
-                <td>{{ curData.numberOfDecodedPackets }}</td>
+              	<template v-if="curData.status == 'RECEIVING_DATA'">
+              		<td>{{ curData.name }}</td>
+              		<td colspan="2">
+						<div class="progress" style="height: 20px;">
+						  <div class="progress-bar progress-bar-animated" role="progressbar" :style="'width: ' + formatReceive(curData) + '%'" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+						  	<span>{{ formatReceive(curData) }} %</span>
+						  </div>
+						</div>            
+              		</td>	
+              	</template>
+              	<template v-else-if="curData.status == 'RECEIVED'">
+              		<td>{{ curData.name }}</td>
+              		<td colspan="2">
+						<div class="progress" style="height: 20px;">
+						  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+						  	<span>Decoding...</span>
+						  </div>
+						</div>            
+              		</td>	
+              	</template>
+              	<template v-else>
+	              	<td>{{ curData.name }}</td>
+	                <td><router-link :to="{ path: '/admin/observation/load', query: { id: curData.id, satelliteId: curData.satelliteId }}">{{ formatTime(curData.start) + ' ' + formatDate(curData.start) }}</router-link></td>
+	                <td>{{ curData.numberOfDecodedPackets }}</td>
+              	</template>
               </tr>
             </tbody>
          </table>      
@@ -40,6 +62,9 @@ export default {
     this.loadData()
   },
   methods: {
+    formatReceive(observation) {
+      return Math.round((moment().utc().valueOf() - observation.start) * 100 / (observation.end - observation.start));
+    },
     rowColor (observation) {
       if (observation.hasData) {
         return 'table-success'

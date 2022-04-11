@@ -582,7 +582,7 @@
 						"description": "If unable to start immediately"
 					},
 					"200": {
-						"description": "Success. Return id of the newly started observation",
+						"description": "Success. Return ids of the newly started observations",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -1239,6 +1239,16 @@
 						"format": "int64",
 						"description": "UNIX timestamp"
 					},
+					"end": {
+						"type": "integer",
+						"format": "int64",
+						"description": "UNIX timestamp"
+					},
+					"status": {
+						"type": "string",
+						"description": "Observation status. Can be one of: RECEIVING_DATA, RECEIVED, DECODED, UPLOADED, FAILED",
+						"example": "RECEIVING_DATA"
+					},
 					"numberOfDecodedPackets": {
 						"type": "integer",
 						"format": "int64",
@@ -1330,11 +1340,6 @@
 						"format": "int64",
 						"description": "Actual frequency used while receiving satellite data. Frequency of the raw file",
 						"example": "137900000"
-					},
-					"decoder": {
-						"type": "string",
-						"description": "Type of decoder to use. Supported values: APT, LRPT, TELEMETRY",
-						"example": "LRPT"
 					},
 					"bandwidth": {
 						"type": "integer",
