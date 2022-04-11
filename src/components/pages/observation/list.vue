@@ -19,7 +19,7 @@
 						  	<span>{{ formatReceive(curData) }} %</span>
 						  </div>
 						</div>            
-              		</td>	
+              		</td>
               	</template>
               	<template v-else-if="curData.status == 'RECEIVED'">
               		<td>{{ curData.name }}</td>
@@ -60,6 +60,7 @@ export default {
   },
   mounted () {
     this.loadData()
+    setTimeout(this.reloadData, 10000);
   },
   methods: {
     formatReceive(observation) {
@@ -76,6 +77,10 @@ export default {
     },
     formatTime (unixTimestamp) {
       return moment(unixTimestamp).utc().format('HH:mm')
+    },
+    reloadData() {
+      this.loadData()
+      setTimeout(this.reloadData, 10000);
     },
     loadData () {
       const vm = this
