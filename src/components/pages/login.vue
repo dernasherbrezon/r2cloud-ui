@@ -17,6 +17,7 @@
         <button class="btn btn-lg btn-primary btn-block" :disabled="submitting" type="submit">Sign in</button>
 		<div style="padding-top: 20px;">
 			<router-link to="/restore">Forgot password</router-link>
+			<router-link class="pull-right" to="/presentationMode" v-if="presentationMode">Presentation mode</router-link>
 		</div>        
       </form>
 </template>
@@ -28,13 +29,15 @@
       return {
         username: '',
         password: '',
-        submitting: false
+        submitting: false,
+        presentationMode: false
       }
     },
     created () {
       var vm = this
       vm.$http.get('/configured').then(function (response) {
         auth.setGeneralSetup(response.data.generalSetup)
+        vm.presentationMode = response.data.presentationMode
         if (!response.data.configured) {
           vm.$router.push('/setup')
         } else if (!response.data.generalSetup) {

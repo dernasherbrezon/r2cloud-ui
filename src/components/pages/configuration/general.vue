@@ -28,7 +28,7 @@
           <div class="col-md-4">
             <div class="form-group">
                 <label for="detect">&nbsp;</label>
-                <button id="detect" type="button" class="btn btn-default" v-on:click="detectLocation" style="display: block;">Detect</button>
+                <button id="detect" type="button" class="btn btn-light" v-on:click="detectLocation" style="display: block;">Detect</button>
             </div>
           </div>
         </div>
@@ -54,6 +54,21 @@
 	        <div class="form-check">
 	            <input class="form-check-input" type="checkbox" id="gridCheck" v-model="autoUpdate">
 	            <label class="form-check-label" for="gridCheck"> Auto-update enabled</label>
+	        </div>
+        </div>
+        <hr/>
+        <div class="form-group">
+	        <div class="form-check">
+	            <input class="form-check-input" type="checkbox" id="presentationMode" v-model="presentationMode">
+	            <label class="form-check-label" for="presentationMode"> Presentation mode enabled</label>
+				<small id="presentationModeHelp" class="form-text text-muted">
+				  	This will allow access to the following data WITHOUT username and password:
+				  	<ul>
+				  		<li>Next 5 scheduled observations</li>
+				  		<li>Previous past 5 observations and any data assotiated with them</li>
+				  	</ul>
+				  	If enabled, then login page will contain additional link to the presentation page.
+				</small>
 	        </div>
         </div>
         <hr/>
@@ -164,7 +179,8 @@ export default {
       rotatorCycle: 1000,
       success: false,
       gain: 45,
-      biast: false
+      biast: false,
+      presentationMode: false
     }
   },
   mounted () {
@@ -184,6 +200,7 @@ export default {
       vm.rotatorCycle = response.data.rotatorCycle
       vm.gain = response.data.gain
       vm.biast = response.data.biast
+      vm.presentationMode = response.data.presentationMode
     })
   },
   methods: {
@@ -225,7 +242,8 @@ export default {
         rotatorTolerance: parseFloat(vm.rotatorTolerance),
         rotatorCycle: parseInt(vm.rotatorCycle),
         gain: parseFloat(vm.gain),
-        biast: vm.biast
+        biast: vm.biast,
+        presentationMode: vm.presentationMode
       }).then(function (response) {
         vm.submitting = false
         vm.success = true

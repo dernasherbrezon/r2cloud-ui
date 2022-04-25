@@ -33,7 +33,7 @@
               	</template>
               	<template v-else>
 	              	<td>{{ curData.name }}</td>
-	                <td><router-link :to="{ path: '/admin/observation/load', query: { id: curData.id, satelliteId: curData.satelliteId }}">{{ formatTime(curData.start) + ' ' + formatDate(curData.start) }}</router-link></td>
+	                <td><router-link :to="{ path: '/admin/observation/load', query: { id: curData.id, satelliteId: curData.satelliteId, path: '/admin/observation/load' }}">{{ formatTime(curData.start) + ' ' + formatDate(curData.start) }}</router-link></td>
 	                <td>{{ curData.numberOfDecodedPackets }}</td>
               	</template>
               </tr>
@@ -55,12 +55,22 @@ export default {
   data () {
     return {
       observations: [],
-      loading: true
+      loading: true,
+      timeoutFunction: ''
     }
   },
   mounted () {
     this.loadData()
-    setTimeout(this.reloadData, 10000);
+    this.timeoutFunction = setTimeout(this.reloadData, 10000);
+  },
+  unmounted() {
+    if( this.timeoutFunction !== '' ) {
+      clearTimeout(this.timeoutFunction)
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+    clearTimeout(this.timeoutFunction)
+    next()
   },
   methods: {
     formatReceive(observation) {
@@ -80,7 +90,7 @@ export default {
     },
     reloadData() {
       this.loadData()
-      setTimeout(this.reloadData, 10000);
+      this.timeoutFunction = setTimeout(this.reloadData, 10000)
     },
     loadData () {
       const vm = this

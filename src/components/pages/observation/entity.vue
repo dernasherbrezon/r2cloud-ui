@@ -208,7 +208,7 @@ export default {
     },
     loadData () {
       const vm = this
-      vm.$http.get('/admin/observation/load?id=' + vm.$route.query.id + '&satelliteId=' + vm.$route.query.satelliteId).then(function (response) {
+      vm.$http.get(vm.$route.query.path + '?id=' + vm.$route.query.id + '&satelliteId=' + vm.$route.query.satelliteId).then(function (response) {
         vm.observation = response.data
         vm.loading = false
         vm.generatePolarPlot()

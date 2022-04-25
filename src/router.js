@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import login from '@/components/pages/login'
+import presentationMode from '@/components/pages/presentationMode'
 import restore from '@/components/pages/setup/restore'
 import setup from '@/components/pages/setup/setup'
 import setupWizard from '@/components/pages/setup/wizard'
@@ -33,6 +34,11 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/presentationMode',
+      name: 'presentationMode',
+      component: presentationMode
     },
     {
       path: '/restore',
@@ -103,6 +109,11 @@ const router = new Router({
     {
       path: '/admin/observation/load',
       name: 'observationEntity',
+      component: observationEntity
+    },
+    {
+      path: '/observation/load',
+      name: 'observationEntityPresentation',
       component: observationEntity
     },
     {
