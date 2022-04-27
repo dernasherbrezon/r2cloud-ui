@@ -150,7 +150,6 @@ export default {
         var currentDate = new Date()
         var gmst = satellite.gstime(currentDate)
         for( var i =0;i<vm.observations.length;i++) {
-           console.log(vm.observations[i].status)
            if( vm.observations[i].status !== 'NEW' && vm.observations[i].status !== 'RECEIVING_DATA' ) {
                continue;
            }
