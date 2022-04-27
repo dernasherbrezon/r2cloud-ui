@@ -20,7 +20,7 @@
     "chart.js": "2.9.4",
     "d3": "5.16.0",
     "font-awesome": "4.7.0",
-    "moment": "2.21.0",
+    "moment": "2.29.2",
     "rrd4j-js": "2.0.1",
     "satellite.js": "4.0.0",
     "topojson-client": "^3.1.0",
