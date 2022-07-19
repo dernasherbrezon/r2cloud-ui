@@ -1027,6 +1027,11 @@
 						"format": "int64",
 						"description": "UNIX timestamp. The next scheduled observation time for this satellite. Can be empty if satellite is not enabled",
 						"example": "1574019119875"
+					},
+					"status": {
+						"type": "string",
+						"description": "Overall satellite status. Can be one of: ENABLED, WEAK, DISABLED, DECAYED. Mostly used to differentiate satellites with weak signals",
+						"example": "ENABLED"
 					}
 				}
 			},

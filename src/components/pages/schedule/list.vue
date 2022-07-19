@@ -11,7 +11,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr :key="curData.id" v-for="(curData, index) in sortedSatellites">
+              <tr :class="rowColor(curData)" :key="curData.id" v-for="(curData, index) in sortedSatellites">
               	<td>{{ curData.name }}</td>
                 <td>{{ curData.nextPassFormatted }}</td>
                 <td>{{ curData.frequency }} hz</td>
@@ -72,6 +72,12 @@ export default {
         vm.handleError(vm, error)
       })
     },
+    rowColor (scheduleDetails) {
+      if (scheduleDetails.status === 'WEAK') {
+        return 'table-warning'
+      }
+      return ''
+    },    
     sort:function(s) {
       //if s == current sort, reverse
       if(s === this.currentSort) {
