@@ -12,7 +12,7 @@ import statusMetrics from '@/components/pages/status/metrics'
 
 import configGeneral from '@/components/pages/configuration/general'
 import configDDNS from '@/components/pages/configuration/ddns'
-import configR2Cloud from '@/components/pages/configuration/r2cloud'
+import configIntegrations from '@/components/pages/configuration/integrations'
 
 import tle from '@/components/pages/tle'
 import observationList from '@/components/pages/observation/list'
@@ -88,8 +88,8 @@ const router = new Router({
     },
     {
       path: '/admin/config/r2cloud',
-      name: 'configR2Cloud',
-      component: configR2Cloud
+      name: 'configIntegrations',
+      component: configIntegrations
     },
     {
       path: '/admin/tle',
