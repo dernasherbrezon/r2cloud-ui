@@ -13,7 +13,7 @@
         <h3 class="pb-2 mb-2 border-bottom">Leosatdata</h3>
         <div class="form-group" :class="{'has-danger': errors.has('apiKey') }">
           <label for="apiKey">API key</label>
-          <input type="text" id="apiKey" name="apiKey" class="form-control" :class="{'is-invalid': errors.has('apiKey') }" v-validate="'required'" v-model="apiKey">
+          <input type="text" id="apiKey" name="apiKey" class="form-control" :class="{'is-invalid': errors.has('apiKey') }" v-model="apiKey">
           <div class="invalid-feedback" v-if="errors.has('apiKey')">{{ errors.first('apiKey') }}</div>
           <small id="apiKeyHelp" class="form-text text-muted">You can register at <a href="https://leosatdata.com/register/load">leosatdata.com</a> and obtain an API key there.</small>
         </div>
