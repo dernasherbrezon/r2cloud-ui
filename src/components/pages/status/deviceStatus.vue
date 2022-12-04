@@ -14,7 +14,6 @@ export default {
   props: ['device'],
   computed: {
     batteryIcon: function () {
-      console.log(this.device.batteryLevel)
       if (this.device.batteryLevel > 75) {
         return 'fa fa-battery-4'
       } else if (this.device.batteryLevel > 50) {
@@ -28,7 +27,6 @@ export default {
       }
     },
     signalIcon: function() {
-      console.log(this.device.signalLevel)
       // each bluetooth chip has different "good" signal level in db
       // taken from https://www.cnet.com/how-to/how-to-check-bluetooth-connection-strength-in-os-x/
       if (this.device.signalLevel > -60) {
