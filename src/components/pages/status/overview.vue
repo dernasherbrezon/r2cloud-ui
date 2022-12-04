@@ -3,7 +3,7 @@
 		<div class="col-md-12" :key="curData.id" v-for="(curData, index) in devices">
 		
 			<div class="card border-success mb-3" v-if="curData.status === 'CONNECTED'">
-				<div class="card-header text-success">{{ curData.connection }}</div>
+				<div class="card-header text-success">{{ curData.connection }}<deviceStatus :device="curData" /></div>
 				<ul class="list-group list-group-flush text-success">
 				    <li class="list-group-item" v-if="curData.model">Model: {{ curData.model }}</li>
 					<li class="list-group-item">Frequencies: {{ curData.minFrequency / 1000000  }} - {{ curData.maxFrequency / 1000000 }} Mhz</li>
@@ -12,7 +12,7 @@
 			</div>
 			
 			<div class="card border-danger mb-3" v-else-if="curData.status === 'FAILED'">
-				<div class="card-header text-danger">{{ curData.connection }}</div>
+				<div class="card-header text-danger">{{ curData.connection }}<deviceStatus :device="curData" /></div>
 				<ul class="list-group list-group-flush text-danger">
 				    <li class="list-group-item">Status: {{ curData.status }}</li>
 				    <li class="list-group-item">Message: {{ curData.failureMessage }}</li>
@@ -30,6 +30,7 @@
 
 <script>
 import rotatorStatus from './rotatorStatus.vue'
+import deviceStatus from './deviceStatus.vue'
 
 export default {
   name: 'status',
@@ -52,7 +53,8 @@ export default {
     }
   },
   components: {
-    rotatorStatus
+    rotatorStatus,
+    deviceStatus
   }
 }
 </script>
