@@ -245,7 +245,6 @@ export default {
         start: coordStart,
         end: coordEnd
       }
-      console.log(vm.polarPlot)
     },
     polarGetAzEl(satrec, observerGd, t) {
         var positionAndVelocity = satellite.propagate(satrec, t.toDate())
