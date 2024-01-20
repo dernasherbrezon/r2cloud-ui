@@ -146,9 +146,42 @@
             <b-tab title="TLE">
               <div class="row" style="margin-top: 20px;" v-if="observation.tle">
                 <div class="col-md-12">
-                  <p>{{ observation.tle.line1 }}</p>
-				  <p>{{ observation.tle.line2 }}</p>
-				  <p>{{ observation.tle.line3 }}</p>
+	              			<form>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group" v-if="observation.tleStatus == 'OLD'">
+											<label for="tleCalculated">Calculated (epoch)</label>
+											<input class="form-control is-invalid" id="tleCalculated" disabled :value="formatTime(observation.tleUnixTime) + ' ' + formatDate(observation.tleUnixTime)">
+											<div class="invalid-feedback">Older than 14 days</div>
+										</div>
+										<div class="form-group" v-else>
+											<label for="tleCalculated">Calculated (epoch)</label>
+											<input class="form-control" id="tleCalculated" disabled :value="formatTime(observation.tleUnixTime) + ' ' + formatDate(observation.tleUnixTime)">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="tleDownloaded">Downloaded</label>
+											<input class="form-control" id="tleDownloaded" disabled :value="formatTime(observation.tleUnixTime) + ' ' + formatDate(observation.tleUnixTime)">
+										</div>
+									</div>
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="tleSource">Source</label>
+											<input class="form-control" id="tleSource" disabled value="Celestrak">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<textarea class="form-control" id="tleValue" disabled rows="3">{{ observation.tle.line1 }}
+{{ observation.tle.line2 }}
+{{ observation.tle.line3 }}</textarea>
+										</div>
+									</div>
+								</div>
+							</form>
                 </div>
               </div>
               <div class="row" style="margin-top: 20px;" v-else>
@@ -210,16 +243,25 @@ export default {
       const vm = this
       vm.$http.get(vm.$route.query.path + '?id=' + vm.$route.query.id + '&satelliteId=' + vm.$route.query.satelliteId).then(function (response) {
         vm.observation = response.data
+        var satrec = satellite.twoline2satrec(vm.observation.tle.line2, vm.observation.tle.line3)
+        vm.observation.tleUnixTime = (satrec.jdsatepoch - 2440587.5) * 86400000;
+		var diff = Math.abs(vm.observation.start - vm.observation.tleUnixTime);
+		if (diff < 7 * 24 * 60 * 60 * 1000) {
+			vm.observation.tleStatus = 'GOOD'
+		} else if (diff < 14 * 24 * 60 * 60 * 1000) {
+			vm.observation.tleStatus = 'STALE'
+		} else {
+			vm.observation.tleStatus = 'OLD'
+		}
         vm.loading = false
-        vm.generatePolarPlot()
+        vm.generatePolarPlot(satrec)
       }).catch(function (error) {
         vm.loading = false
         vm.handleError(vm, error)
       })
     },
-    generatePolarPlot() {
+    generatePolarPlot(satrec) {
       const vm = this
-      var satrec = satellite.twoline2satrec(vm.observation.tle.line2, vm.observation.tle.line3)
       var g = ''
       var observerGd = {
         longitude: vm.observation.groundStation.lon * Math.PI / 180.0,
