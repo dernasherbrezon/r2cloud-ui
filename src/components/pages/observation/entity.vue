@@ -162,13 +162,13 @@
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="tleDownloaded">Downloaded</label>
-											<input class="form-control" id="tleDownloaded" disabled :value="formatTime(observation.tleUnixTime) + ' ' + formatDate(observation.tleUnixTime)">
+											<input class="form-control" id="tleDownloaded" disabled :value="formatTime(observation.tle.updated) + ' ' + formatDate(observation.tle.updated)">
 										</div>
 									</div>
 									<div class="col-md-4">
 										<div class="form-group">
 											<label for="tleSource">Source</label>
-											<input class="form-control" id="tleSource" disabled value="Celestrak">
+											<input class="form-control" id="tleSource" disabled :value="observation.tle.source">
 										</div>
 									</div>
 								</div>
