@@ -1,4 +1,4 @@
-# r2cloud-ui [![Build Status](https://travis-ci.com/dernasherbrezon/r2cloud-ui.svg?branch=master)](https://travis-ci.com/dernasherbrezon/r2cloud-ui)
+# r2cloud-ui [![Main Workflow](https://github.com/dernasherbrezon/r2cloud-ui/actions/workflows/build.yml/badge.svg)](https://github.com/dernasherbrezon/r2cloud-ui/actions/workflows/build.yml)
 
 Screenshots
 

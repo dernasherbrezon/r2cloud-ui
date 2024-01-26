@@ -74,7 +74,6 @@ export default {
     
     var AzElScale = Chart.scaleService.getScaleConstructor('radialLinear').extend({
         getPointPositionForValue: function(index, value) {
-        console.log(value)
             var me = this;
             var scalingFactor = me.drawingArea / (me.max - me.min);
             return {
@@ -83,8 +82,6 @@ export default {
             };
         },
         getDistanceFromCenterForValue: function(value) {
-        console.log("here: " + value);
-        //console.trace();
             var me = this;
             // Take into account half font size + the yPadding of the top value
             var scalingFactor = me.drawingArea / (me.max - me.min);
@@ -102,28 +99,6 @@ export default {
     // line._loop = false;
     // this will make line instead of square
     var AzElChart = Chart.controllers.radar.extend({
-        _setDatasetHoverStyle: function() {
-        var element = this.getMeta().dataset;
-        var prev = {};
-        var i, ilen, key, keys, hoverOptions, model;
-        
-        if (!element) {
-            return;
-        }
-        
-        model = element._model;
-        hoverOptions = this._resolveDatasetElementOptions(element, true);
-        
-        keys = Object.keys(hoverOptions);
-        for (i = 0, ilen = keys.length; i < ilen; ++i) {
-            key = keys[i];
-            prev[key] = model[key];
-            model[key] = hoverOptions[key];
-        }
-        
-        element.$previousStyle = prev;
-          console.log("here");
-        },
         update: function(reset) {
             var me = this;
             var meta = me.getMeta();
