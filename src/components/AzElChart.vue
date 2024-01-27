@@ -174,7 +174,10 @@ export default {
                 display: true
             },
             ticks: {
-                display: false
+                display: false,
+                beginAtZero: true,
+                max: 90,
+                min: 0
             }
         },
         legend: {

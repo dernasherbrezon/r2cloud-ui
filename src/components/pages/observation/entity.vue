@@ -251,6 +251,9 @@ export default {
       var azelData = []
       for (var t = moment(vm.observation.start); t < moment(vm.observation.end); t.add(20, 's')) {
         var skyPosition = vm.polarGetAzEl(satrec, observerGd, t);
+        if(  skyPosition.elevation < 0 ) {
+            skyPosition.elevation = 0
+        }
         azelData.push({x: skyPosition.azimuth.toFixed(2), y: skyPosition.elevation.toFixed(2), time: t.utc().format('HH:mm:ss')})
       }
       vm.chartData = azelData
