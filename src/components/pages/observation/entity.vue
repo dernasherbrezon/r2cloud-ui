@@ -61,9 +61,9 @@
               <td>Bandwidth</td>
               <td>{{ observation.bandwidth  }}</td>
             </tr>
-            <tr v-if="observation.rawURL">
+            <tr v-if="observation.sigmfDataURL">
               <td>Download</td>
-              <td><i class="fa fa-download" aria-hidden="true"></i>&nbsp;<a :href="observation.rawURL" target="blank">Raw file</a></td>
+              <td><a :href="observation.sigmfDataURL" target="blank">SigMF data</a><br/><a :href="observation.sigmfMetaURL" target="blank">SigMF meta</a></td>
             </tr>
           </tbody>
         </table>
