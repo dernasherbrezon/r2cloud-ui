@@ -11,7 +11,6 @@ import statusOverview from '@/components/pages/status/overview'
 import statusMetrics from '@/components/pages/status/metrics'
 
 import configGeneral from '@/components/pages/configuration/general'
-import configDDNS from '@/components/pages/configuration/ddns'
 import configIntegrations from '@/components/pages/configuration/integrations'
 
 import tle from '@/components/pages/tle'
@@ -80,11 +79,6 @@ const router = new Router({
       path: '/admin/config/general',
       name: 'configGeneral',
       component: configGeneral
-    },
-    {
-      path: '/admin/config/ddns',
-      name: 'configDDNS',
-      component: configDDNS
     },
     {
       path: '/admin/config/r2cloud',

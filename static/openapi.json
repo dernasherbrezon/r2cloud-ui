@@ -285,68 +285,6 @@
 				}
 			}
 		},
-		"/admin/config/ddns": {
-			"get": {
-				"tags": [
-					"Configuration"
-				],
-				"summary": "Get base station DDNS configuration",
-				"responses": {
-					"200": {
-						"description": "DDNS configuration",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/DDNSConfiguration"
-								}
-							}
-						}
-					}
-				},
-				"security": [
-					{
-						"Bearer": []
-					}
-				]
-			},
-			"post": {
-				"tags": [
-					"Configuration"
-				],
-				"summary": "Update base station DDNS configuration",
-				"requestBody": {
-					"description": "DDNS configuration",
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/DDNSConfigurationRequest"
-							}
-						}
-					},
-					"required": true
-				},
-				"responses": {
-					"400": {
-						"description": "If request parameters are missing or empty",
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Response"
-								}
-							}
-						}
-					},
-					"200": {
-						"description": "Success"
-					}
-				},
-				"security": [
-					{
-						"Bearer": []
-					}
-				]
-			}
-		},
 		"/admin/config/general": {
 			"get": {
 				"tags": [
@@ -1123,57 +1061,6 @@
 				"properties": {
 					"errors": {
 						"$ref": "#/components/schemas/Errors"
-					}
-				}
-			},
-			"DDNSConfigurationRequest": {
-				"type": "object",
-				"properties": {
-					"username": {
-						"type": "string",
-						"description": "username used for ddns authentication"
-					},
-					"password": {
-						"type": "string",
-						"description": "password used for ddns authentication"
-					},
-					"domain": {
-						"type": "string",
-						"description": "domain for this base station",
-						"example": "example.ddns.com"
-					},
-					"type": {
-						"type": "string",
-						"description": "ddns provider",
-						"example": "NONE"
-					}
-				}
-			},
-			"DDNSConfiguration": {
-				"type": "object",
-				"properties": {
-					"username": {
-						"type": "string",
-						"description": "username used for ddns authentication"
-					},
-					"password": {
-						"type": "string",
-						"description": "password used for ddns authentication"
-					},
-					"domain": {
-						"type": "string",
-						"description": "domain for this base station",
-						"example": "example.ddns.com"
-					},
-					"type": {
-						"type": "string",
-						"description": "ddns provider",
-						"example": "NONE"
-					},
-					"currentIp": {
-						"type": "string",
-						"description": "Current external IP",
-						"example": "127.0.0.1"
 					}
 				}
 			},
