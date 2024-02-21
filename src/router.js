@@ -13,6 +13,8 @@ import statusMetrics from '@/components/pages/status/metrics'
 import configGeneral from '@/components/pages/configuration/general'
 import configIntegrations from '@/components/pages/configuration/integrations'
 
+import deviceConfig from '@/components/pages/device/config'
+
 import tle from '@/components/pages/tle'
 import observationList from '@/components/pages/observation/list'
 import observationEntity from '@/components/pages/observation/entity'
@@ -114,6 +116,11 @@ const router = new Router({
       path: '/admin/schedule/list',
       name: 'scheduleList',
       component: scheduleList
+    },
+    {
+      path: '/admin/device/config/load',
+      name: 'deviceConfig',
+      component: deviceConfig
     },
     {
       path: '/404',
