@@ -68,9 +68,9 @@ export default {
       lat: '',
       lng: '',
       autoUpdate: false,
-      presentationMode: false
+      presentationMode: false,
       submitting: false,
-      success: false,
+      success: false
     }
   },
   mounted () {

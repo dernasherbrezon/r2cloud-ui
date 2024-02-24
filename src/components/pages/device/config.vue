@@ -32,7 +32,7 @@
             <div class="col-md-4">
                 <label for="minimumFrequency">Minimum frequency</label>
                 <div class="input-group md-4">
-                    <input type="text" id="minimumFrequency" name="minimumFrequency" :class="{'is-invalid': errors.has('minimumFrequency') }" v-validate="'required|integer'" class="form-control" v-model="entity.minimumFrequency">
+                    <input type="number" step="0.001" id="minimumFrequency" name="minimumFrequency" :class="{'is-invalid': errors.has('minimumFrequency') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.minimumFrequency">
                     <div class="input-group-append">
                         <span class="input-group-text" id="basic-addon2">Mhz</span>
                     </div>
@@ -42,7 +42,7 @@
             <div class="col-md-4">
                 <label for="maximumFrequency">Maximum frequency</label>
                 <div class="input-group md-4">
-                    <input type="text" id="maximumFrequency" name="maximumFrequency" :class="{'is-invalid': errors.has('maximumFrequency') }" v-validate="'required|integer'" class="form-control" v-model="entity.maximumFrequency">
+                    <input type="number" step="0.001" id="maximumFrequency" name="maximumFrequency" :class="{'is-invalid': errors.has('maximumFrequency') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.maximumFrequency">
                     <div class="input-group-append">
                         <span class="input-group-text" id="basic-addon3">Mhz</span>
                     </div>
@@ -56,7 +56,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-danger': errors.has('rtlDeviceId') }">
                       <label for="rtlDeviceId">Device index</label>
-                      <input type="text" id="rtlDeviceId" name="rtlDeviceId" :class="{'is-invalid': errors.has('rtlDeviceId') }" v-validate="'required|integer'" class="form-control" v-model="entity.rtlDeviceId">
+                      <input type="number" id="rtlDeviceId" name="rtlDeviceId" :class="{'is-invalid': errors.has('rtlDeviceId') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.rtlDeviceId">
                       <div class="invalid-feedback" v-if="errors.has('rtlDeviceId')">{{ errors.first('rtlDeviceId') }}</div>
                       <small id="rtlDeviceIdHelp" class="form-text text-muted">If several rtl-sdr devices connected specify index here to distinguish them</small>
                     </div>
@@ -64,7 +64,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-danger': errors.has('gain') }">
                       <label for="gain">Gain</label>
-                      <input type="text" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model="entity.gain">
+                      <input type="number" step="0.1" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.gain">
                       <div class="invalid-feedback" v-if="errors.has('gain')">{{ errors.first('gain') }}</div>
                       <small id="rtlDeviceIdHelp" class="form-text text-muted">Put 0 for AGC (Automatic gain control). Maximum is 49.6</small>
                     </div>
@@ -74,7 +74,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="gain">Bias-t enabled</label><br/>
-                        <input class="form-control" type="checkbox" id="biast" v-model="entity.biast">
+                        <input class="form-control" type="checkbox" id="biast" name="biast" v-model="entity.biast">
                         <small id="biast" class="form-text text-muted">
                             Will enable <a href="https://en.wikipedia.org/wiki/Bias_tee">bias-t</a> before every observation and disable afterwards
                         </small>
@@ -83,7 +83,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                       <label for="ppm">PPM</label>
-                      <input type="text" id="ppm" name="ppm" :class="{'is-invalid': errors.has('ppm') }" :readonly="ppmType === 'AUTO'" class="form-control" v-model="entity.ppm">
+                      <input type="number" id="ppm" name="ppm" :class="{'is-invalid': errors.has('ppm') }" class="form-control" v-model.number="entity.ppm">
                       <div class="invalid-feedback" v-if="errors.has('ppm')">{{ errors.first('ppm') }}</div>
                     </div>
                 </div>
@@ -95,7 +95,7 @@
                 <div class="col-md-8">
                     <div class="form-group" :class="{'has-danger': errors.has('gain') }">
                       <label for="gain">Gain</label>
-                      <input type="text" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model="entity.gain">
+                      <input type="number" step="0.1" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.gain">
                       <div class="invalid-feedback" v-if="errors.has('gain')">{{ errors.first('gain') }}</div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-danger': errors.has('gain') }">
                       <label for="gain">Gain</label>
-                      <input type="text" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model="entity.gain">
+                      <input type="number" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.gain">
                       <div class="invalid-feedback" v-if="errors.has('gain')">{{ errors.first('gain') }}</div>
                       <small id="portHelp" class="form-text text-muted">Supported values: 1,2,3,4,5,6,0. "0" is for automatic gain (AGC)</small>
                     </div>
@@ -136,7 +136,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-danger': errors.has('gain') }">
                       <label for="gain">Gain</label>
-                      <input type="text" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model="entity.gain">
+                      <input type="number" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.gain">
                       <div class="invalid-feedback" v-if="errors.has('gain')">{{ errors.first('gain') }}</div>
                       <small id="portHelp" class="form-text text-muted">Supported values: 1,2,3,4,5,6,0. "0" is for automatic gain (AGC)</small>
                     </div>
@@ -146,7 +146,7 @@
                 <div class="col-md-4">
                     <label for="minimumBatteryVoltage">Minimum battery voltage</label>
                     <div class="input-group md-4">
-                        <input type="text" id="minimumBatteryVoltage" name="minimumBatteryVoltage" :class="{'is-invalid': errors.has('minimumBatteryVoltage') }" v-validate="'integer'" class="form-control" v-model="entity.minimumBatteryVoltage">
+                        <input type="number" step="0.1" id="minimumBatteryVoltage" name="minimumBatteryVoltage" :class="{'is-invalid': errors.has('minimumBatteryVoltage') }" v-validate="'integer'" class="form-control" v-model.number="entity.minimumBatteryVoltage">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon2">V</span>
                         </div>
@@ -156,7 +156,7 @@
                 <div class="col-md-4">
                     <label for="minimumBatteryVoltage">Maximum battery voltage</label>
                     <div class="input-group md-4">
-                        <input type="text" id="maximumBatteryVoltage" name="maximumBatteryVoltage" :class="{'is-invalid': errors.has('maximumBatteryVoltage') }" v-validate="'integer'" class="form-control" v-model="entity.maximumBatteryVoltage">
+                        <input type="number" step="0.1" id="maximumBatteryVoltage" name="maximumBatteryVoltage" :class="{'is-invalid': errors.has('maximumBatteryVoltage') }" v-validate="'integer'" class="form-control" v-model.number="entity.maximumBatteryVoltage">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon2">V</span>
                         </div>
@@ -179,7 +179,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-danger': errors.has('port') }">
                       <label for="port">Port</label>
-                      <input type="text" id="port" name="port" :class="{'is-invalid': errors.has('port') }" v-validate="'required|integer'" class="form-control" v-model="entity.port">
+                      <input type="number" id="port" name="port" :class="{'is-invalid': errors.has('port') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.port">
                       <div class="invalid-feedback" v-if="errors.has('port')">{{ errors.first('port') }}</div>
                       <small id="portHelp" class="form-text text-muted">Example: 80</small>
                     </div>
@@ -187,7 +187,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-danger': errors.has('gain') }">
                       <label for="gain">Gain</label>
-                      <input type="text" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model="entity.gain">
+                      <input type="number" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.gain">
                       <div class="invalid-feedback" v-if="errors.has('gain')">{{ errors.first('gain') }}</div>
                       <small id="portHelp" class="form-text text-muted">Supported values: 1,2,3,4,5,6,0. "0" is for automatic gain (AGC)</small>
                     </div>
@@ -225,7 +225,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-danger': errors.has('port') }">
                       <label for="port">Port</label>
-                      <input type="text" id="port" name="port" :class="{'is-invalid': errors.has('port') }" v-validate="'required|integer'" class="form-control" v-model="entity.port">
+                      <input type="number" id="port" name="port" :class="{'is-invalid': errors.has('port') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.port">
                       <div class="invalid-feedback" v-if="errors.has('port')">{{ errors.first('port') }}</div>
                       <small id="portHelp" class="form-text text-muted">Example: 8090</small>
                     </div>
@@ -235,7 +235,7 @@
                 <div class="col-md-4">
                     <label for="bandwidth">Bandwidth</label>
                     <div class="input-group md-4">
-                        <input type="text" id="bandwidth" name="bandwidth" :class="{'is-invalid': errors.has('bandwidth') }" v-validate="'required|integer'" class="form-control" v-model="entity.bandwidth">
+                        <input type="number" step="0.001" id="bandwidth" name="bandwidth" :class="{'is-invalid': errors.has('bandwidth') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.bandwidth">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon3">Mhz</span>
                         </div>
@@ -246,7 +246,7 @@
                 <div class="col-md-4">
                     <label for="bandwidthCrop">Bandwidth crop</label>
                     <div class="input-group md-4">
-                        <input type="text" id="bandwidthCrop" name="bandwidthCrop" :class="{'is-invalid': errors.has('bandwidthCrop') }" v-validate="'required|integer'" class="form-control" v-model="entity.bandwidthCrop">
+                        <input type="number" id="bandwidthCrop" name="bandwidthCrop" :class="{'is-invalid': errors.has('bandwidthCrop') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.bandwidthCrop">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon3">hz</span>
                         </div>
@@ -288,7 +288,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-danger': errors.has('port') }">
                       <label for="port">Port</label>
-                      <input type="text" id="port" name="port" :class="{'is-invalid': errors.has('port') }" v-validate="'required|integer'" class="form-control" v-model="entity.port">
+                      <input type="number" id="port" name="port" :class="{'is-invalid': errors.has('port') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.port">
                       <div class="invalid-feedback" v-if="errors.has('port')">{{ errors.first('port') }}</div>
                       <small id="portHelp" class="form-text text-muted">Example: 5555</small>
                     </div>
@@ -296,7 +296,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-danger': errors.has('gain') }">
                       <label for="gain">Gain</label>
-                      <input type="text" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model="entity.gain">
+                      <input type="number" step="0.1" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.gain">
                       <div class="invalid-feedback" v-if="errors.has('gain')">{{ errors.first('gain') }}</div>
                     </div>
                 </div>
@@ -320,7 +320,7 @@
                 <div class="col-md-4">
                     <label for="minElevation">Minimum elevation</label>
                     <div class="input-group md-4">
-                        <input type="text" id="minElevation" name="antenna.minElevation" :class="{'is-invalid': errors.has('antenna.minElevation') }" v-validate="'required|decimal'" class="form-control" v-model="entity.antenna.minElevation">
+                        <input type="number" step="0.1" id="minElevation" name="antenna.minElevation" :class="{'is-invalid': errors.has('antenna.minElevation') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.antenna.minElevation">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon3">degrees</span>
                         </div>
@@ -331,7 +331,7 @@
                 <div class="col-md-4">
                     <label for="guaranteedElevation">Guaranteed elevation</label>
                     <div class="input-group md-4">
-                        <input type="text" id="guaranteedElevation" name="antenna.guaranteedElevation" :class="{'is-invalid': errors.has('antenna.guaranteedElevation') }" v-validate="'required|decimal'" class="form-control" v-model="entity.antenna.guaranteedElevation">
+                        <input type="number" step="0.1" id="guaranteedElevation" name="antenna.guaranteedElevation" :class="{'is-invalid': errors.has('antenna.guaranteedElevation') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.antenna.guaranteedElevation">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon3">degrees</span>
                         </div>
@@ -347,7 +347,7 @@
                 <div class="col-md-4">
                     <label for="azimuth">Azimuth</label>
                     <div class="input-group md-4">
-                        <input type="text" id="azimuth" name="antenna.azimuth" :class="{'is-invalid': errors.has('antenna.azimuth') }" v-validate="'required|decimal'" class="form-control" v-model="entity.antenna.azimuth">
+                        <input type="number" step="0.1" id="azimuth" name="antenna.azimuth" :class="{'is-invalid': errors.has('antenna.azimuth') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.antenna.azimuth">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon3">degrees</span>
                         </div>
@@ -358,7 +358,7 @@
                 <div class="col-md-4">
                     <label for="elevation">Elevation</label>
                     <div class="input-group md-4">
-                        <input type="text" id="elevation" name="antenna.elevation" :class="{'is-invalid': errors.has('antenna.elevation') }" v-validate="'required|decimal'" class="form-control" v-model="entity.antenna.elevation">
+                        <input type="number" step="0.1" id="elevation" name="antenna.elevation" :class="{'is-invalid': errors.has('antenna.elevation') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.antenna.elevation">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon3">degrees</span>
                         </div>
@@ -369,7 +369,7 @@
                 <div class="col-md-4">
                     <label for="beamwidth">Beamwidth</label>
                     <div class="input-group md-4">
-                        <input type="text" id="beamwidth" name="antenna.beamwidth" :class="{'is-invalid': errors.has('antenna.beamwidth') }" v-validate="'required|decimal'" class="form-control" v-model="entity.antenna.beamwidth">
+                        <input type="number" step="0.1" id="beamwidth" name="antenna.beamwidth" :class="{'is-invalid': errors.has('antenna.beamwidth') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.antenna.beamwidth">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon3">degrees</span>
                         </div>
@@ -398,7 +398,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-danger': errors.has('rotator.rotctrldPort') }">
                         <label for="rotctrldPort">Port</label>
-                        <input type="text" id="rotctrldPort" name="rotator.rotctrldPort" :class="{'is-invalid': errors.has('rotator.rotctrldPort') }" v-validate="'integer'" class="form-control" v-model="entity.rotator.rotctrldPort">
+                        <input type="number" id="rotctrldPort" name="rotator.rotctrldPort" :class="{'is-invalid': errors.has('rotator.rotctrldPort') }" v-validate="'integer'" class="form-control" v-model.number="entity.rotator.rotctrldPort">
                         <div class="invalid-feedback" v-if="errors.has('rotator.rotctrldPort')">{{ errors.first('rotator.rotctrldPort') }}</div>
                     </div>
                 </div>
@@ -407,7 +407,7 @@
                 <div class="col-md-4">
                     <label for="rotatorTolerance">Tolerance</label>
                     <div class="input-group md-4">
-                        <input type="text" id="rotatorTolerance" name="rotator.rotatorTolerance" :class="{'is-invalid': errors.has('rotator.rotatorTolerance') }" v-validate="'decimal'" class="form-control" v-model="entity.rotator.rotatorTolerance">
+                        <input type="number" step="0.1" id="rotatorTolerance" name="rotator.rotatorTolerance" :class="{'is-invalid': errors.has('rotator.rotatorTolerance') }" v-validate="'decimal'" class="form-control" v-model.number="entity.rotator.rotatorTolerance">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon3">degrees</span>
                         </div>
@@ -418,7 +418,7 @@
                 <div class="col-md-4">
                     <label for="rotatorCycle">Update interval</label>
                     <div class="input-group md-4">
-                        <input type="text" id="rotatorCycle" name="rotator.rotatorCycle" :class="{'is-invalid': errors.has('rotator.rotatorCycle') }" class="form-control" v-model="entity.rotator.rotatorCycle">
+                        <input type="number" id="rotatorCycle" name="rotator.rotatorCycle" :class="{'is-invalid': errors.has('rotator.rotatorCycle') }" class="form-control" v-model.number="entity.rotator.rotatorCycle">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon3">ms</span>
                         </div>
@@ -478,6 +478,7 @@ export default {
       this.success = false
       this.submitting = true
       const vm = this
+      console.log("max freq: " + typeof vm.entity.maximumFrequency);
       vm.$http.post('/admin/device/config/save', vm.entity).then(function (response) {
         vm.submitting = false
         vm.success = true
