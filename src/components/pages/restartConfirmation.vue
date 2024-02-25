@@ -1,7 +1,7 @@
 <template>
     <div class="jumbotron col-md-12" v-if="!waitingForRestart">
-      <h1>Restart is required</h1>
-      <p class="lead">To complete this operation a restart is required. Proceed?</p>
+      <h1>Please confirm restart</h1>
+      <p class="lead">{{ confirmationMessage }}</p>
       <p><a class="btn btn-info" v-on:click.prevent="sendRestart" href="#">Restart</a></p>
     </div>
     <div class="col-md-12" style="text-align: center;" v-else>
@@ -16,7 +16,8 @@ import Auth from '@/components/auth.js'
     data() {
       return {
         timeoutFunction: '',
-        waitingForRestart: false
+        waitingForRestart: false,
+        confirmationMessage: 'To complete this operation a restart is required. Proceed?'
       }
     },
     unmounted() {
@@ -27,6 +28,12 @@ import Auth from '@/components/auth.js'
     beforeRouteLeave (to, from, next) {
       clearTimeout(this.timeoutFunction)
       next()
+    },
+    mounted () {
+      const vm = this
+      if( vm.$route.query.confirmationMessage ) {
+        vm.confirmationMessage = vm.$route.query.confirmationMessage
+      }
     },
     methods: {
       checkHealth() {

@@ -20,7 +20,10 @@
                 <b-dropdown-item to="/admin/device/config/list">Devices</b-dropdown-item>
                 <b-dropdown-item to="/admin/config/r2cloud">Integrations</b-dropdown-item>
               </b-nav-item-dropdown>
-              <b-nav-item v-on:click.prevent="logout">Logout</b-nav-item>
+              <b-nav-item-dropdown text="System">
+                <b-dropdown-item :to="{ path: '/admin/restart', query: { confirmationMessage: 'Are you sure you want to restart?' }}"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;Restart</b-dropdown-item>
+              	<b-dropdown-item v-on:click.prevent="logout" query=""><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;Logout</b-dropdown-item>
+              </b-nav-item-dropdown>
 			</b-navbar-nav>
 		</b-collapse>
     </b-navbar>
