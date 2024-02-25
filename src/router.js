@@ -16,6 +16,7 @@ import configIntegrations from '@/components/pages/configuration/integrations'
 import deviceConfig from '@/components/pages/device/config'
 import deviceList from '@/components/pages/device/list'
 
+import restartConfirmation from '@/components/pages/restartConfirmation'
 
 import tle from '@/components/pages/tle'
 import observationList from '@/components/pages/observation/list'
@@ -93,6 +94,11 @@ const router = new Router({
       path: '/admin/tle',
       name: 'tle',
       component: tle
+    },
+    {
+      path: '/admin/restart',
+      name: 'restartConfirmation',
+      component: restartConfirmation
     },
     {
       path: '/admin/api',

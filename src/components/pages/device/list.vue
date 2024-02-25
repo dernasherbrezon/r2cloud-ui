@@ -8,7 +8,7 @@
 	      {{ errors.first('general') }}
 	      </b-alert>
     	<router-link class="btn btn-primary btn-sm" :to="{ path: '/admin/device/config/load'}">New</router-link>
-    	<a class="btn btn-secondary btn-sm" href="#" @click="deleteDevice" :class="checkedIds.length === 0 ? 'disabled' : ''">Delete</a>
+    	<a class="btn btn-secondary btn-sm" href="#" v-on:click.prevent="deleteDevice" :class="checkedIds.length === 0 ? 'disabled' : ''">Delete</a>
     	<hr/>
 		<table class="table table-hover">
             <thead>
@@ -69,7 +69,7 @@ export default {
     deleteDevice() {
       const vm = this
       vm.$http.post('/admin/device/config/delete', { ids: vm.checkedIds }).then(function (response) {
-        console.log("done")
+        vm.$router.push('/admin/restart')
       })
     }
   }

@@ -431,7 +431,6 @@
             </div>
         </div>
         <button type="submit" class="btn btn-primary" :disabled="submitting">Save</button>
-        <span v-if="success" class="text-success" style="margin-left: 20px;">Saved</span>
       </form>
     </div>
   </div>
@@ -448,7 +447,6 @@ export default {
         },
         rotator: {}
       },
-      success: false,
       submitting: false
     }
   },
@@ -480,10 +478,9 @@ export default {
       this.success = false
       this.submitting = true
       const vm = this
-      console.log("max freq: " + typeof vm.entity.maximumFrequency);
       vm.$http.post('/admin/device/config/save', vm.entity).then(function (response) {
         vm.submitting = false
-        vm.success = true
+        vm.$router.push('/admin/restart')
       }).catch(function (error) {
         vm.submitting = false
         vm.handleError(vm, error)

@@ -17,6 +17,9 @@ Vue.use(Validator)
 Vue.config.productionTip = false
 
 Vue.prototype.$http = HTTP
+Vue.prototype.$globalData = Vue.observable({
+  waitingForRestart: false 
+});
 
 Vue.mixin({
   methods: {
@@ -76,7 +79,8 @@ var vue = new Vue({
           Auth.logout()
           vue.$router.push('/login')
         }
-        if (error.response.status === 502) {
+        if (!vm.$globalData.waitingForRestart && error.response.status === 502) {
+          Auth.logout()
           vm.$router.push('/502')
         }
       }
