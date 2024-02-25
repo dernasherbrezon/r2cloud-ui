@@ -17,6 +17,7 @@
               </b-nav-item-dropdown>              
               <b-nav-item-dropdown text="Configuration">
                 <b-dropdown-item to="/admin/config/general">General</b-dropdown-item>
+                <b-dropdown-item to="/admin/device/config/list">Devices</b-dropdown-item>
                 <b-dropdown-item to="/admin/config/r2cloud">Integrations</b-dropdown-item>
               </b-nav-item-dropdown>
               <b-nav-item v-on:click.prevent="logout">Logout</b-nav-item>

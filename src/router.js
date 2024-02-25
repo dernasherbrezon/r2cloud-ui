@@ -14,6 +14,8 @@ import configGeneral from '@/components/pages/configuration/general'
 import configIntegrations from '@/components/pages/configuration/integrations'
 
 import deviceConfig from '@/components/pages/device/config'
+import deviceList from '@/components/pages/device/list'
+
 
 import tle from '@/components/pages/tle'
 import observationList from '@/components/pages/observation/list'
@@ -121,6 +123,11 @@ const router = new Router({
       path: '/admin/device/config/load',
       name: 'deviceConfig',
       component: deviceConfig
+    },
+    {
+      path: '/admin/device/config/list',
+      name: 'deviceList',
+      component: deviceList
     },
     {
       path: '/404',

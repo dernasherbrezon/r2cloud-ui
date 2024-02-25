@@ -1,7 +1,8 @@
 <template>
   <div class="row">
     <div class="col-md-12">
-      <h1 class="pb-2 mb-2 border-bottom">{{ entity.name }}</h1>
+      <h1 class="pb-2 mb-2 border-bottom" v-if="entity.name">{{ entity.name }}</h1>
+      <h1 class="pb-2 mb-2 border-bottom" v-else>New device</h1>
       <b-alert variant="danger"
         dismissible
         :show="errors.has('general')">
@@ -10,12 +11,13 @@
     </div>
     <div class="col-md-12">
       <form style="margin-top: 20px;" @submit.prevent="validateBeforeSubmit">
-          <input type="hidden" name="id" v-model="entity.id">
+        <input type="hidden" name="id" v-model="entity.id">
+        <input type="hidden" name="deviceType" v-model="entity.deviceType" v-if="entity.id !== undefined">
         <div class="row">
             <div class="col-md-8">
                 <div class="form-group">
                     <label for="deviceType">Device type</label>
-                    <select id="deviceType" name="deviceType" class="form-control" v-model="entity.deviceType">
+                    <select id="deviceType" name="deviceType" class="form-control" :disabled="entity.id !== undefined" v-model="entity.deviceType">
                         <option value="RTLSDR">RTL-SDR</option>
                         <option value="PLUTOSDR">Pluto SDR</option>
                         <option value="LORAAT">LoRa-at</option>
@@ -32,7 +34,7 @@
             <div class="col-md-4">
                 <label for="minimumFrequency">Minimum frequency</label>
                 <div class="input-group md-4">
-                    <input type="number" step="0.001" id="minimumFrequency" name="minimumFrequency" :class="{'is-invalid': errors.has('minimumFrequency') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.minimumFrequency">
+                    <input type="number" step="0.001" id="minimumFrequency" name="minimumFrequency" :class="{'is-invalid': errors.has('minimumFrequency') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.minimumFrequency">
                     <div class="input-group-append">
                         <span class="input-group-text" id="basic-addon2">Mhz</span>
                     </div>
@@ -42,7 +44,7 @@
             <div class="col-md-4">
                 <label for="maximumFrequency">Maximum frequency</label>
                 <div class="input-group md-4">
-                    <input type="number" step="0.001" id="maximumFrequency" name="maximumFrequency" :class="{'is-invalid': errors.has('maximumFrequency') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.maximumFrequency">
+                    <input type="number" step="0.001" id="maximumFrequency" name="maximumFrequency" :class="{'is-invalid': errors.has('maximumFrequency') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.maximumFrequency">
                     <div class="input-group-append">
                         <span class="input-group-text" id="basic-addon3">Mhz</span>
                     </div>
@@ -105,11 +107,11 @@
         <div v-if="entity.deviceType == 'LORAAT'">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="form-group" :class="{'has-danger': errors.has('port') }">
-                      <label for="port">Serial device</label>
-                      <input type="text" id="port" name="port" :class="{'is-invalid': errors.has('port') }" v-validate="'required'" class="form-control" v-model="entity.port">
-                      <div class="invalid-feedback" v-if="errors.has('port')">{{ errors.first('port') }}</div>
-                      <small id="portHelp" class="form-text text-muted">Example: /dev/ttyUSB0</small>
+                    <div class="form-group" :class="{'has-danger': errors.has('host') }">
+                      <label for="host">Serial device</label>
+                      <input type="text" id="host" name="host" :class="{'is-invalid': errors.has('host') }" v-validate="'required'" class="form-control" v-model="entity.host">
+                      <div class="invalid-feedback" v-if="errors.has('host')">{{ errors.first('host') }}</div>
+                      <small id="hostHelp" class="form-text text-muted">Example: /dev/ttyUSB0</small>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -126,11 +128,11 @@
         <div v-if="entity.deviceType == 'LORAATBLE'">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="form-group" :class="{'has-danger': errors.has('btaddress') }">
-                      <label for="btaddress">Bluetooth address</label>
-                      <input type="text" id="btaddress" name="btaddress" :class="{'is-invalid': errors.has('btaddress') }" v-validate="'required'" class="form-control" v-model="entity.btaddress">
-                      <div class="invalid-feedback" v-if="errors.has('btaddress')">{{ errors.first('btaddress') }}</div>
-                      <small id="portHelp" class="form-text text-muted">Example: 78:DD:08:A3:A7:52</small>
+                    <div class="form-group" :class="{'has-danger': errors.has('host') }">
+                      <label for="host">Bluetooth address</label>
+                      <input type="text" id="host" name="host" :class="{'is-invalid': errors.has('host') }" v-validate="'required'" class="form-control" v-model="entity.host">
+                      <div class="invalid-feedback" v-if="errors.has('host')">{{ errors.first('host') }}</div>
+                      <small id="hostHelp" class="form-text text-muted">Example: 78:DD:08:A3:A7:52</small>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -235,7 +237,7 @@
                 <div class="col-md-4">
                     <label for="bandwidth">Bandwidth</label>
                     <div class="input-group md-4">
-                        <input type="number" step="0.001" id="bandwidth" name="bandwidth" :class="{'is-invalid': errors.has('bandwidth') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.bandwidth">
+                        <input type="number" step="0.001" id="bandwidth" name="bandwidth" :class="{'is-invalid': errors.has('bandwidth') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.bandwidth">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon3">Mhz</span>
                         </div>
