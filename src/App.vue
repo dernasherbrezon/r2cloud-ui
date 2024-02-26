@@ -12,13 +12,13 @@
 			</b-navbar-nav>
 			<b-navbar-nav class="ml-auto">
               <b-nav-item-dropdown text="Status">
-                <b-dropdown-item to="/admin/status/overview">Overview</b-dropdown-item>
-                <b-dropdown-item to="/admin/status/metrics">Metrics</b-dropdown-item>
+                <b-dropdown-item to="/admin/status/overview"><i class="fa fa-search"></i>&nbsp;Overview</b-dropdown-item>
+                <b-dropdown-item to="/admin/status/metrics"><i class="fa fa-area-chart"></i>&nbsp;Metrics</b-dropdown-item>
               </b-nav-item-dropdown>              
               <b-nav-item-dropdown text="Configuration">
-                <b-dropdown-item to="/admin/config/general">General</b-dropdown-item>
-                <b-dropdown-item to="/admin/device/config/list">Devices</b-dropdown-item>
-                <b-dropdown-item to="/admin/config/r2cloud">Integrations</b-dropdown-item>
+                <b-dropdown-item to="/admin/config/general"><i class="fa fa-cog"></i>&nbsp;General</b-dropdown-item>
+                <b-dropdown-item to="/admin/device/config/list"><i class="fa fa-microchip"></i>&nbsp;Devices</b-dropdown-item>
+                <b-dropdown-item to="/admin/config/r2cloud"><i class="fa fa-puzzle-piece" aria-hidden="true"></i>&nbsp;Integrations</b-dropdown-item>
               </b-nav-item-dropdown>
               <b-nav-item-dropdown text="System">
                 <b-dropdown-item :to="{ path: '/admin/restart', query: { confirmationMessage: 'Are you sure you want to restart?' }}"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;Restart</b-dropdown-item>

@@ -148,7 +148,7 @@
                 <div class="col-md-4">
                     <label for="minimumBatteryVoltage">Minimum battery voltage</label>
                     <div class="input-group md-4">
-                        <input type="number" step="0.1" id="minimumBatteryVoltage" name="minimumBatteryVoltage" :class="{'is-invalid': errors.has('minimumBatteryVoltage') }" v-validate="'integer'" class="form-control" v-model.number="entity.minimumBatteryVoltage">
+                        <input type="number" step="0.1" id="minimumBatteryVoltage" name="minimumBatteryVoltage" :class="{'is-invalid': errors.has('minimumBatteryVoltage') }" v-validate="'decimal'" class="form-control" v-model.number="entity.minimumBatteryVoltage">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon2">V</span>
                         </div>
@@ -158,7 +158,7 @@
                 <div class="col-md-4">
                     <label for="minimumBatteryVoltage">Maximum battery voltage</label>
                     <div class="input-group md-4">
-                        <input type="number" step="0.1" id="maximumBatteryVoltage" name="maximumBatteryVoltage" :class="{'is-invalid': errors.has('maximumBatteryVoltage') }" v-validate="'integer'" class="form-control" v-model.number="entity.maximumBatteryVoltage">
+                        <input type="number" step="0.1" id="maximumBatteryVoltage" name="maximumBatteryVoltage" :class="{'is-invalid': errors.has('maximumBatteryVoltage') }" v-validate="'decimal'" class="form-control" v-model.number="entity.maximumBatteryVoltage">
                         <div class="input-group-append">
                             <span class="input-group-text" id="basic-addon2">V</span>
                         </div>

@@ -23,7 +23,7 @@
                 <td><input type="checkbox" name="id" :value="curData.id" v-model="checkedIds"></td>
           		<td><router-link :to="{ path: '/admin/device/config/load', query: { id: curData.id }}">{{ curData.name }}</router-link></td>
           		<td v-if="curData.status === 'CONNECTED'">{{ curData.status }}</td>
-          		<td v-if="curData.status === 'FAILED'">{{ curData.failureMessage }}</td>
+          		<td v-else-if="curData.status === 'FAILED'">{{ curData.failureMessage }}</td>
           		<td v-else></td>
               </tr>
             </tbody>
