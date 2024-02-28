@@ -437,6 +437,8 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 export default {
   name: 'general',
   data() {
@@ -459,6 +461,11 @@ export default {
       if( !response.data.rotator ) {
         response.data.rotator = {}
       }
+      if( response.data ) {
+        response.data.minimumFrequency = response.data.minimumFrequency / 1000000
+        response.data.maximumFrequency = response.data.maximumFrequency / 1000000
+        response.data.bandwidth = response.data.bandwidth / 1000000
+      } 
       vm.entity = response.data
     })
   },
@@ -478,7 +485,11 @@ export default {
       this.success = false
       this.submitting = true
       const vm = this
-      vm.$http.post('/admin/device/config/save', vm.entity).then(function (response) {
+      var toSubmit = Vue.util.extend({}, vm.entity)
+      toSubmit.minimumFrequency *= 1000000
+      toSubmit.maximumFrequency *= 1000000
+      toSubmit.bandwidth *= 1000000
+      vm.$http.post('/admin/device/config/save', toSubmit).then(function (response) {
         vm.submitting = false
         vm.$router.push('/admin/restart')
       }).catch(function (error) {
