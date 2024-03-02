@@ -54,7 +54,6 @@
 	        </div>
         </div>
         <button type="submit" class="btn btn-primary" :disabled="submitting">Save</button>
-        <span v-if="success" class="text-success" style="margin-left: 20px;">Saved</span>
       </form>
     </div>
   </div>
@@ -69,8 +68,7 @@ export default {
       lng: '',
       autoUpdate: false,
       presentationMode: false,
-      submitting: false,
-      success: false
+      submitting: false
     }
   },
   mounted () {
@@ -104,7 +102,6 @@ export default {
       if (this.submitting) {
         return
       }
-      this.success = false
       this.submitting = true
       const vm = this
       vm.$http.post('/admin/config/general', {
@@ -114,7 +111,7 @@ export default {
         presentationMode: vm.presentationMode
       }).then(function (response) {
         vm.submitting = false
-        vm.success = true
+        vm.$router.push('/admin/restart')
       }).catch(function (error) {
         vm.submitting = false
         vm.handleError(vm, error)
