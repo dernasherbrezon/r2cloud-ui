@@ -25,9 +25,9 @@
               <td>End</td>
               <td>{{ formatTime(observation.end) + ' ' + formatDate(observation.end) }}</td>
             </tr>
-            <tr v-if="observation.gain">
+            <tr v-if="observation.device && observation.device.gain">
               <td>Gain</td>
-              <td>{{ observation.gain }}</td>
+              <td>{{ observation.device.gain }}</td>
             </tr>
             <tr v-if="observation.biast">
               <td>Bias-T</td>
