@@ -25,13 +25,13 @@
               <td>End</td>
               <td>{{ formatTime(observation.end) + ' ' + formatDate(observation.end) }}</td>
             </tr>
-            <tr v-if="observation.device && observation.device.gain">
+            <tr v-if="observation.device && observation.device.gain !== undefined">
               <td>Gain</td>
               <td>{{ observation.device.gain }}</td>
             </tr>
-            <tr v-if="observation.biast">
+            <tr v-if="observation.device && observation.device.biast">
               <td>Bias-T</td>
-              <td>{{ observation.biast }}</td>
+              <td>{{ observation.device.biast }}</td>
             </tr>            
             <tr v-if="observation.channelA">
               <td>Channel A</td>
