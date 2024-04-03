@@ -3,7 +3,7 @@
 		<div class="col-md-12" :key="curData.id" v-for="(curData, index) in devices">
 		
 			<div class="card border-success mb-3" v-if="curData.status === 'CONNECTED'">
-				<div class="card-header text-success"><router-link :to="{ path: '/admin/device/config/load', query: { id: curData.id } }"><i class="fa fa-cog"></i></router-link>&nbsp;{{ curData.connection }}<deviceStatus :device="curData" /></div>
+				<div class="card-header text-success"><router-link :to="{ path: '/admin/device/config/load', query: { id: curData.id } }"><i class="fa fa-cog"></i></router-link>&nbsp;<router-link :to="{ path: '/admin/device/schedule', query: { id: curData.id } }">{{ curData.connection }}</router-link><deviceStatus :device="curData" /></div>
 				<ul class="list-group list-group-flush text-success">
 				    <li class="list-group-item" v-if="curData.model">Model: {{ curData.model }}</li>
 					<li class="list-group-item">Frequencies: {{ curData.minFrequency / 1000000  }} - {{ curData.maxFrequency / 1000000 }} Mhz</li>
@@ -12,7 +12,7 @@
 			</div>
 			
 			<div class="card border-danger mb-3" v-else-if="curData.status === 'FAILED'">
-				<div class="card-header text-danger"><router-link :to="{ path: '/admin/device/config/load', query: { id: curData.id } }"><i class="fa fa-cog"></i></router-link>&nbsp;{{ curData.connection }}<deviceStatus :device="curData" /></div>
+				<div class="card-header text-danger"><router-link :to="{ path: '/admin/device/config/load', query: { id: curData.id } }"><i class="fa fa-cog"></i></router-link>&nbsp;<router-link :to="{ path: '/admin/device/schedule', query: { id: curData.id } }">{{ curData.connection }}</router-link><deviceStatus :device="curData" /></div>
 				<ul class="list-group list-group-flush text-danger">
 				    <li class="list-group-item">Status: {{ curData.status }}</li>
 				    <li class="list-group-item">Message: {{ curData.failureMessage }}</li>

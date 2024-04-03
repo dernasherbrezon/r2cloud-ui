@@ -15,6 +15,7 @@ import configIntegrations from '@/components/pages/configuration/integrations'
 
 import deviceConfig from '@/components/pages/device/config'
 import deviceList from '@/components/pages/device/list'
+import deviceSchedule from '@/components/pages/device/schedule'
 
 import restartConfirmation from '@/components/pages/restartConfirmation'
 
@@ -134,6 +135,11 @@ const router = new Router({
       path: '/admin/device/config/list',
       name: 'deviceList',
       component: deviceList
+    },
+    {
+      path: '/admin/device/schedule',
+      name: 'deviceSchedule',
+      component: deviceSchedule
     },
     {
       path: '/404',

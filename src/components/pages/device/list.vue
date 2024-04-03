@@ -14,7 +14,8 @@
             <thead>
               <tr>
                 <th scope="col" style="border-top: 0px; width: 10px">&nbsp;</th>
-              	<th scope="col" style="border-top: 0px; width: 60%">Name</th>
+              	<th scope="col" style="border-top: 0px; width: 40%">Name</th>
+              	<th scope="col" style="border-top: 0px; width: 20%">Schedule</th>
                 <th scope="col" style="border-top: 0px;">Status</th>
               </tr>
             </thead>
@@ -22,6 +23,7 @@
               <tr :class="rowColor(curData)" :key="curData.id" v-for="(curData, index) in devices">
                 <td><input type="checkbox" name="id" :value="curData.id" v-model="checkedIds"></td>
           		<td><router-link :to="{ path: '/admin/device/config/load', query: { id: curData.id }}">{{ curData.name }}</router-link></td>
+          		<td><router-link :to="{ path: '/admin/device/schedule', query: { id: curData.id }}">Schedule</router-link></td>
           		<td v-if="curData.status === 'CONNECTED'">{{ curData.status }}</td>
           		<td v-else-if="curData.status === 'FAILED'">{{ curData.failureMessage }}</td>
           		<td v-else></td>
