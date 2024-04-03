@@ -4,7 +4,7 @@
       <h1 class="pb-2 mb-2 border-bottom">Schedule</h1>
     </div>
     <div class="col-md-12">
-		<svg :height="svgHeight()" :width="svgWidth()" xmlns="http://www.w3.org/2000/svg">
+		<svg :height="svgHeight" :width="svgWidth" xmlns="http://www.w3.org/2000/svg">
 		  <line :x1="cur.x1" :y1="cur.y1" :x2="cur.x2" :y2="cur.y2" style="stroke:black;" :style="'stroke-width:' + cur.strokeWidth" v-for="(cur, index) in ticks" />
 		  <text :x="cur.x" :y="cur.y" v-for="(cur, index) in tickLabels">{{ cur.text }}</text>
 		  <rect :x="cur.x" :y="cur.y" :width="cur.width" :height="cur.height" style="stroke:black;" :style="'fill:' + cur.color" v-for="(cur, index) in blocks" />
@@ -29,8 +29,8 @@ export default {
       blocks: [],
       blocksLabels: [],
       marginTopBottom: 5,
-      start: 0,
-      end: 0,
+      svgWidth: 0,
+      svgHeight: 0,
       loading: true
     }
   },
@@ -38,12 +38,6 @@ export default {
     this.loadData()
   },
   methods: {
-    svgWidth () {
-      return this.offsetX + this.rulerWidth + this.blockWidth + this.blockBorderWidth;
-    },
-    svgHeight () {
-      return ((this.end - this.start) / (60 * 1000) / 2) * 5 + this.marginTopBottom * 2;
-    },
     hashcode(str, seed = 0) {
         let h1 = 0xdeadbeef ^ seed;
         let h2 = 0x41c6ce57 ^ seed;
@@ -64,6 +58,15 @@ export default {
       }
       return colour;
     },
+    findFreeSlot(arr, time) {
+      for( var i = 0;i<arr.length;i++) {
+        if( arr[i].end <= time ) {
+          return i;
+        }
+      }
+      arr.push({});
+      return arr.length - 1;
+    },
     loadData () {
       const vm = this
       vm.$http.get('/admin/device/schedule', { params: { id: vm.$route.query.id } }).then(function (response) {
@@ -76,15 +79,18 @@ export default {
           response.data[i].start = (Math.round(response.data[i].start / twoMinutes)) * twoMinutes;
           response.data[i].end = (Math.round(response.data[i].end / twoMinutes)) * twoMinutes;
         }
-        vm.start = response.data[0].start - 2 * 60 * 1000;
-        vm.end = response.data[response.data.length - 1].end + 2 * 60 * 1000;
+        var start = response.data[0].start - 2 * 60 * 1000;
+        var end = response.data[response.data.length - 1].end + 2 * 60 * 1000;
         var ticks = [];
         var tickLabels = [];
         var blocks = [];
         var blocksLabels = [];
         var j = 0;
         var k = 0;
-        for( i = vm.start;i<=vm.end;i+=twoMinutes, k++) {
+        var slots = [];
+        var svgWidth = 0;
+        var svgHeight = 0;
+        for( i = start;i<=end;i+=twoMinutes, k++) {
           var curDate = new Date(i);
           var minute = curDate.getUTCMinutes();
           var hour = curDate.getUTCHours();
@@ -105,16 +111,20 @@ export default {
             var minutestr = '' + minute;
             tickLabels.push({ y: y + 5, text: hourstr.padStart(2, '0') + ':' + minutestr.padStart(2, '0') });
           }
-          if ( j < response.data.length && i === response.data[j].start ) {
+          while ( j < response.data.length && i === response.data[j].start ) {
+            var freeSlot = vm.findFreeSlot(slots, i);
             var curSlot = response.data[j];
             var durationTwoMinutes = ((curSlot.end - curSlot.start) / twoMinutes) * vm.tickInterval;
-            blocks.push({ x: x2, y: y, width: vm.blockWidth, height: durationTwoMinutes, color: vm.getRandomColor(vm.hashcode(curSlot.satelliteId)) });
-            blocksLabels.push({ x: (x2 + vm.blockWidth / 2), y: (y + durationTwoMinutes / 2 + 5), text: curSlot.name });
-          }
-          while( j < response.data.length && i > response.data[j].start) {
+            blocks.push({ x: x2 + freeSlot * vm.blockWidth, y: y, width: vm.blockWidth, height: durationTwoMinutes, color: vm.getRandomColor(vm.hashcode(curSlot.satelliteId)) });
+            blocksLabels.push({ x: (x2 + freeSlot * vm.blockWidth + vm.blockWidth / 2), y: (y + durationTwoMinutes / 2 + 5), text: curSlot.name });
+            slots[freeSlot] = response.data[j];
             j++;
+            svgWidth = Math.max(svgWidth, x2 + (freeSlot + 1) * vm.blockWidth);
           }
+          svgHeight = Math.max(svgHeight, y);
         }
+        vm.svgWidth = svgWidth;
+        vm.svgHeight = svgHeight;
         vm.ticks = ticks;
         vm.blocks = blocks;
         vm.tickLabels = tickLabels;
