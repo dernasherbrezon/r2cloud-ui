@@ -22,6 +22,7 @@
                         <option value="PLUTOSDR">Pluto SDR</option>
                         <option value="LORAAT">LoRa-at</option>
                         <option value="LORAATBLE">LoRa-at BLE</option>
+                        <option value="LORAATBLEC">LoRa-at BLE Client</option>
                         <option value="LORAATWIFI">LoRa-at WiFi</option>
                         <option value="SDRSERVER">sdr-server</option>
                         <option value="SPYSERVER">spyserver</option>
@@ -166,6 +167,27 @@
                     </div>
                 </div>
             </div>
+            <hr/>
+        </div>
+        <div v-if="entity.deviceType == 'LORAATBLEC'">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group" :class="{'has-danger': errors.has('host') }">
+                      <label for="host">Bluetooth address</label>
+                      <input type="text" id="host" name="host" :class="{'is-invalid': errors.has('host') }" v-validate="'required'" class="form-control" v-model="entity.host">
+                      <div class="invalid-feedback" v-if="errors.has('host')">{{ errors.first('host') }}</div>
+                      <small id="hostHelp" class="form-text text-muted">Example: 78:DD:08:A3:A7:52</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group" :class="{'has-danger': errors.has('gain') }">
+                      <label for="gain">Gain</label>
+                      <input type="number" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.gain">
+                      <div class="invalid-feedback" v-if="errors.has('gain')">{{ errors.first('gain') }}</div>
+                      <small id="portHelp" class="form-text text-muted">Supported values: 1,2,3,4,5,6,0. "0" is for automatic gain (AGC)</small>
+                    </div>
+                </div>
+            </div>   
             <hr/>
         </div>
         <div v-if="entity.deviceType == 'LORAATWIFI'">
