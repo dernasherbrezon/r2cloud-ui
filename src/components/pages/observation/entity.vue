@@ -95,7 +95,7 @@
                 </div>
               </div>
             </b-tab>
-            <b-tab title="Spectogram">
+            <b-tab title="Spectogram" v-if="observation.spectogramURL || observation.rawURL">
               <div class="row" style="margin-top: 20px;" v-if="observation.spectogramURL && !generatingSpectogram">
                 <div class="col-md-12">
                   <img class="img-fluid" :src="observation.spectogramURL">
