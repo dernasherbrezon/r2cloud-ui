@@ -32,6 +32,32 @@
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-md-4">
+              <label for="retentionMaxSizeBytes">Retention</label>
+              <div class="input-group md-4">
+                  <input type="number" step="0.001" id="retentionMaxSizeBytes" name="retentionMaxSizeBytes" :class="{'is-invalid': errors.has('retentionMaxSizeBytes') }" v-validate="'required|decimal'" class="form-control" v-model.number="retentionMaxSizeBytes">
+                  <div class="input-group-append">
+                      <span class="input-group-text" id="basic-addon2">GiB</span>
+                  </div>
+                  <div class="invalid-feedback" v-if="errors.has('retentionMaxSizeBytes')">{{ errors.first('retentionMaxSizeBytes') }}</div>
+              </div>              
+              <small id="retentionMaxSizeBytesHelp" class="form-text text-muted">
+         	    Amount of disk space r2cloud will occupy with observation's data. This includes raw I/Q files, decoded data, meta information &etc.
+              </small>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group" :class="{'has-danger': errors.has('retentionRawCount') }">
+              <label for="retentionRawCount">Max I/Q files</label>
+              <input type="text" id="retentionRawCount" name="retentionRawCount" :class="{'is-invalid': errors.has('retentionRawCount') }" v-validate="'required|decimal'" class="form-control" v-model="retentionRawCount">
+              <div class="invalid-feedback" v-if="errors.has('retentionRawCount')">{{ errors.first('retentionRawCount') }}</div>
+              <small id="retentionRawCountHelp" class="form-text text-muted">
+              	Number of raw I/Q files to keep. They can be used for manual processing and analysis. They are the biggest disk space consumers.
+              </small>
+            </div>
+          </div>
+        </div>
+        <hr/>
         <div class="form-group">
 	        <div class="form-check">
 	            <input class="form-check-input" type="checkbox" id="gridCheck" v-model="autoUpdate">
@@ -66,6 +92,8 @@ export default {
     return {
       lat: '',
       lng: '',
+      retentionMaxSizeBytes: 0,
+      retentionRawCount: 0,
       autoUpdate: false,
       presentationMode: false,
       submitting: false
@@ -78,6 +106,8 @@ export default {
       vm.lng = response.data.lng
       vm.autoUpdate = response.data.autoUpdate
       vm.presentationMode = response.data.presentationMode
+      vm.retentionMaxSizeBytes = response.data.retentionMaxSizeBytes / 1024 / 1024 / 1024
+      vm.retentionRawCount = response.data.retentionRawCount
     })
   },
   methods: {
@@ -108,7 +138,9 @@ export default {
         lat: parseFloat(vm.lat),
         lng: parseFloat(vm.lng),
         autoUpdate: vm.autoUpdate,
-        presentationMode: vm.presentationMode
+        presentationMode: vm.presentationMode,
+        retentionMaxSizeBytes: vm.retentionMaxSizeBytes * 1024 * 1024 * 1024,
+        retentionRawCount: vm.retentionRawCount
       }).then(function (response) {
         vm.submitting = false
         vm.$router.push('/admin/restart')
