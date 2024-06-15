@@ -469,7 +469,10 @@ export default {
         antenna: {
           antennaType: "OMNIDIRECTIONAL"
         },
-        rotator: {}
+        rotator: {},
+        bandwidth: 2.4,
+        bandwidthCrop: 10000,
+        basepath: '/tmp'
       },
       submitting: false
     }
