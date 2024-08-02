@@ -11,7 +11,7 @@
           <tbody>
           	<tr v-if="observation.tle">
           		<td>Satellite</td>
-          		<td>{{ observation.tle.line1 }}</td>
+          		<td>{{ observation.satelliteName }}</td>
           	</tr>
           	<tr>
           		<td>NORAD id</td>
