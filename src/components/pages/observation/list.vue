@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     formatReceive(observation) {
-      return Math.round((moment().utc().valueOf() - observation.start) * 100 / (observation.end - observation.start));
+      return Math.round((observation.currentTime - observation.start) * 100 / (observation.end - observation.start));
     },
     rowColor (observation) {
       if (observation.hasData) {
