@@ -11,7 +11,7 @@
           <tbody>
           	<tr v-if="observation.tle">
           		<td>Satellite</td>
-          		<td>{{ observation.satelliteName }}</td>
+          		<td><router-link :to="{ path: '/admin/observation/list', query: { satelliteId: observation.satellite, path: '/admin/observation/list' }}">{{ observation.satelliteName }}</router-link></td>
           	</tr>
           	<tr>
           		<td>NORAD id</td>

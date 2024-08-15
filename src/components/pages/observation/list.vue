@@ -38,7 +38,12 @@
               	</template>
               </tr>
             </tbody>
-         </table>      
+         </table>
+         <div style="text-align: center;" v-if="haveMore">
+         	<button class="btn btn-secondary" v-on:click="this.loadData">More</button>
+         	<br/>
+         	<br/>
+         </div>   
     </div>
     <div class="col-md-12" style="text-align: center;" v-else>
       <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
@@ -56,21 +61,12 @@ export default {
     return {
       observations: [],
       loading: true,
-      timeoutFunction: ''
+      haveMore: true,
+      cursor: ""
     }
   },
   mounted () {
     this.loadData()
-    this.timeoutFunction = setTimeout(this.reloadData, 10000);
-  },
-  unmounted() {
-    if( this.timeoutFunction !== '' ) {
-      clearTimeout(this.timeoutFunction)
-    }
-  },
-  beforeRouteLeave (to, from, next) {
-    clearTimeout(this.timeoutFunction)
-    next()
   },
   methods: {
     formatReceive(observation) {
@@ -88,15 +84,25 @@ export default {
     formatTime (unixTimestamp) {
       return moment(unixTimestamp).utc().format('HH:mm')
     },
-    reloadData() {
-      this.loadData()
-      this.timeoutFunction = setTimeout(this.reloadData, 10000)
-    },
     loadData () {
       const vm = this
-      vm.$http.get('/admin/observation/list').then(function (response) {
-        vm.observations = response.data
+      var satelliteId = ''
+      if( vm.$route.query.satelliteId ) {
+        satelliteId = vm.$route.query.satelliteId
+      }
+      vm.$http.get('/admin/observation/list?limit=12&cursor=' + vm.cursor + '&satelliteId=' + satelliteId).then(function (response) {
+        for (var i = 0; i < response.data.length; i++) {
+          vm.observations.push(response.data[i])
+        }
+        if( response.data.length === 0 ) {
+          vm.haveMore = false
+        } else {
+          vm.cursor = response.data[response.data.length - 1].id
+        }
         vm.loading = false
+      }).catch(function (error) {
+        vm.loading = false
+        vm.handleError(vm, error)
       })
     }
   }
