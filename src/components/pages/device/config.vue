@@ -59,7 +59,7 @@
                 <div class="col-md-4">
                     <div class="form-group" :class="{'has-danger': errors.has('rtlDeviceId') }">
                       <label for="rtlDeviceId">Device index</label>
-                      <input type="number" id="rtlDeviceId" name="rtlDeviceId" :class="{'is-invalid': errors.has('rtlDeviceId') }" v-validate="'required|integer'" class="form-control" v-model.number="entity.rtlDeviceId">
+                      <input type="text" id="rtlDeviceId" name="rtlDeviceId" :class="{'is-invalid': errors.has('rtlDeviceId') }" v-validate="'required'" class="form-control" v-model="entity.rtlDeviceId">
                       <div class="invalid-feedback" v-if="errors.has('rtlDeviceId')">{{ errors.first('rtlDeviceId') }}</div>
                       <small id="rtlDeviceIdHelp" class="form-text text-muted">If several rtl-sdr devices connected specify index here or SN (serial number) to distinguish them</small>
                     </div>
