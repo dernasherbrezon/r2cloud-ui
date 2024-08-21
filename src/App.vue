@@ -11,10 +11,7 @@
               <b-nav-item to="/admin/api"><i class="fa fa-puzzle-piece" aria-hidden="true"></i>&nbsp;API</b-nav-item>
 			</b-navbar-nav>
 			<b-navbar-nav class="ml-auto">
-              <b-nav-item-dropdown text="Status">
-                <b-dropdown-item to="/admin/status/overview"><i class="fa fa-search"></i>&nbsp;Overview</b-dropdown-item>
-                <b-dropdown-item to="/admin/status/metrics"><i class="fa fa-area-chart"></i>&nbsp;Metrics</b-dropdown-item>
-              </b-nav-item-dropdown>              
+			  <b-nav-item to="/admin/status/overview"><i class="fa fa-search"></i>&nbsp;Status</b-nav-item>
               <b-nav-item-dropdown text="Configuration">
                 <b-dropdown-item to="/admin/config/general"><i class="fa fa-cog"></i>&nbsp;General</b-dropdown-item>
                 <b-dropdown-item to="/admin/device/config/list"><i class="fa fa-microchip"></i>&nbsp;Devices</b-dropdown-item>

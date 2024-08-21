@@ -8,7 +8,6 @@ import setup from '@/components/pages/setup/setup'
 import setupWizard from '@/components/pages/setup/wizard'
 
 import statusOverview from '@/components/pages/status/overview'
-import statusMetrics from '@/components/pages/status/metrics'
 
 import configGeneral from '@/components/pages/configuration/general'
 import configIntegrations from '@/components/pages/configuration/integrations'
@@ -75,11 +74,6 @@ const router = new Router({
           return '/admin/status/overview'
         }
       }
-    },
-    {
-      path: '/admin/status/metrics',
-      name: 'statusMetrics',
-      component: statusMetrics
     },
     {
       path: '/admin/config/general',
