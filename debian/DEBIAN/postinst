@@ -1,0 +1,5 @@
+if [ "$1" = "configure" ]; then
+	chown -R root:root /usr/share/doc/r2cloud-ui
+    chmod -R 644 /usr/share/doc/r2cloud-ui
+	find /usr/share/doc/r2cloud-ui -type d -exec chmod 755 {} \;
+fi
