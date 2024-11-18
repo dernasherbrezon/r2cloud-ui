@@ -18,11 +18,12 @@ import deviceSchedule from '@/components/pages/device/schedule'
 
 import restartConfirmation from '@/components/pages/restartConfirmation'
 
-import tle from '@/components/pages/tle'
 import observationList from '@/components/pages/observation/list'
 import observationEntity from '@/components/pages/observation/entity'
 
 import scheduleList from '@/components/pages/schedule/list'
+
+import satelliteLoad from '@/components/pages/satellite/entity'
 
 import api from '@/components/pages/api'
 
@@ -86,11 +87,6 @@ const router = new Router({
       component: configIntegrations
     },
     {
-      path: '/admin/tle',
-      name: 'tle',
-      component: tle
-    },
-    {
       path: '/admin/restart',
       name: 'restartConfirmation',
       component: restartConfirmation
@@ -134,6 +130,11 @@ const router = new Router({
       path: '/admin/device/schedule',
       name: 'deviceSchedule',
       component: deviceSchedule
+    },
+    {
+      path: '/admin/satellite/load',
+      name: 'satelliteLoad',
+      component: satelliteLoad
     },
     {
       path: '/404',

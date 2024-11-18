@@ -6,12 +6,11 @@
     	<b-collapse is-nav id="nav_collapse">
 			<b-navbar-nav>
               <b-nav-item to="/admin/observation/list"><i class="fa fa-map" aria-hidden="true"></i>&nbsp;Observations</b-nav-item>
-              <b-nav-item to="/admin/schedule/list"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;Schedule</b-nav-item>
-              <b-nav-item to="/admin/tle"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;TLE</b-nav-item>
+              <b-nav-item to="/admin/schedule/list"><i class="fa fa-cube" aria-hidden="true"></i>&nbsp;Satellites</b-nav-item>
               <b-nav-item to="/admin/api"><i class="fa fa-puzzle-piece" aria-hidden="true"></i>&nbsp;API</b-nav-item>
 			</b-navbar-nav>
 			<b-navbar-nav class="ml-auto">
-			  <b-nav-item to="/admin/status/overview"><i class="fa fa-search"></i>&nbsp;Status</b-nav-item>
+			  <b-nav-item to="/admin/status/overview"><i class="fa fa-bar-chart"></i>&nbsp;Status</b-nav-item>
               <b-nav-item-dropdown text="Configuration">
                 <b-dropdown-item to="/admin/config/general"><i class="fa fa-cog"></i>&nbsp;General</b-dropdown-item>
                 <b-dropdown-item to="/admin/device/config/list"><i class="fa fa-microchip"></i>&nbsp;Devices</b-dropdown-item>

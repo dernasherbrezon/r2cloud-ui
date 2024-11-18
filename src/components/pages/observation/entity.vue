@@ -128,6 +128,21 @@
                 <div class="col-md-12">
 	              			<form>
 								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<textarea class="form-control" id="tleValue" disabled rows="3">{{ observation.tle.line1 }}
+{{ observation.tle.line2 }}
+{{ observation.tle.line3 }}</textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<div class="form-group">
+											<label for="tleSource">Source</label>
+											<input class="form-control" id="tleSource" disabled :value="observation.tle.source">
+										</div>
+									</div>
 									<div class="col-md-4">
 										<div class="form-group" v-if="observation.tleStatus == 'OLD'">
 											<label for="tleCalculated">Calculated (epoch)</label>
@@ -143,21 +158,6 @@
 										<div class="form-group">
 											<label for="tleDownloaded">Downloaded</label>
 											<input class="form-control" id="tleDownloaded" disabled :value="formatTime(observation.tle.updated) + ' ' + formatDate(observation.tle.updated)">
-										</div>
-									</div>
-									<div class="col-md-4">
-										<div class="form-group">
-											<label for="tleSource">Source</label>
-											<input class="form-control" id="tleSource" disabled :value="observation.tle.source">
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<textarea class="form-control" id="tleValue" disabled rows="3">{{ observation.tle.line1 }}
-{{ observation.tle.line2 }}
-{{ observation.tle.line3 }}</textarea>
 										</div>
 									</div>
 								</div>
@@ -226,7 +226,7 @@ export default {
         vm.observation = response.data
         var satrec = satellite.twoline2satrec(vm.observation.tle.line2, vm.observation.tle.line3)
         vm.observation.tleUnixTime = (satrec.jdsatepoch - 2440587.5) * 86400000;
-		var diff = Math.abs(vm.observation.start - vm.observation.tleUnixTime);
+		var diff = Math.abs(vm.observation.tle.updated - vm.observation.tleUnixTime);
 		if (diff < 7 * 24 * 60 * 60 * 1000) {
 			vm.observation.tleStatus = 'GOOD'
 		} else if (diff < 14 * 24 * 60 * 60 * 1000) {

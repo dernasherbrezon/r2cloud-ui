@@ -4,17 +4,29 @@
 		<table class="table table-hover">
             <thead>
               <tr>
-              	<th @click="sort('name')" scope="col" style="width: 20%; border-top: 0px; cursor: pointer;">Name</th>
-                <th @click="sort('nextPass')" scope="col" style="width: 20%; border-top: 0px; cursor: pointer;">Next pass</th>
+              	<th @click="sort('name')" scope="col" style="width: 20%; border-top: 0px; cursor: pointer;">Name&nbsp;
+              		<i class="fa fa-long-arrow-down" v-if="currentSort === 'name' && currentSortDir === 'asc'"></i>
+              		<i class="fa fa-long-arrow-up" v-if="currentSort === 'name' && currentSortDir === 'desc'"></i>
+              	</th>
+                <th @click="sort('nextPass')" scope="col" style="width: 20%; border-top: 0px; cursor: pointer;">Next pass&nbsp;
+              		<i class="fa fa-long-arrow-down" v-if="currentSort === 'nextPass' && currentSortDir === 'asc'"></i>
+              		<i class="fa fa-long-arrow-up" v-if="currentSort === 'nextPass' && currentSortDir === 'desc'"></i>
+                </th>
                 <th scope="col" style="width: 20%; border-top: 0px;">Frequency</th>
-                <th scope="col" style="width: 20%; border-top: 0px;">Enabled</th>
+                <th scope="col" style="width: 10%; border-top: 0px;">Source</th>
+                <th scope="col" style="width: 10%; border-top: 0px;">Enabled</th>
               </tr>
             </thead>
             <tbody>
               <tr :class="rowColor(curData)" :key="curData.id" v-for="(curData, index) in sortedSatellites">
-              	<td>{{ curData.name }}</td>
+              	<td><router-link :to="{ path: '/admin/satellite/load', query: { id: curData.id }}">{{ curData.name }}</router-link></td>
                 <td>{{ curData.nextPassFormatted }}</td>
                 <td>{{ curData.frequency }} hz</td>
+                <td>
+                	<span class="badge badge-secondary" v-if="curData.source === 'CONFIG'">r2cloud</span>
+                	<span class="badge badge-success" v-if="curData.source === 'LEOSATDATA'">leosatdata</span>
+                	<span class="badge badge-warning" v-if="curData.source === 'SATNOGS'">satnogs</span>
+                </td>
                 <td>
                 	<input type="checkbox" v-model="curData.enabled" @change="check(curData, index)">
                 </td>
