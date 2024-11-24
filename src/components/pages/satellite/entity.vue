@@ -63,7 +63,7 @@
       <h2>Transmitters</h2>
       <form :key="curData.frequency" v-for="(curData, index) in entity.transmitters">
         <div class="row">
-          <div class="col-md-4" v-if="curData.status == 'ENABLED'">
+          <div class="col-md-4" v-if="curData.status == 'ENABLED' || curData.status == 'WEAK'">
             <div class="form-group">
               <label for="framing">Framing</label>
               <input class="form-control is-valid" id="framing" disabled :value="curData.framing">
