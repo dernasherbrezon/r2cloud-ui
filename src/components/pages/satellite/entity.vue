@@ -4,14 +4,20 @@
       <h1 class="pb-2 mb-2 border-bottom">{{ entity.name }}</h1>
       <form>
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label for="source">NORAD id</label>
+              <input class="form-control" id="source" disabled :value="entity.noradId">
+            </div>
+          </div>
+          <div class="col-md-3">
             <div class="form-group">
               <label for="source">Source</label>
               <input class="form-control" id="source" disabled :value="'R2CLOUD'" v-if="entity.source === 'CONFIG'">
               <input class="form-control" id="source" disabled :value="entity.source" v-else>
             </div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-3">
             <div class="form-group">
               <label for="lastUpdateTime">Last updated</label>
               <input class="form-control" id="lastUpdateTime" disabled :value="formatTime(entity.lastUpdateTime) + ' ' + formatDate(entity.lastUpdateTime)">
