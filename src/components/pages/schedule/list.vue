@@ -14,6 +14,7 @@
                 </th>
                 <th scope="col" style="width: 20%; border-top: 0px;">Frequency</th>
                 <th scope="col" style="width: 10%; border-top: 0px;">Source</th>
+                <th scope="col" style="width: 10%; border-top: 0px;">Modulation</th>
                 <th scope="col" style="width: 10%; border-top: 0px;">Enabled</th>
               </tr>
             </thead>
@@ -26,6 +27,12 @@
                 	<span class="badge badge-secondary" v-if="curData.source === 'CONFIG'">r2cloud</span>
                 	<span class="badge badge-success" v-if="curData.source === 'LEOSATDATA'">leosatdata</span>
                 	<span class="badge badge-warning" v-if="curData.source === 'SATNOGS'">satnogs</span>
+                </td>
+                <td>
+                	<span class="badge badge-warning" v-if="curData.modulation === 'LORA'">{{ curData.modulation }}</span>
+                	<span class="badge badge-success" v-else-if="curData.modulation === 'BPSK'">{{ curData.modulation }}</span>
+                	<span class="badge badge-secondary" v-else-if="curData.modulation === 'AFSK'">{{ curData.modulation }}</span>
+                	<span class="badge badge-primary" v-else>{{ curData.modulation }}</span>
                 </td>
                 <td>
                 	<input type="checkbox" v-model="curData.enabled" @change="check(curData, index)">
