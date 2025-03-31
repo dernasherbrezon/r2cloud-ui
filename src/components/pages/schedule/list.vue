@@ -27,6 +27,7 @@
                 	<span class="badge badge-secondary" v-if="curData.source === 'CONFIG'">r2cloud</span>
                 	<span class="badge badge-success" v-if="curData.source === 'LEOSATDATA'">leosatdata</span>
                 	<span class="badge badge-warning" v-if="curData.source === 'SATNOGS'">satnogs</span>
+                	<span class="badge badge-warning" v-if="curData.source === 'CUSTOM'">custom</span>
                 </td>
                 <td>
                 	<span class="badge badge-warning" v-if="curData.modulation === 'LORA'">{{ curData.modulation }}</span>
