@@ -70,10 +70,41 @@
       </div>
       <div class="col-md-8">
           <b-tabs no-fade>
-          	<b-tab title="Image" v-if="observation.aURL">
-              <div class="row" style="margin-top: 20px;">
+          	<b-tab title="Image" v-if="observation.aURL || observation.instruments">
+              <div class="row" style="margin-top: 20px;" v-if="observation.aURL">
                 <div class="col-md-12">
                   <img class="img-fluid" :src="observation.aURL">
+                </div>
+              </div>
+              <div class="row" style="margin-top: 20px;" v-else>
+                <div class="col-md-12">
+                  <form>
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label for="instrument">Instrument</label>
+                        <select v-model="selectedInstrumentId" class="form-control" id="instrument" @change="onInstrumentChange()" aria-describedby="instrumentHelp">
+                          <option v-for="cur in observation.instruments" :key="cur.id" :value="cur.id">{{ cur.name }}</option>
+                        </select>
+                        <small id="instrumentHelp" class="form-text text-muted">
+                          {{ selectedInstrument.description }}
+                        </small>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label for="channel">Channel</label>
+                        <select v-model="selectedChannelId" class="form-control" id="channel" @change="onChannelChange" aria-describedby="channelHelp">
+                          <option value="combo">Combined</option>
+                          <option disabled v-if="selectedInstrument.channels">──────────</option>
+                          <option v-for="cur in selectedInstrument.channels" :key="cur.id" :value="cur.id">{{ cur.id }}</option>
+                        </select>
+                        <small id="channelHelp" class="form-text text-muted">
+                          {{ selectedChannel.description }}
+                        </small>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <img class="img-fluid" width="100%" :src="selectedChannel.imageURL">
+                    </div>
+                  </form>
                 </div>
               </div>
           	</b-tab>
@@ -107,7 +138,7 @@
                 </div>                
                 <div class="col-md-12" style="text-align: center;" v-else-if="generatingSpectogram">
                   <i class="fa fa-cog fa-spin fa-3x fa-fw"></i>
-                  <span class="sr-only">Generating...</span>          
+                  <span class="sr-only">Generating...</span>
                 </div>
                 <div class="col-md-12" style="text-align: center;" v-else-if="errors.has('general')">
                   <p class="text-danger">
@@ -193,13 +224,37 @@ export default {
       observation: {},
       loading: true,
       generatingSpectogram: false,
-      chartData: []
+      chartData: [],
+      selectedInstrumentId: '',
+      selectedInstrument: {},
+      selectedChannel: {},
+      selectedChannelId: ''
     }
   },
   mounted () {
     this.loadData()
   },
   methods: {
+    onInstrumentChange() {
+      this.selectedInstrument = this.observation.instruments.find(item => item.id === this.selectedInstrumentId);
+      this.selectedChannel = {
+        id: "combo",
+        imageURL: this.selectedInstrument.combinedImageURL,
+        description: "Combined image from some channels"
+      }; 
+      this.selectedChannelId = this.selectedChannel.id;
+    },
+    onChannelChange() {
+      if( this.selectedChannelId === "combo" ) {
+        this.selectedChannel = {
+          id: "combo",
+          imageURL: this.selectedInstrument.combinedImageURL,
+          description: "Combined image from some channels"
+        };
+        return;
+      }
+      this.selectedChannel = this.selectedInstrument.channels.find(item => item.id === this.selectedChannelId);
+    },
     debug () {
       const vm = this
       vm.generatingSpectogram = true
@@ -233,6 +288,13 @@ export default {
 			vm.observation.tleStatus = 'STALE'
 		} else {
 			vm.observation.tleStatus = 'OLD'
+		}
+		if( vm.observation.instruments ) {
+			vm.selectedInstrument = vm.observation.instruments.find(item => item && item.primary);
+			if( vm.selectedInstrument ) {
+				vm.selectedInstrumentId = vm.selectedInstrument.id;
+				vm.onInstrumentChange();
+			}
 		}
         vm.loading = false
         vm.generatePolarPlot(satrec)
