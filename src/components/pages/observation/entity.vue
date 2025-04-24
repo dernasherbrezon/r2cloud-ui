@@ -292,9 +292,11 @@ export default {
 		if( vm.observation.instruments ) {
 			vm.selectedInstrument = vm.observation.instruments.find(item => item && item.primary);
 			if( vm.selectedInstrument ) {
-				vm.selectedInstrumentId = vm.selectedInstrument.id;
-				vm.onInstrumentChange();
+			} else {
+				vm.selectedInstrument = vm.observation.instruments[0];
 			}
+			vm.selectedInstrumentId = vm.selectedInstrument.id;
+			vm.onInstrumentChange();
 		}
         vm.loading = false
         vm.generatePolarPlot(satrec)
