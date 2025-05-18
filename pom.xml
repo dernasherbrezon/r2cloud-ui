@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ru.r2cloud</groupId>
+	<artifactId>r2cloud-ui</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>r2cloud ui</name>
+	<description>Web UI for r2cloud</description>
+	<inceptionYear>2014</inceptionYear>
+	<url>https://github.com/dernasherbrezon/r2cloud-ui</url>
+	<organization>
+		<name>r2cloud</name>
+	</organization>
+
+	<developers>
+		<developer>
+			<email>dernasherbrezon@gmail.com</email>
+			<name>Andrey Rodionov</name>
+		</developer>
+	</developers>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.aerse.maven</groupId>
+				<artifactId>deb-maven-plugin</artifactId>
+				<version>1.22</version>
+				<executions>
+					<execution>
+						<id>package</id>
+						<phase>package</phase>
+						<goals>
+							<goal>package</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<unixUserId>pi</unixUserId>
+					<unixGroupId>pi</unixGroupId>
+					<arch>all</arch>
+					<section>embedded</section>
+					<debBaseDir>${basedir}/debian/DEBIAN</debBaseDir>
+					<javaServiceWrapper>false</javaServiceWrapper>
+					<defaultScripts>false</defaultScripts>
+					<fileSets>
+						<fileSet>
+							<source>${basedir}/debian/usr</source>
+							<target>/usr</target>
+						</fileSet>
+					</fileSets>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<licenses>
+		<license>
+			<name>Apache-2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+</project>

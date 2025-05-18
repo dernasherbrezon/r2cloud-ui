@@ -12,18 +12,21 @@ jobs:
     - uses: actions/checkout@v3
       with:
         submodules: recursive
-    - name: Use Node.js 15.x
-      uses: actions/setup-node@v3
+        
+    - name: Cache
+      uses: actions/cache@v3
       with:
-        node-version: '15.x'
-        cache: 'npm'
+        path: |
+          ~/.m2/repository
+          !~/.m2/repository/ru/r2cloud/
+          ~/.sonar/cache
+          ~/.rvm/
+        key: ${{ runner.os }}-maven
+        restore-keys: |
+          ${{ runner.os }}-maven-
+
     - name: Install dependencies
       run: npm ci
-    - name: Set up Ruby 2.6
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: '3.0'
-        bundler-cache: true
     - run: npm run build
     - run: npm test
     - name: Import GPG key
@@ -43,13 +46,11 @@ jobs:
       if: github.ref == 'refs/heads/master'
       run: |
         set -e
-        DATE=$(date '+%Y%m%d%H%M%S')
-        APT_CLI_VERSION="1.8"
-        echo "Version: ${DATE}" >> debian/DEBIAN/control
-        chmod 755 debian/DEBIAN/postinst
-        dpkg-deb -Z gzip --build debian r2cloud-ui-${DATE}.deb
+        mvn deb:package
         mkdir -p ~/.m2/repository/
+        APT_CLI_VERSION="1.8"
         [[ -f ~/.m2/repository/apt-cli-${APT_CLI_VERSION}.jar ]] || wget --no-clobber --quiet -O ~/.m2/repository/apt-cli-${APT_CLI_VERSION}.jar https://github.com/dernasherbrezon/apt-cli/releases/download/apt-cli-${APT_CLI_VERSION}/apt-cli.jar
+        cd ./target/
         java -jar ~/.m2/repository/apt-cli-${APT_CLI_VERSION}.jar --url s3://r2cloud --component main --codename r2cloud --gpg-keyname F2DCBFDCA5A70917  save --patterns ./*.deb
         java -jar ~/.m2/repository/apt-cli-${APT_CLI_VERSION}.jar --url s3://r2cloud --component main --codename stretch --gpg-keyname F2DCBFDCA5A70917  save --patterns ./*.deb
         java -jar ~/.m2/repository/apt-cli-${APT_CLI_VERSION}.jar --url s3://r2cloud --component main --codename buster --gpg-keyname F2DCBFDCA5A70917  save --patterns ./*.deb
