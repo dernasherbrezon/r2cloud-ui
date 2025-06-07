@@ -90,7 +90,8 @@
                         </small>
                       </div>
                       <div class="form-group col-md-6">
-                        <label for="channel">Channel</label>
+                        <label for="channel" v-if="!selectedInstrument.series">Channel</label>
+                        <label for="channel" v-else>Image</label>
                         <select v-model="selectedChannelId" class="form-control" id="channel" @change="onChannelChange" aria-describedby="channelHelp">
                           <option value="combo" v-if="selectedInstrument.combinedImageURL">Combined</option>
                           <option disabled v-if="selectedInstrument.channels && selectedInstrument.combinedImageURL">──────────</option>
@@ -246,7 +247,6 @@ export default {
       } else {
         this.selectedChannel = this.selectedInstrument.channels[0];
       }
-      console.log(this.selectedInstrument);
       this.selectedChannelId = this.selectedChannel.id;
     },
     onChannelChange() {
@@ -295,6 +295,19 @@ export default {
 			vm.observation.tleStatus = 'OLD'
 		}
 		if( vm.observation.instruments ) {
+			vm.observation.instruments.forEach(function(item) {
+				if(item.imageSeriesURL) {
+					var imageSeries = [];
+					item.imageSeriesURL.forEach(function(curUrl, index) {
+						imageSeries.push({
+							id: index,
+							imageURL: curUrl,
+							description: ""
+						})
+					});
+					item.channels = imageSeries;
+				}
+			});
 			vm.selectedInstrument = vm.observation.instruments.find(item => item && item.primary);
 			if( vm.selectedInstrument ) {
 			} else {
