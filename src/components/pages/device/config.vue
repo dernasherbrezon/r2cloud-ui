@@ -108,11 +108,11 @@
         <div v-if="entity.deviceType == 'LORAAT'">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="form-group" :class="{'has-danger': errors.has('host') }">
-                      <label for="host">Serial device</label>
-                      <input type="text" id="host" name="host" :class="{'is-invalid': errors.has('host') }" v-validate="'required'" class="form-control" v-model="entity.host">
-                      <div class="invalid-feedback" v-if="errors.has('host')">{{ errors.first('host') }}</div>
-                      <small id="hostHelp" class="form-text text-muted">Example: /dev/ttyUSB0</small>
+                    <div class="form-group" :class="{'has-danger': errors.has('serialDevice') }">
+                      <label for="serialDevice">Serial device</label>
+                      <input type="text" id="serialDevice" name="serialDevice" :class="{'is-invalid': errors.has('serialDevice') }" v-validate="'required'" class="form-control" v-model="entity.serialDevice">
+                      <div class="invalid-feedback" v-if="errors.has('serialDevice')">{{ errors.first('serialDevice') }}</div>
+                      <small id="serialDeviceHelp" class="form-text text-muted">Example: /dev/ttyUSB0</small>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -129,11 +129,11 @@
         <div v-if="entity.deviceType == 'LORAATBLE'">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="form-group" :class="{'has-danger': errors.has('host') }">
-                      <label for="host">Bluetooth address</label>
-                      <input type="text" id="host" name="host" :class="{'is-invalid': errors.has('host') }" v-validate="'required'" class="form-control" v-model="entity.host">
-                      <div class="invalid-feedback" v-if="errors.has('host')">{{ errors.first('host') }}</div>
-                      <small id="hostHelp" class="form-text text-muted">Example: 78:DD:08:A3:A7:52</small>
+                    <div class="form-group" :class="{'has-danger': errors.has('btAddress') }">
+                      <label for="btAddress">Bluetooth address</label>
+                      <input type="text" id="btAddress" name="btAddress" :class="{'is-invalid': errors.has('btAddress') }" v-validate="'required'" class="form-control" v-model="entity.btAddress">
+                      <div class="invalid-feedback" v-if="errors.has('btAddress')">{{ errors.first('btAddress') }}</div>
+                      <small id="btAddressHelp" class="form-text text-muted">Example: 78:DD:08:A3:A7:52</small>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -172,11 +172,11 @@
         <div v-if="entity.deviceType == 'LORAATBLEC'">
             <div class="row">
                 <div class="col-md-4">
-                    <div class="form-group" :class="{'has-danger': errors.has('host') }">
-                      <label for="host">Bluetooth address</label>
-                      <input type="text" id="host" name="host" :class="{'is-invalid': errors.has('host') }" v-validate="'required'" class="form-control" v-model="entity.host">
-                      <div class="invalid-feedback" v-if="errors.has('host')">{{ errors.first('host') }}</div>
-                      <small id="hostHelp" class="form-text text-muted">Example: 78:DD:08:A3:A7:52</small>
+                    <div class="form-group" :class="{'has-danger': errors.has('btAddress') }">
+                      <label for="btAddress">Bluetooth address</label>
+                      <input type="text" id="btAddress" name="btAddress" :class="{'is-invalid': errors.has('btAddress') }" v-validate="'required'" class="form-control" v-model="entity.btAddress">
+                      <div class="invalid-feedback" v-if="errors.has('btAddress')">{{ errors.first('btAddress') }}</div>
+                      <small id="btAddressHelp" class="form-text text-muted">Example: 78:DD:08:A3:A7:52</small>
                     </div>
                 </div>
                 <div class="col-md-4">
