@@ -26,6 +26,7 @@
                         <option value="LORAATWIFI">LoRa-at WiFi</option>
                         <option value="SDRSERVER">sdr-server</option>
                         <option value="SPYSERVER">spyserver</option>
+                        <option value="AIRSPY">AIRSPY</option>
                     </select>
                     <small id="typeHelp" class="form-text text-muted">Each device has its own configuration</small>
                 </div>
@@ -88,6 +89,76 @@
                       <label for="ppm">PPM</label>
                       <input type="number" id="ppm" name="ppm" :class="{'is-invalid': errors.has('ppm') }" class="form-control" v-model.number="entity.ppm">
                       <div class="invalid-feedback" v-if="errors.has('ppm')">{{ errors.first('ppm') }}</div>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+        </div>
+        <hr/>
+        <div v-if="entity.deviceType == 'AIRSPY'">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group" :class="{'has-danger': errors.has('rtlDeviceId') }">
+                      <label for="rtlDeviceId">Serial number</label>
+                      <input type="text" id="rtlDeviceId" name="rtlDeviceId" :class="{'is-invalid': errors.has('rtlDeviceId') }" class="form-control" v-model="entity.rtlDeviceId">
+                      <div class="invalid-feedback" v-if="errors.has('rtlDeviceId')">{{ errors.first('rtlDeviceId') }}</div>
+                      <small id="rtlDeviceIdHelp" class="form-text text-muted">If several devices connected specify serial number to select the correct one</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="gain">Bias-t enabled</label><br/>
+                        <input class="form-control" type="checkbox" id="biast" name="biast" v-model="entity.biast">
+                        <small id="biast" class="form-text text-muted">
+                            Will enable <a href="https://en.wikipedia.org/wiki/Bias_tee">bias-t</a> before every observation and disable afterwards
+                        </small>
+                    </div>
+                </div>
+            </div>   
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group" :class="{'has-danger': errors.has('gainType') }">
+                        <label for="gainType">Gain type</label>
+                        <select id="gainType" name="gainType" class="form-control" :class="{'is-invalid': errors.has('gainType') }" v-model="entity.gainType">
+                            <option value="FREE">Free</option>
+                            <option value="LINEAR">Linear</option>
+                            <option value="SENSITIVE">Sensitive</option>
+                        </select>
+                        <div class="invalid-feedback" v-if="errors.has('gainType')">{{ errors.first('gainType') }}</div>
+                    </div>
+                </div>
+                <div class="col-md-4" v-if="entity.gainType === 'LINEAR' || entity.gainType === 'SENSITIVE'">
+                    <div class="form-group" :class="{'has-danger': errors.has('gain') }">
+                      <label for="gain">Gain</label>
+                      <input type="number" step="1" id="gain" name="gain" :class="{'is-invalid': errors.has('gain') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.gain">
+                      <div class="invalid-feedback" v-if="errors.has('gain')">{{ errors.first('gain') }}</div>
+                      <small id="rtlDeviceIdHelp" class="form-text text-muted">Maximum is 21</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row" v-if="entity.gainType === 'FREE'">
+                <div class="col-md-2">
+                    <div class="form-group" :class="{'has-danger': errors.has('lnaGain') }">
+                      <label for="lnaGain">LNA gain</label>
+                      <input type="number" step="1" id="lnaGain" name="lnaGain" :class="{'is-invalid': errors.has('lnaGain') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.lnaGain">
+                      <div class="invalid-feedback" v-if="errors.has('lnaGain')">{{ errors.first('lnaGain') }}</div>
+                      <small id="lnaGainHelp" class="form-text text-muted">Maximum is 14</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group" :class="{'has-danger': errors.has('mixerGain') }">
+                      <label for="mixerGain">Mixer gain</label>
+                      <input type="number" step="1" id="mixerGain" name="mixerGain" :class="{'is-invalid': errors.has('mixerGain') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.mixerGain">
+                      <div class="invalid-feedback" v-if="errors.has('mixerGain')">{{ errors.first('mixerGain') }}</div>
+                      <small id="mixerGainHelp" class="form-text text-muted">Maximum is 15</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group" :class="{'has-danger': errors.has('vgaGain') }">
+                      <label for="vgaGain">VGA gain</label>
+                      <input type="number" step="1" id="vgaGain" name="vgaGain" :class="{'is-invalid': errors.has('vgaGain') }" v-validate="'required|decimal'" class="form-control" v-model.number="entity.vgaGain">
+                      <div class="invalid-feedback" v-if="errors.has('vgaGain')">{{ errors.first('vgaGain') }}</div>
+                      <small id="vgaGainHelp" class="form-text text-muted">Maximum is 15</small>
                     </div>
                 </div>
             </div>
