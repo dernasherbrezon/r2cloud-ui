@@ -32,9 +32,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <textarea class="form-control" id="tleValue" disabled rows="3">{{ entity.tle.line1 }}
-{{ entity.tle.line2 }}
-{{ entity.tle.line3 }}</textarea>
+              <textarea class="form-control" id="tleValue" disabled rows="3">{{ entity.tle }}</textarea>
             </div>
           </div>
         </div>
@@ -171,7 +169,6 @@
 
 <script>
 import moment from 'moment'
-import * as satellite from 'satellite.js'
 
 export default {
   name: 'general',
@@ -186,16 +183,15 @@ export default {
     const vm = this
     vm.$http.get('/admin/satellite/load', { params: { id: vm.$route.query.id } } ).then(function (response) {
       vm.entity = response.data
-        var satrec = satellite.twoline2satrec(vm.entity.tle.line2, vm.entity.tle.line3)
-        vm.entity.tleUnixTime = (satrec.jdsatepoch - 2440587.5) * 86400000;
-        var diff = Math.abs(vm.entity.tle.updated - vm.entity.tleUnixTime);
-        if (diff < 7 * 24 * 60 * 60 * 1000) {
-          vm.entity.tleStatus = 'GOOD'
-        } else if (diff < 14 * 24 * 60 * 60 * 1000) {
-          vm.entity.tleStatus = 'STALE'
-        } else {
-          vm.entity.tleStatus = 'OLD'
-        }
+      vm.entity.tleUnixTime = Date.parse(vm.entity.tle.EPOCH + "Z");
+      var diff = Math.abs(vm.entity.tle.updated - vm.entity.tleUnixTime);
+      if (diff < 7 * 24 * 60 * 60 * 1000) {
+        vm.entity.tleStatus = 'GOOD'
+      } else if (diff < 14 * 24 * 60 * 60 * 1000) {
+        vm.entity.tleStatus = 'STALE'
+      } else {
+        vm.entity.tleStatus = 'OLD'
+      }
     })
   },
   methods: {

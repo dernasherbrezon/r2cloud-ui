@@ -162,9 +162,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
-											<textarea class="form-control" id="tleValue" disabled rows="3">{{ observation.tle.line1 }}
-{{ observation.tle.line2 }}
-{{ observation.tle.line3 }}</textarea>
+											<textarea class="form-control" id="tleValue" disabled rows="3">{{ observation.tle }}</textarea>
 										</div>
 									</div>
 								</div>
@@ -285,7 +283,7 @@ export default {
       vm.$http.get(vm.$route.query.path + '?id=' + vm.$route.query.id + '&satelliteId=' + vm.$route.query.satelliteId).then(function (response) {
         vm.observation = response.data
         var satrec = satellite.twoline2satrec(vm.observation.tle.line2, vm.observation.tle.line3)
-        vm.observation.tleUnixTime = (satrec.jdsatepoch - 2440587.5) * 86400000;
+        vm.observation.tleUnixTime = Date.parse(vm.entity.tle.EPOCH + "Z");
 		var diff = Math.abs(vm.observation.tle.updated - vm.observation.tleUnixTime);
 		if (diff < 7 * 24 * 60 * 60 * 1000) {
 			vm.observation.tleStatus = 'GOOD'
