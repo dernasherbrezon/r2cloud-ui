@@ -282,8 +282,7 @@ export default {
       const vm = this
       vm.$http.get(vm.$route.query.path + '?id=' + vm.$route.query.id + '&satelliteId=' + vm.$route.query.satelliteId).then(function (response) {
         vm.observation = response.data
-        var satrec = satellite.twoline2satrec(vm.observation.tle.line2, vm.observation.tle.line3)
-        vm.observation.tleUnixTime = Date.parse(vm.entity.tle.EPOCH + "Z");
+        vm.observation.tleUnixTime = Date.parse(vm.observation.tle.EPOCH + "Z");
 		var diff = Math.abs(vm.observation.tle.updated - vm.observation.tleUnixTime);
 		if (diff < 7 * 24 * 60 * 60 * 1000) {
 			vm.observation.tleStatus = 'GOOD'
@@ -315,6 +314,7 @@ export default {
 			vm.onInstrumentChange();
 		}
         vm.loading = false
+        var satrec = satellite.json2satrec(vm.observation.tle)
         vm.generatePolarPlot(satrec)
       }).catch(function (error) {
         vm.loading = false
