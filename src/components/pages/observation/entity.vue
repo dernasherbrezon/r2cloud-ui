@@ -162,7 +162,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="form-group">
-											<textarea class="form-control" id="tleValue" disabled rows="3">{{ observation.tle }}</textarea>
+											<textarea class="form-control" id="tleValue" disabled rows="23">{{ observation.tle }}</textarea>
 										</div>
 									</div>
 								</div>
