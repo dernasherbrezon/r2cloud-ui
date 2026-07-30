@@ -129,9 +129,7 @@
             </b-tab>
             <b-tab title="Spectogram" v-if="observation.spectogramURL || observation.rawURL">
               <div class="row" style="margin-top: 20px;" v-if="observation.spectogramURL && !generatingSpectogram">
-                <div class="col-md-12">
-                  <img class="img-fluid" :src="observation.spectogramURL">
-                </div>
+                <spectogram :src="observation.spectogramURL" :startTime="observation.start" :endTime="observation.end" :minFreq="observation.actualFrequency - observation.sampleRate/2" :maxFreq="observation.actualFrequency + observation.sampleRate/2"/>
               </div>
               <div class="row" style="margin-top: 20px;" v-else>
                 <div class="col-md-12 text-center" style="margin-top: 10%" v-if="!generatingSpectogram && !errors.has('general')">
@@ -214,10 +212,11 @@
 import moment from 'moment'
 import * as satellite from 'satellite.js'
 import azelchart from '@/components/AzElChart.vue'
+import spectogram from '@/components/spectogram.vue'
 
 export default {
   name: 'observationLoad',
-  components: {azelchart},
+  components: {azelchart,spectogram},
   data () {
     return {
       observation: {},
